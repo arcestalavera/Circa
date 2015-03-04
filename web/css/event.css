@@ -1,0 +1,149 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 03 3, 15, 11:26:20 PM
+    Author     : Arces
+*/
+
+#event-whole{
+    overflow-y: scroll;
+    top: 120px;
+    height: 94%;
+}
+
+#event-header-div{
+    background: url("../img/event/event1.jpg");
+    font-family: century gothic;
+    margin-top: 55px;
+    left: 0;
+    right: 0;
+    position: relative;
+}
+
+.event-header-img{
+    height: 300px;
+    width: 700px;
+    opacity: .8;
+}
+
+.profile-pic{
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 100px;
+    box-shadow: 0px 3px 2px rgb(10,10,10);
+    margin-left: auto;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    top: 130px;
+    z-index:90;
+}
+
+#event-body-div{
+    font-family: arial;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.event-description, .event-title{
+    font-family: arial;
+    margin-left: auto;
+    margin-right: auto;
+    width: 850px;
+    margin-bottom: 0;
+}
+
+.event-title{
+    margin-top: 45px;
+}
+
+.event-description{
+    margin-top: 10px;
+    border-bottom:solid rgba(150, 150, 150, .7);
+    border-radius: 30px;
+}
+
+.event-join{
+    font-family: arial;
+    font-size: 17px;
+    background-color: white;
+}
+
+.event-join:hover{
+    cursor: hand;
+    text-decoration: underline;
+}
+
+.event-comment-div{
+    background-color: rgb(220, 220, 220);
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    min-height: 90px;
+    font-family: arial;
+}
+
+.event-comment-header{
+    font-family: arial;
+    font-size: 20px;
+    background-color: rgb(200, 200, 203);
+    border-radius: 50px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 6px;
+    color: #940000;
+}
+
+.commenter-pic{
+    width: 70px;
+    float: left;
+    height: 70px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+.event-sub-comment{
+    background-color: rgb(220, 220, 220);
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    margin-top: 0px;
+    min-height: 60px;
+    font-family: arial;
+    font-size: 14px;
+}
+
+.sub-commenter-pic{
+    width: 40px;
+    float: left;
+    height: 40px;
+    border-radius: 50%;
+    margin: 10px;
+}
+
+h2,p{
+    margin: 10px;
+}
+
+.event-comment-text{
+    font-family: arial;
+    margin: 20px;
+    
+}
+
+a{
+    text-decoration: none;
+    color: #940000;
+}
+
+a:hover{
+    text-decoration: underline;
+    cursor: hand;
+}
