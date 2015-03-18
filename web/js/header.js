@@ -1,6 +1,8 @@
+
+var d = new Date();
+
 $(document).ready(function(){
     var isOpened = false;
-    
     $(".header-logo").click(function(){
         if(!isOpened)
         {	
