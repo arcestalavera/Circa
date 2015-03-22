@@ -1,3 +1,11 @@
+<%-- 
+    Document   : Login
+    Created on : 03 22, 15, 7:35:36 PM
+    Author     : Arces
+--%>
+
+<%@page contentType="text/html"%>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Welcome to Circa - Login or Sign up</title>
@@ -15,12 +23,23 @@
         <div id = "header">
             <div id = "headerElements">
                 <img id = "circaLogo" src="img/login/CircaLogo.png" alt="Circa Logo">
-                <form id = "logIn">
-                    <input type="text" placeholder = "email" />
-                    <input type="password" placeholder = "password" />
-                    <button id = "logInButton"/><a href = "home.html">log-in</a></button>
-                <br>
-                <font color ="white" face ="arial" size=2>Incorrect E-mail / Password! Please try again.</font>
+                <form id = "logIn" action = "Login" method = "post">
+                    <input type="text" placeholder = "email / username" name = "inputUser"/>
+                    <input type="password" placeholder = "password" name = "inputPassword"/>
+                    <input type="submit" id = "logInButton" value = "log-in" class = "clickableButton"/>
+                    <br>
+                    <%
+                        HttpSession reqSession = request.getSession();
+                        Boolean isCorrect = (Boolean) reqSession.getAttribute("isCorrect");
+
+                        if (isCorrect != null) {
+                            if (!isCorrect) {
+                    %>
+                    <font color ="white" face ="arial" size=2>Incorrect E-mail / Password! Please try again.</font>
+                    <%
+                            }
+                        }
+                    %>
                 </form>
             </div>
         </div>

@@ -19,6 +19,8 @@
                     <input type="text" placeholder = "email" />
                     <input type="password" placeholder = "password" />
                     <button id = "logInButton"/><a href = "home.html">log-in</a></button>
+                <br>
+                <font color ="white" face ="arial" size=2>Incorrect E-mail / Password! Please try again.</font>
                 </form>
             </div>
         </div>
@@ -36,12 +38,13 @@
         <div id = "signUpDiv">
             <h1 id = "signUpCircaLabel" class = "centeredSignUp">circa</h1>
             <form id = "signUpForm" class = "centeredSignUp">
-                <input type="text" placeholder = "First Name" class = "signUpNameFields" />
-                <input type="text" placeholder = "Last Name" class = "signUpNameFields" />
-                <input type="text" placeholder = "Email" class = "signUpOtherFields" />
-                <input type="text" placeholder = "Username" class = "signUpOtherFields" />
-                <input type="password" placeholder = "Password" class = "signUpOtherFields" />
-                <button id = "signUpForCircaButton" class = "clickableButton"><a href = "home.html">Sign up for Circa!</a></button>
+                <input type="text" placeholder = "First Name" class = "signUpNameFields" required/>
+                <input type="text" placeholder = "Last Name" class = "signUpNameFields" required/>
+                <input type="text" placeholder = "Email" class = "signUpOtherFields" required/>
+                <input type="text" placeholder = "Username" class = "signUpOtherFields" required/>
+                <input type="password" placeholder = "Password" class = "signUpOtherFields" required/>
+                <input type="password" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
+                <input type ="submit" id = "signUpForCircaButton" class = "clickableButton" value="Sign up for Circa!"/>
             </form>
         </div>
     </body>
