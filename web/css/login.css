@@ -167,15 +167,22 @@ html, body{
 }
 
 .signUpNameFields{
-    width: 50%;
+    width: 46%;
 }
 
 .signUpOtherFields{
-    width: 100%;
+    width: 95%;
 }
 
 .signUpNameFields:hover, .signUpOtherFields:hover{
-    border: lightgreen 2px solid;
+    border: lightgoldenrodyellow 2px solid;
+    
+}
+
+.signUpOtherFields_error{
+    width: 95%;
+    border: salmon 3px inset;
+    background-color: bisque;
 }
 
 #signUpForCircaButton{

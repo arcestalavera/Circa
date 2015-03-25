@@ -1,0 +1,142 @@
+body{
+    margin: 0px;
+}
+.postBar{
+    width: 465;
+    height: 130;
+    background-color: #F0FFFF;
+    border: 1px solid;
+    border-color: #FFE0C0;
+    border-radius: 3px;
+    margin-top:55px;
+    margin-left: 75px;
+}
+.postBarTop{
+    width: 465;
+    height: 30;
+    background-color: #F0FFFF;
+    border-bottom: 1px solid;
+    border-color: #FFE0C0;
+}
+input.postBarText{
+    width: 465;
+    height: 60;
+    background-color: #F0FFFF;
+    border: 0;
+    padding-left: 7px;
+}
+.postBarBottom{
+    width: 465;
+    height: 30;
+    background-color: #F0FFFF;
+    border-top: 1px solid;
+    border-color: #FFE0C0;
+}
+button.postButton{
+    border-radius: 4px;
+    border:0;
+    background-color:#A05030;
+    float:right;
+    color: white;
+    margin-top: 7px;
+    margin-right: 10px;
+    height: 25;
+    width: 70;
+
+}
+button.postButton:hover{
+    cursor:hand;
+    opacity: .85;
+}
+.post{
+    background-color: #F0FFFF;
+    width: 465;
+    height: 400;
+    border: 1px solid;
+    border-color: #FFE0C0;
+    border-radius: 3px;
+    margin-left: 75px;
+    margin-top: 15px;
+}
+.textLinks{
+    color: #B02020;
+    font-family: Arial;
+    font-weight: Bold;
+    font-size: 16;
+    margin-top: 25px;
+    margin-left: 8px;
+}
+.textLinks:hover{
+    text-decoration: underline;
+    cursor: hand;
+
+}
+.postOptions{
+    float: right;
+    margin-right: 8px;
+    margin-top: 10px;
+}	
+.postText{
+    margin-left: 14px;
+    font-family: Tahoma;
+    font-size: 14;
+}
+.postPhoto{
+    margin-top: 5px;
+    text-align: center;
+}
+.postComment{
+    background-color: #F0E8D0;
+    width: 465;
+    height: 65;
+    margin-top: 7px;
+    border-top: 1px solid #FFE0C0;
+    border-bottom: 1px solid #FFE0C0;
+}
+.textInput{
+    margin-left: 8px;
+    margin-top: 17px;
+    height: 32;
+    width: 390;
+}
+IMG.postDP{
+    height: auto;
+    width: 50;
+    margin-left: 10px;
+    margin-top: 7px;
+    float:left; 
+}
+IMG.postDP:hover{
+    cursor: hand;
+}
+IMG.options{
+    width: 20;
+    height: auto;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+IMG.photo{
+    width: 420;
+    height: 240;
+}
+IMG.photo:hover{
+    cursor:hand;
+}
+IMG.options:hover{
+    cursor: hand;
+    opacity: .55;
+}
+IMG.commentPhoto{
+    float:left;
+    width: 40;
+    height: auto;
+    margin-top:12px;
+    margin-left: 10px;
+}
+IMG.commentPhoto:hover{
+    cursor: hand;
+}
+IMG.postBarPhoto{
+    width: 20;
+    height: auto;
+}

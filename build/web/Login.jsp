@@ -61,10 +61,15 @@
                 <input type="text" placeholder = "Last Name" class = "signUpNameFields" required/>
                 <input type="text" placeholder = "Email" class = "signUpOtherFields" required/>
                 <input type="text" placeholder = "Username" class = "signUpOtherFields" required/>
-                <input type="password" placeholder = "Password" class = "signUpOtherFields" required/>
-                <input type="password" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
+                <input type="password" name = "password" placeholder = "Password" class = "signUpOtherFields" required/>
+                
+                <input type="password" name = "confirmpass" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
                 <input type ="submit" id = "signUpForCircaButton" class = "clickableButton" value="Sign up for Circa!"/>
+                
             </form>
+        </div>
+        <div id = "signUpError">
+            <p>HEHEHEHEHE</p>
         </div>
     </body>
 </html>
