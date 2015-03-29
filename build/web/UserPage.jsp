@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel = "shortcut icon" href = "CircaLogoIcon.ico"/>
+        <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
         <title> ${loggedUser.getFirstName()} ${loggedUser.getLastName()}</title>
         <meta charset="UTF-8">
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
@@ -12,17 +12,17 @@
 
     </head>
 
-
     <body bgcolor="#E8E8E8">
 
+        <!-- HEADER -->
         <div id = "header-whole">
             <div id = "header-temp">
             </div>
             <div id = "header">
-                <div id = "header-left">
+                <form id = "header-left">
                     <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
-                    <a href = "Result.jsp"><button class = "search-button">></button></a>
-                </div>	
+                    <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
+                </form>
                 <div id = "header-right">
                     <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Clusters.jsp" class = "text">Clusters</a>
@@ -30,11 +30,11 @@
                     <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>
-            <img src = "img\clusters\CircaLogo.png" class = "header-logo"/>
-        </div>		 
+            <img src = "img\clusters\CircaLogo.png" class = "header-logo" />
+        </div>
+        <!-- END HEADER -->	 
 
-
-        <div class = "profTop"><IMG class="profPic" src="img/logo.png"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
+        <div class = "profTop"><IMG class="profPic" src= "${loggedUser.getProfilePicture()}"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
 
         <div class="infoDiv">
             <div class="infoText">${loggedUser.getFirstName()} ${loggedUser.getLastName()}</div>

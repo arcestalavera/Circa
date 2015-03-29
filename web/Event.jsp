@@ -1,47 +1,47 @@
 <html>
     <head>
         <title>Circa</title>
-        
+        <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
         <!-- HEADER SCRIPT -->
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
-	</script>
-	<script type = "text/javascript" src = "js/header.js">
-	</script>
-	<link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
+        </script>
+        <script type = "text/javascript" src = "js/header.js">
+        </script>
+        <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <!-- END HEADER -->
-        
+
         <link rel="stylesheet" type="text/css" 	media="all" href="css/event.css" />
-        
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body style = "margin: 0px;">
         <!-- HEADER -->
         <div id = "header-whole">
-        <div id = "header-temp">
-	</div>
-	<div id = "header">
-		<div id = "header-left">
-			<input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
-			<a href = "Result.jsp"><button class = "search-button">></button></a>
-		</div>	
-		<div id = "header-right">
-			<a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
-			<a href = "Clusters.jsp" class = "text">Clusters</a>
-			<a href = "Home.jsp" class = "text">Home</a>
-			<a href = "Login.jsp" class = "text">Logout</a>
-		</div>
-	</div>
-	<img src = "img\clusters\CircaLogo.png" class = "header-logo" alt = "logo"/>
-        </div>
+            <div id = "header-temp">
+            </div>
+            <div id = "header">
+                <form id = "header-left">
+                    <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
+                    <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
+                </form>
+                <div id = "header-right">
+                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "Clusters.jsp" class = "text">Clusters</a>
+                    <a href = "Home.jsp" class = "text">Home</a>
+                    <a href = "Logout" class = "text">Logout</a>
+                </div>
+            </div>
+            <img src = "img\clusters\CircaLogo.png" class = "header-logo" />
+        </div>    
         <!-- END HEADER -->
-        
+
         <!-- EVENT -->
         <div id = "event-whole">
             <div id = "event-header-div" align = "center">
                 <img src = "img/event/party1.jpg" alt = "napoleon" class = "profile-pic"/>
                 <img src = "img/event/event1.jpg" alt = "napoleon borntoparty" class = "event-header-img"/>
-               
+
             </div>
             <h1 class = "event-title" align = "center" style = "color: #940000;">Happy Thursday!</h1>
             <div id = "event-body-div" align = "center">

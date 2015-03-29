@@ -15,10 +15,10 @@
             <div id = "header-temp">
             </div>
             <div id = "header">
-                <div id = "header-left">
+                <form id = "header-left">
                     <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
-                    <a href = "Result.jsp"><button class = "search-button">></button></a>
-                </div>	
+                    <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
+                </form>
                 <div id = "header-right">
                     <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Clusters.jsp" class = "text">Clusters</a>

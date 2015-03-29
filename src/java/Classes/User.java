@@ -14,17 +14,18 @@ import java.util.Date;
  * @author Arces
  */
 public class User {
-    private String firstName, lastName, emailAddress;
+    private String firstName, lastName, emailAddress, profilePicture;
     private int userID;
     private Date birthDate;
     private ArrayList<User> buddyList;
     
-    public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate){
+    public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate, String profilePicture){
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.birthDate = birthDate;
+        this.profilePicture = profilePicture;
     }
 
     /**
@@ -109,5 +110,19 @@ public class User {
      */
     public void setBuddyList(ArrayList<User> buddyList) {
         this.buddyList = buddyList;
+    }
+
+    /**
+     * @return the profilePicture
+     */
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    /**
+     * @param profilePicture the profilePicture to set
+     */
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

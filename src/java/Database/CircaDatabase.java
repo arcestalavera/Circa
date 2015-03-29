@@ -202,4 +202,24 @@ public class CircaDatabase { //singleton
         
         return birthDay;
     }
+    
+    public String getProfPic(int userID){
+        String profilePicture = "";
+
+        try {
+            sql = "SELECT profilePicture FROM user"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                profilePicture = rs.getString("profilePicture");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return profilePicture;
+    }
 }

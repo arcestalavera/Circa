@@ -3,27 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Servlet;
 
-import Classes.User;
-import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Arces
  */
-@WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+public class SearchEvent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +37,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");
+            out.println("<title>Servlet SearchEvent</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchEvent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -77,45 +72,12 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html");
-
-        CircaDatabase db = CircaDatabase.getInstance();
-        HttpSession reqSession = request.getSession();
-        Boolean isCorrect;
+        //processRequest(request, response);
+        
         RequestDispatcher reqDispatcher;
-        String inputUser = request.getParameter("inputUser");
-        String inputPass = request.getParameter("inputPassword");
-
-        if (inputPass.equals(db.getPassword(inputUser))) {
-            isCorrect = true;
-            
-            //get user info
-            int userID = db.getUserID(inputUser);
-            String firstName = db.getFirstName(userID);
-            String lastName = db.getLastName(userID);
-            String emailAddress = db.getEmailAddress(userID);
-            Date birthDate = db.getBirthDay(userID);
-            String imgPath = db.getProfPic(userID);
-            
-            //set user info
-            User loggedUser = new User(userID, firstName, lastName, emailAddress, birthDate, imgPath);
-            
-            //put user info in session
-            System.out.println("USER DETAILS:\nid = " + userID
-                                + "\nfirst name = " + firstName
-                                + "\nlast name = " + lastName
-                                + "\nemail address= " + emailAddress);
-            //redirect to home
-            reqSession.removeAttribute("isCorrect");
-            reqSession.setAttribute("loggedUser", loggedUser);
-            reqDispatcher = request.getRequestDispatcher("Home.jsp");
-        } else {
-            isCorrect = false;
-            reqSession.setAttribute("isCorrect", isCorrect);
-            reqDispatcher = request.getRequestDispatcher("Login.jsp");
-        }
-
-        reqDispatcher.forward(request, response);
+        
+        
+        reqDispatcher = request.getRequestDispatcher("Login.jsp");
     }
 
     /**
