@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Welcome to Circa - Login or Sign up</title>
+        <title>Welcome to Circa - Login or Sign up </title>
         <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
         <link rel="stylesheet" type="text/css" 	media="all" href="css/Login.css" />
         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
