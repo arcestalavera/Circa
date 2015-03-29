@@ -19,11 +19,11 @@ public class User {
     private Date birthDate;
     private ArrayList<User> buddyList;
     
-    public User(String firstName, String lastName, String emailAddress, int userID, Date birthDate){
+    public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate){
+        this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
-        this.userID = userID;
         this.birthDate = birthDate;
     }
 

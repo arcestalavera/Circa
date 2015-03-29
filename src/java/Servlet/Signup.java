@@ -9,6 +9,8 @@ package Servlet;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -80,10 +82,21 @@ public class Signup extends HttpServlet {
         CircaDatabase db = CircaDatabase.getInstance();
         
         try{
-            db.addUser(request.getParameter("first_name"), request.getParameter("last_name"), request.getParameter("email_address"), 
-                    request.getParameter("username"), request.getParameter("password"));
+            ArrayList<Boolean> errorList = new ArrayList<>();
+            String password = request.getParameter("password");
+            String confirmPass = request.getParameter("confirmpass");
+            RequestDispatcher reqDispatcher = null;
             
-            response.sendRedirect("home.html");
+            if(!password.equals(confirmPass))
+            {
+                errorList.add(true);
+            }
+            else{
+                db.addUser(request.getParameter("first_name"), request.getParameter("last_name"), request.getParameter("email_address"), 
+                        request.getParameter("username"), request.getParameter("password"));
+            }
+            reqDispatcher = request.getRequestDispatcher("Login.jsp");
+            reqDispatcher.forward(request, response);
         }catch(Exception e)
         {
             e.printStackTrace();

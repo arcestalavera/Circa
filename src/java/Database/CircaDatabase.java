@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
@@ -86,5 +87,119 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    //-- GET INFO ------------------------------------------------------------
+    public int getUserID(String userInput){
+        int userID = 0;
+        boolean isFound = false;
+
+        try {
+         //get via email
+            sql = "SELECT userID FROM user"
+                    + " WHERE emailAddress = '" + userInput + "'"; 
+            
+            rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                userID = rs.getInt("userID");
+                isFound = true;
+            }
+            
+         //get via username
+            if(!isFound)
+            {
+                sql = "SELECT userID FROM user"
+                        + " WHERE username = '" + userInput + "'";
+                
+                rs = stmt.executeQuery(sql);
+                if(rs.next()){
+                    userID = rs.getInt("userID");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return userID;
+    }
+    
+    public String getFirstName(int userID){
+        String firstName = "";
+
+        try {
+            sql = "SELECT firstName FROM user"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                firstName = rs.getString("firstName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return firstName;
+    }
+    
+    public String getLastName(int userID){
+        String lastName = "";
+
+        try {
+            sql = "SELECT lastName FROM user"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                lastName = rs.getString("lastName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return lastName;
+    }
+    
+    public String getEmailAddress(int userID){
+        String emailAddress = "";
+
+        try {
+            sql = "SELECT emailAddress FROM user"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                emailAddress = rs.getString("emailAddress");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return emailAddress;
+    }
+    
+    public Date getBirthDay(int userID){
+        Date birthDay = null;
+
+        try {
+            sql = "SELECT birthDate FROM user"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                birthDay = rs.getDate("birthDate");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return birthDay;
     }
 }

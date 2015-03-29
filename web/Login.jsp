@@ -4,13 +4,14 @@
     Author     : Arces
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html"%>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Welcome to Circa - Login or Sign up</title>
         <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
-        <link rel="stylesheet" type="text/css" 	media="all" href="css/login.css" />
+        <link rel="stylesheet" type="text/css" 	media="all" href="css/Login.css" />
         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src ="js/login.js"></script>
     </head>
@@ -56,20 +57,16 @@
 
         <div id = "signUpDiv">
             <h1 id = "signUpCircaLabel" class = "centeredSignUp">circa</h1>
-            <form id = "signUpForm" class = "centeredSignUp">
-                <input type="text" placeholder = "First Name" class = "signUpNameFields" required/>
-                <input type="text" placeholder = "Last Name" class = "signUpNameFields" required/>
-                <input type="text" placeholder = "Email" class = "signUpOtherFields" required/>
-                <input type="text" placeholder = "Username" class = "signUpOtherFields" required/>
+            <form id = "signUpForm" class = "centeredSignUp" action = "Signup" method = "post">
+                <input type="text" name ="first_name" placeholder = "First Name" class = "signUpNameFields" required/>
+                <input type="text" name ="last_name" placeholder = "Last Name" class = "signUpNameFields" required/>
+                <input type="date" name ="birthday" class = "signUpDateField" required/>
+                <input type="text" name ="email_address" placeholder = "Email" class = "signUpOtherFields" required/>
+                <input type="text" name ="username" placeholder = "Username" class = "signUpOtherFields" required/>
                 <input type="password" name = "password" placeholder = "Password" class = "signUpOtherFields" required/>
-                
-                <input type="password" name = "confirmpass" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
+                <input type="password" name = "confirmpassword" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
                 <input type ="submit" id = "signUpForCircaButton" class = "clickableButton" value="Sign up for Circa!"/>
-                
             </form>
-        </div>
-        <div id = "signUpError">
-            <p>HEHEHEHEHE</p>
         </div>
     </body>
 </html>

@@ -1,39 +1,33 @@
-<%-- 
-    Document   : Home.jsp
-    Created on : 03 23, 15, 2:11:41 PM
-    Author     : Arces
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
         <link rel = "shortcut icon" href = "CircaLogoIcon.ico"/>
         <title> Circa - Home </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" 	media="all" href="css/Home.css" />
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
         <script type = "text/javascript" src = "js/header.js">
         </script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" 	media="all" href="css/Home.css" />
 
     </head>
 
+
     <body bgcolor="#E8E8E8">
+
         <div id = "header-whole">
             <div id = "header-temp">
             </div>
             <div id = "header">
                 <div id = "header-left">
                     <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
-                    <a href = "result.html"><button class = "search-button">></button></a>
+                    <a href = "Result.jsp"><button class = "search-button">></button></a>
                 </div>	
                 <div id = "header-right">
-                    <a href = "user-page.html" class = "text">Jeron</a>  
-                    <a href = "clusters.html" class = "text">Clusters</a>
+                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>  
+                    <a href = "Clusters.jsp" class = "text">Clusters</a>
                     <a href = "Home.jsp" class = "text">Home</a>
-                    <a href = "Login.jsp" class = "text">Logout</a>
+                    <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>
             <img src = "img\clusters\CircaLogo.png" class = "header-logo" alt = "logo"/>

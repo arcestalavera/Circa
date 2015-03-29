@@ -17,13 +17,13 @@
             <div id = "header">
                 <div id = "header-left">
                     <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
-                    <a href = "result.html"><button class = "search-button">></button></a>
+                    <a href = "Result.jsp"><button class = "search-button">></button></a>
                 </div>	
                 <div id = "header-right">
-                    <a href = "user-page.html" class = "text">Jeron</a>
-                    <a href = "clusters.html" class = "text">Clusters</a>
-                    <a href = "home.html" class = "text">Home</a>
-                    <a href = "login.html" class = "text">Logout</a>
+                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "Clusters.jsp" class = "text">Clusters</a>
+                    <a href = "Home.jsp" class = "text">Home</a>
+                    <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>
             <img src = "img\clusters\CircaLogo.png" class = "header-logo" />
