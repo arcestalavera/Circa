@@ -9,6 +9,7 @@ html, body{
     height: 100%;
     overflow: hidden;
     background-color: black;
+    
 }
 
 #backgroundImage{
@@ -174,21 +175,15 @@ html, body{
     width: 95%;
 }
 
-.signUpDateField{
-    height: 35px;
-}
-
 .signUpNameFields:hover, .signUpOtherFields:hover{
     border: lightgoldenrodyellow 2px solid;
     
 }
 
 .signUpOtherFields_error{
-    width: 97%;
-    height: 35px;
-    border: red 3px inset;
+    width: 95%;
+    border: salmon 3px inset;
     background-color: bisque;
-    padding-left: 10px;
 }
 
 #signUpForCircaButton{
