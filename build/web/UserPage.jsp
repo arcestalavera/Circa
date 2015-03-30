@@ -7,6 +7,7 @@
         </script>
         <script type = "text/javascript" src = "js/header.js">
         </script>
+        <script type = "text/javascript" src = "js/UserPage.js"></script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <link rel="stylesheet" type="text/css" 	media="all" href="css/UserPage.css" />
 
@@ -44,7 +45,22 @@
         </div>
 
         <div class="postDiv">
-
+            
+            <ul class = "tabs">
+                <li><a href="#showEvents"><b>Events</b></a></li>
+                <li><a href="#showSchedule"><b>Schedule</b></a></li>
+            </ul>
+            <div id = "showEvents" align = "center">
+                <h3 class = "text-heading">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+            </div>
+            <div id = "showSchedule" align = "center">
+                <h3 class = "text-heading">Schedule of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+                <input type = "date" class = "schedule-date"/>
+            </div>
+                
+                
+                
+            <!--
             <div class = "postBar" >
                 <div class="postBarTop"></div>
                 <input type="text" class="postBarText" placeholder="Got a new event?"/>
@@ -59,6 +75,8 @@
                 <div class = "postPhoto"><IMG class ="photo" src="img/home/weeeeeeeeeee.jpg"/></div>
                 <div class ="postComment"><input type="text" placeholder="Write a comment..." class="textInput"/><IMG class ="commentPhoto" src="img/logo.png"/></div>
             </div>
+            -->
+            
         </div>
     </body>
 </html>
