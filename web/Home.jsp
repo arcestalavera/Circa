@@ -28,7 +28,7 @@
                 <div id = "header-right">
                     <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Clusters.jsp" class = "text">Clusters</a>
-                    <a href = "Home.jsp" class = "text">Home</a>
+                    <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>

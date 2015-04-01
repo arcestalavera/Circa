@@ -5,8 +5,8 @@
         <servlet-class>Servlet.Signup</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>Servlet.Login</servlet-class>
+        <servlet-name>Home</servlet-name>
+        <servlet-class>Servlet.Home</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
@@ -21,7 +21,7 @@
         <url-pattern>/Signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
+        <servlet-name>Home</servlet-name>
         <url-pattern>/Home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Arces
  */
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+public class Home extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -63,7 +63,9 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RequestDispatcher reqDispatcher;
+        reqDispatcher = request.getRequestDispatcher("Home.jsp");
+        reqDispatcher.forward(request, response);
     }
 
     /**
@@ -83,39 +85,45 @@ public class Login extends HttpServlet {
         HttpSession reqSession = request.getSession();
         Boolean isCorrect;
         RequestDispatcher reqDispatcher;
-        String inputUser = request.getParameter("inputUser");
-        String inputPass = request.getParameter("inputPassword");
+        
+        String referer = request.getHeader("Referer");
+        System.out.println("HEHE " + referer);
+        
+        // if user is logging in
+        if(referer.equals("http://localhost:8084/Circa/")){
+            String inputUser = request.getParameter("inputUser");
+            String inputPass = request.getParameter("inputPassword");
+            
+            if (inputPass.equals(db.getPassword(inputUser))) {
+                isCorrect = true;
 
-        if (inputPass.equals(db.getPassword(inputUser))) {
-            isCorrect = true;
-            
-            //get user info
-            int userID = db.getUserID(inputUser);
-            String firstName = db.getFirstName(userID);
-            String lastName = db.getLastName(userID);
-            String emailAddress = db.getEmailAddress(userID);
-            Date birthDate = db.getBirthDay(userID);
-            String imgPath = db.getProfPic(userID);
-            
-            //set user info
-            User loggedUser = new User(userID, firstName, lastName, emailAddress, birthDate, imgPath);
-            
-            //put user info in session
-            System.out.println("USER DETAILS:\nid = " + userID
-                                + "\nfirst name = " + firstName
-                                + "\nlast name = " + lastName
-                                + "\nemail address= " + emailAddress);
-            //redirect to home
-            reqSession.removeAttribute("isCorrect");
-            reqSession.setAttribute("loggedUser", loggedUser);
-            reqDispatcher = request.getRequestDispatcher("Home.jsp");
-        } else {
-            isCorrect = false;
-            reqSession.setAttribute("isCorrect", isCorrect);
-            reqDispatcher = request.getRequestDispatcher("index.jsp");
+                //get user info
+                int userID = db.getUserID(inputUser);
+                String firstName = db.getFirstName(userID);
+                String lastName = db.getLastName(userID);
+                String emailAddress = db.getEmailAddress(userID);
+                Date birthDate = db.getBirthDay(userID);
+                String imgPath = db.getProfPic(userID);
+
+                //set user info
+                User loggedUser = new User(userID, firstName, lastName, emailAddress, birthDate, imgPath);
+
+                //put user info in session
+                System.out.println("USER DETAILS:\nid = " + userID
+                                    + "\nfirst name = " + firstName
+                                    + "\nlast name = " + lastName
+                                    + "\nemail address= " + emailAddress);
+                //redirect to home
+                reqSession.removeAttribute("isCorrect");
+                reqSession.setAttribute("loggedUser", loggedUser);
+                reqDispatcher = request.getRequestDispatcher("Home.jsp");
+            } else {
+                isCorrect = false;
+                reqSession.setAttribute("isCorrect", isCorrect);
+                reqDispatcher = request.getRequestDispatcher("index.jsp");
+            }
+            reqDispatcher.forward(request, response);
         }
-
-        reqDispatcher.forward(request, response);
     }
 
     /**
