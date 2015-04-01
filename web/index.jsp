@@ -24,7 +24,7 @@
         <div id = "header">
             <div id = "headerElements">
                 <img id = "circaLogo" src="img/login/CircaLogo.png" alt="Circa Logo">
-                <form id = "logIn" action = "Home" method = "post">
+                <form id = "logIn" action = "Login" method = "post">
                     <input type="text" placeholder = "email / username" name = "inputUser"/>
                     <input type="password" placeholder = "password" name = "inputPassword"/>
                     <input type="submit" id = "logInButton" value = "log-in" class = "clickableButton"/>

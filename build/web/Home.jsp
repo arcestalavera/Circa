@@ -26,8 +26,8 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
-                    <a href = "Clusters.jsp" class = "text">Clusters</a>
+                    <a href = "User" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
                 </div>
