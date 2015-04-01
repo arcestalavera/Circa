@@ -9,7 +9,11 @@ package Servlet;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.Locale;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -84,7 +88,7 @@ public class Signup extends HttpServlet {
         try{
             ArrayList<Boolean> errorList = new ArrayList<>();
             String password = request.getParameter("password");
-            String confirmPass = request.getParameter("confirmpass");
+            String confirmPass = request.getParameter("confirmpassword");
             RequestDispatcher reqDispatcher = null;
             
             if(!password.equals(confirmPass))
@@ -92,10 +96,21 @@ public class Signup extends HttpServlet {
                 errorList.add(true);
             }
             else{
+                String birthday = request.getParameter("birthday");
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date date = sdf1.parse(birthday);
+                java.sql.Date sqlStartDate = new java.sql.Date(date.getTime());  
+                System.out.println("FIRST NAME: " + request.getParameter("first_name"));
+                System.out.println("LAST NAME: " + request.getParameter("last_name"));
+                System.out.println("EMAIL ADDRESS: " + request.getParameter("email_address"));
+                System.out.println("BIRTHDAY: " + sqlStartDate);
+                System.out.println("USERNAME: " + request.getParameter("username"));
+                System.out.println("PASSWORD: " + request.getParameter("password"));
+                
                 db.addUser(request.getParameter("first_name"), request.getParameter("last_name"), request.getParameter("email_address"), 
-                        request.getParameter("username"), request.getParameter("password"));
+                        sqlStartDate, request.getParameter("username"), request.getParameter("password"));
             }
-            reqDispatcher = request.getRequestDispatcher("Login.jsp");
+            reqDispatcher = request.getRequestDispatcher("index.jsp");
             reqDispatcher.forward(request, response);
         }catch(Exception e)
         {
