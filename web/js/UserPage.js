@@ -1,3 +1,10 @@
+/*function goToEvent(var eventID)
+{
+    
+}
+*/
+
+
 $(document).ready(function() {
     $('ul.tabs').each(function() {
         var $active, $content, $links = $(this).find('a');
@@ -23,5 +30,9 @@ $(document).ready(function() {
            
            e.preventDefault();
         });
+    });
+    
+    $(".event-header").click(function(){
+       $(this).next(".event-description").slideToggle("medium"); 
     });
 });
