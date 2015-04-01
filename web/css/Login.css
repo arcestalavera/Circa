@@ -159,7 +159,7 @@ html, body{
     font-size: 0;
 }
 
-.signUpNameFields, .signUpOtherFields{
+.signUpNameFields, .signUpOtherFields, .signUpDateField{
     position: relative;
     width: inherit;
     height: 35px;
@@ -175,8 +175,14 @@ html, body{
     width: 95%;
 }
 
+.signUpDateField{
+    width: 95%;
+    color: gray;
+    font-family: sans-serif;
+}
+
 .signUpNameFields:hover, .signUpOtherFields:hover{
-    border: lightgoldenrodyellow 2px solid;
+    border: lightgoldenrodyellow 1px solid;
     
 }
 
@@ -187,7 +193,7 @@ html, body{
 }
 
 #signUpForCircaButton{
-    width: 100%;
+    width: 99%;
     height: 35px;
     position: relative;
     top: 7px;
