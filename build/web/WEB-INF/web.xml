@@ -5,10 +5,6 @@
         <servlet-class>Servlet.Signup</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>Servlet.Login</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>Logout</servlet-name>
         <servlet-class>Servlet.Logout</servlet-class>
     </servlet>
@@ -16,13 +12,25 @@
         <servlet-name>SearchEvent</servlet-name>
         <servlet-class>Servlet.SearchEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>toCluster</servlet-name>
+        <servlet-class>Servlet.toCluster</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>toHome</servlet-name>
+        <servlet-class>Servlet.toHome</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>Servlet.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>toUserPage</servlet-name>
+        <servlet-class>Servlet.toUserPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
@@ -31,6 +39,22 @@
     <servlet-mapping>
         <servlet-name>SearchEvent</servlet-name>
         <url-pattern>/SearchEvent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toCluster</servlet-name>
+        <url-pattern>/Cluster</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toHome</servlet-name>
+        <url-pattern>/Home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toUserPage</servlet-name>
+        <url-pattern>/User</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

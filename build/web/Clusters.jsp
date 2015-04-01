@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Your Clusters | Circa</title>
-        <link rel="shortcut icon" href="img/clusters/CircaLogoIcon.ico" />
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js"></script>
         <script type = "text/javascript" src = "js/header.js"></script>
@@ -20,9 +20,9 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
-                    <a href = "Clusters.jsp" class = "text">Clusters</a>
-                    <a href = "Home.jsp" class = "text">Home</a>
+                    <a href = "User" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "Cluster" class = "text">Clusters</a>
+                    <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>

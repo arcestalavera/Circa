@@ -51,7 +51,8 @@ html, body{
     margin: 0;
     background-color: #AD0000;
     color: white;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 600;
     border: 1px solid #CC0000;
 }
 
@@ -159,9 +160,8 @@ html, body{
     font-size: 0;
 }
 
-.signUpNameFields, .signUpOtherFields{
+.signUpNameFields, .signUpOtherFields, .signUpDateField{
     position: relative;
-    width: inherit;
     height: 35px;
     border: 1px solid #BCBCB3;
     padding-left: 10px;
@@ -175,9 +175,14 @@ html, body{
     width: 95%;
 }
 
-.signUpNameFields:hover, .signUpOtherFields:hover{
-    border: lightgoldenrodyellow 2px solid;
-    
+.signUpDateField{
+    width: 95%;
+    font-family: sans-serif;
+    color: gray;
+}
+
+.signUpNameFields:hover, .signUpOtherFields:hover, .signUpDateField:hover{
+    border: lightgoldenrodyellow 1px solid;
 }
 
 .signUpOtherFields_error{
@@ -187,7 +192,7 @@ html, body{
 }
 
 #signUpForCircaButton{
-    width: 100%;
+    width: 98%;
     height: 35px;
     position: relative;
     top: 7px;

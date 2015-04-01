@@ -1,7 +1,8 @@
 <html>
     <head>
-        <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
         <title> ${loggedUser.getFirstName()} ${loggedUser.getLastName()}</title>
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
+        
         <meta charset="UTF-8">
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
@@ -13,7 +14,7 @@
 
     </head>
 
-    <body bgcolor="#E8E8E8">
+    <body bgcolor="#f4f4f4">
 
         <!-- HEADER -->
         <div id = "header-whole">
@@ -25,9 +26,9 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "UserPage.jsp" class = "text">${loggedUser.getFirstName()}</a>
-                    <a href = "Clusters.jsp" class = "text">Clusters</a>
-                    <a href = "Home.jsp" class = "text">Home</a>
+                    <a href = "User" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "Cluster" class = "text">Clusters</a>
+                    <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
                 </div>
             </div>

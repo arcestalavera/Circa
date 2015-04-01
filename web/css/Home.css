@@ -2,9 +2,9 @@ body{
     margin: 0px;
 }
 .postBar{
-    width: 465;
-    height: 130;
-    background-color: #F0FFFF;
+    width: 465px;
+    height: 130px;
+    background-color: white;
     border: 1px solid;
     border-color: #FFE0C0;
     border-radius: 3px;
@@ -12,23 +12,23 @@ body{
     margin-left: 75px;
 }
 .postBarTop{
-    width: 465;
-    height: 30;
-    background-color: #F0FFFF;
+    width: 465px;
+    height: 30px;
+    background-color: white;
     border-bottom: 1px solid;
     border-color: #FFE0C0;
 }
 input.postBarText{
-    width: 465;
-    height: 60;
-    background-color: #F0FFFF;
+    width: 465px;
+    height: 60px;
+    background-color: white;
     border: 0;
     padding-left: 7px;
 }
 .postBarBottom{
-    width: 465;
-    height: 30;
-    background-color: #F0FFFF;
+    width: 465px;
+    height: 30px;
+    background-color: white;
     border-top: 1px solid;
     border-color: #FFE0C0;
 }
@@ -40,18 +40,18 @@ button.postButton{
     color: white;
     margin-top: 7px;
     margin-right: 10px;
-    height: 25;
-    width: 70;
+    height: 25px;
+    width: 70px;
 
 }
 button.postButton:hover{
-    cursor:hand;
+    cursor: pointer;
     opacity: .85;
 }
 .post{
-    background-color: #F0FFFF;
-    width: 465;
-    height: 400;
+    background-color: white;
+    width: 465px;
+    height: 400px;
     border: 1px solid;
     border-color: #FFE0C0;
     border-radius: 3px;
@@ -62,13 +62,13 @@ button.postButton:hover{
     color: #B02020;
     font-family: Arial;
     font-weight: Bold;
-    font-size: 16;
+    font-size: 16px;
     margin-top: 25px;
     margin-left: 8px;
 }
 .textLinks:hover{
     text-decoration: underline;
-    cursor: hand;
+    cursor: pointer;
 
 }
 .postOptions{
@@ -79,7 +79,7 @@ button.postButton:hover{
 .postText{
     margin-left: 14px;
     font-family: Tahoma;
-    font-size: 14;
+    font-size: 14px;
 }
 .postPhoto{
     margin-top: 5px;
@@ -87,8 +87,8 @@ button.postButton:hover{
 }
 .postComment{
     background-color: #F0E8D0;
-    width: 465;
-    height: 65;
+    width: 465px;
+    height: 65px;
     margin-top: 7px;
     border-top: 1px solid #FFE0C0;
     border-bottom: 1px solid #FFE0C0;
@@ -96,47 +96,47 @@ button.postButton:hover{
 .textInput{
     margin-left: 8px;
     margin-top: 17px;
-    height: 32;
-    width: 390;
+    height: 32px;
+    width: 390px;
 }
 IMG.postDP{
     height: auto;
-    width: 50;
+    width: 50px;
     margin-left: 10px;
     margin-top: 7px;
     float:left; 
 }
 IMG.postDP:hover{
-    cursor: hand;
+    cursor: pointer;
 }
 IMG.options{
-    width: 20;
+    width: 20px;
     height: auto;
     margin-left: 2px;
     margin-right: 2px;
 }
 IMG.photo{
-    width: 420;
-    height: 240;
+    width: 420px;
+    height: 240px;
 }
 IMG.photo:hover{
-    cursor:hand;
+    cursor: pointer;
 }
 IMG.options:hover{
-    cursor: hand;
+    cursor: pointer;
     opacity: .55;
 }
 IMG.commentPhoto{
     float:left;
-    width: 40;
+    width: 40px;
     height: auto;
     margin-top:12px;
     margin-left: 10px;
 }
 IMG.commentPhoto:hover{
-    cursor: hand;
+    cursor: pointer;
 }
 IMG.postBarPhoto{
-    width: 20;
+    width: 20px;
     height: auto;
 }

@@ -8,6 +8,7 @@ package Servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,9 @@ public class Logout extends HttpServlet {
         
         //invalidate the session -> remove all saved attributes
         request.getSession().invalidate();
-        response.sendRedirect("Login.jsp");
+        RequestDispatcher reqDispatcher;
+        reqDispatcher = request.getRequestDispatcher("index.jsp");
+        reqDispatcher.forward(request, response);
     }
 
     /**
