@@ -51,8 +51,19 @@
                 <li><a href="#showEvents"><b>Events</b></a></li>
                 <li><a href="#showSchedule"><b>Schedule</b></a></li>
             </ul>
-            <div id = "showEvents" align = "center">
-                <h3 class = "text-heading">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+            <div id = "showEvents">
+                <h3 class = "text-heading" align = "center">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+                <div id = "event-body">
+                    <div class = "event-create" align = "center"><button class = "event-create-button"><b>Create Event!</b></button></div>
+                    <h4 class = "event-header"><b>Birthday</b></h4>
+                    <div class = "event-description">
+                        Descriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd f<br/><h6>Type | Date</h6><br><button>View Event</button>
+                    </div>
+                    <h4 class = "event-header"><b>Birthday</b></h4>
+                    <div class = "event-description">
+                        Descriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd f<br/><h6>Type | Date</h6><br><button>View Event</button>
+                    </div>
+                </div>
             </div>
             <div id = "showSchedule" align = "center">
                 <h3 class = "text-heading">Schedule of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
