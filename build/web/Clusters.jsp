@@ -34,7 +34,7 @@
             <ul id = "user-cluster-list">
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        Team Nerds United
+                        <p class = "cluster-name">Team Nerds United</p>
                         <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
@@ -48,7 +48,7 @@
                 </li>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        Team Fabcon
+                        <p class = "cluster-name">Team Fabcon</p>
                         <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
@@ -62,7 +62,7 @@
                 </li>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        Born2Party
+                        <p class = "cluster-name">Born2Party</p>
                         <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
