@@ -1,7 +1,8 @@
 <html>
     <head>
-        <link rel = "shortcut icon" href = "CircaLogoIcon.ico"/>
         <title> Circa - Home </title>
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
+        
         <meta charset="UTF-8">
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
@@ -13,7 +14,7 @@
     </head>
 
 
-    <body bgcolor="#E8E8E8">
+    <body bgcolor="#f4f4f4">
 
         <!-- HEADER -->
         <div id = "header-whole">

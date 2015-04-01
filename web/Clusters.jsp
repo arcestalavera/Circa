@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Your Clusters | Circa</title>
-        <link rel="shortcut icon" href="img/clusters/CircaLogoIcon.ico" />
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js"></script>
         <script type = "text/javascript" src = "js/header.js"></script>

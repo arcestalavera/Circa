@@ -112,7 +112,7 @@ public class Login extends HttpServlet {
         } else {
             isCorrect = false;
             reqSession.setAttribute("isCorrect", isCorrect);
-            reqDispatcher = request.getRequestDispatcher("Login.jsp");
+            reqDispatcher = request.getRequestDispatcher("index.jsp");
         }
 
         reqDispatcher.forward(request, response);

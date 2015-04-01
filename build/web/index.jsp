@@ -10,7 +10,7 @@
 <html>
     <head>
         <title>Welcome to Circa - Login or Sign up </title>
-        <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
         <link rel="stylesheet" type="text/css" 	media="all" href="css/Login.css" />
         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src ="js/login.js"></script>
@@ -24,7 +24,7 @@
         <div id = "header">
             <div id = "headerElements">
                 <img id = "circaLogo" src="img/login/CircaLogo.png" alt="Circa Logo">
-                <form id = "logIn" action = "Login" method = "post">
+                <form id = "logIn" action = "Home" method = "post">
                     <input type="text" placeholder = "email / username" name = "inputUser"/>
                     <input type="password" placeholder = "password" name = "inputPassword"/>
                     <input type="submit" id = "logInButton" value = "log-in" class = "clickableButton"/>

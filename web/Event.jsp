@@ -1,7 +1,8 @@
 <html>
     <head>
         <title>Circa</title>
-        <link rel="shortcut icon" href="img/login/CircaLogoIcon.ico" />
+        <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
+        
         <!-- HEADER SCRIPT -->
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
