@@ -10,7 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -75,15 +76,20 @@ public class CircaDatabase { //singleton
         return password;
     }
 
-    public void addUser(String firstName, String lastName, String emailAddress, String username, String password) {
-        sql = "INSERT INTO user(firstName, lastName, emailAddress, username, password)"
-                + " VALUES('" + firstName + "', '" + lastName
-                + "', '" + emailAddress + "', '" + username
-                + "', '" + password + "')";
-
+    public void addUser(String firstName, String lastName, String emailAddress, Date birthDate, String username, String password) {
+        sql = "INSERT INTO user(firstName, lastName, emailAddress, birthDate, username, password)"
+                + " VALUES(?, ?, ?, ?, ?, ?);";
+             
         try {
-            stmt = con.createStatement();
-            stmt.executeUpdate(sql);
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+            preparedStmt.setString(1, firstName);
+            preparedStmt.setString(2, lastName);
+            preparedStmt.setString(3, emailAddress);
+            preparedStmt.setDate(4, birthDate);
+            preparedStmt.setString(5, username);
+            preparedStmt.setString(6, password);
+            
+            preparedStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
