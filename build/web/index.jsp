@@ -60,8 +60,8 @@
             <form id = "signUpForm" class = "centeredSignUp" action = "Signup" method = "post">
                 <input type="text" name ="first_name" placeholder = "First Name" class = "signUpNameFields" required/>
                 <input type="text" name ="last_name" placeholder = "Last Name" class = "signUpNameFields" required/>
-                <input type="date" name ="birthday" class = "signUpDateField" required/>
-                <input type="text" name ="email_address" placeholder = "Email" class = "signUpOtherFields" required/>
+                <input type="date" name ="birthday" id = "birthday" class = "signUpDateField" required/>
+                <input type="email" name ="email_address" placeholder = "Email" class = "signUpOtherFields" required/>
                 <input type="text" name ="username" placeholder = "Username" class = "signUpOtherFields" required/>
                 <input type="password" name = "password" placeholder = "Password" class = "signUpOtherFields" required/>
                 <input type="password" name = "confirmpassword" placeholder = "Confirm Password" class = "signUpOtherFields" required/>
