@@ -1,3 +1,6 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@page import="Classes.Event"%>
 <%@page import="java.util.ArrayList"%>
 <html>
@@ -9,6 +12,8 @@
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
         <script type = "text/javascript" src = "js/header.js">
+        </script>
+        <script type = "text/javascript" src = "js/Redirector.js">
         </script>
         <script type = "text/javascript" src = "js/UserPage.js"></script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
@@ -28,7 +33,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -38,10 +43,10 @@
         </div>
         <!-- END HEADER -->	 
 
-        <div class = "profTop"><IMG class="profPic" src= "${loggedUser.getProfilePicture()}"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
+        <div class = "profTop"><IMG class="profPic" src= "${userDetails.getProfilePicture()}"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
 
         <div class="infoDiv">
-            <div class="infoText">${loggedUser.getFirstName()} ${loggedUser.getLastName()}</div>
+            <div class="infoText">${userDetails.getFirstName()} ${userDetails.getLastName()}</div>
             <div class="infoTitle">Clusters | Events</div> 
             <div class="infoTitleContent"> 126 || 7</div>
         </div>
@@ -53,10 +58,10 @@
                 <li><a href="#showSchedule"><b>Schedule</b></a></li>
             </ul>
             <div id = "showEvents">
-                <h3 class = "text-heading" align = "center">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+                <h3 class = "text-heading" align = "center">Events of ${userDetails.getFirstName()}<hr width = "70%"/></h3>
                 <div id = "event-body">
                     <div class = "event-create" align = "center">
-                        <button class = "event-create-button" onclick = "window.location.href='CreateEvent.jsp'"><b>Create Event!</b></button></div>
+                        <button class = "event-create-button" onclick = "window.location.href = 'CreateEvent.jsp'"><b>Create Event!</b></button></div>
                         <%
                             ArrayList<Event> eventList = (ArrayList) request.getSession().getAttribute("eventList");
 
@@ -66,13 +71,19 @@
                     <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
                         <%=eventList.get(i).getDescription()%><br/>
-                        <h6><%=eventList.get(i).getType()%> | Date</h6><br><button>View Event</button>
+                        <%
+                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                        %>
+                        <h6><%=eventList.get(i).getType()%> | 
+                            <%=dateFormat.format(eventList.get(i).getStartDate())%> - 
+                            <%=dateFormat.format(eventList.get(i).getEndDate())%>
+                        </h6><br><button onclick = "goToEvent('<%=eventList.get(i).getEventID()%>')">View Event</button>
                     </div>
                     <%
                         }
                     } else {
                     %>
-                    <h3 class = "event-no-event">${loggedUser.getFirstName()} hasn't hosted any any events yet.</h3>
+                    <h3 class = "event-no-event">${userDetails.getFirstName()} hasn't hosted any any events yet.</h3>
                     <%
                         }
                     %>
@@ -80,7 +91,7 @@
                 </div>
             </div>
             <div id = "showSchedule" align = "center">
-                <h3 class = "text-heading">Schedule of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
+                <h3 class = "text-heading">Schedule of ${userDetails.getFirstName()}<hr width = "70%"/></h3>
                 <input type = "date" class = "schedule-date"/>
             </div>
 

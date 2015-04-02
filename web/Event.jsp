@@ -1,8 +1,11 @@
+<%@page import="Classes.Event"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
 <html>
     <head>
         <title>Circa</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
-        
+
         <!-- HEADER SCRIPT -->
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
@@ -27,7 +30,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -38,25 +41,29 @@
         <!-- END HEADER -->
 
         <!-- EVENT -->
+        <%
+            //get Event details of event
+            Event event = (Event) request.getSession().getAttribute("eventDetails");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        %>
         <div id = "event-whole">
             <div id = "event-header-div" align = "center">
-                <img src = "img/event/party1.jpg" alt = "napoleon" class = "profile-pic"/>
+                <img src = "<%=event.getHost().getProfilePicture()%>" alt = "napoleon" class = "profile-pic"/>
                 <img src = "img/event/event1.jpg" alt = "napoleon borntoparty" class = "event-header-img"/>
-
             </div>
-            <h1 class = "event-title" align = "center" style = "color: #940000;">Happy Thursday!</h1>
+            <h1 class = "event-title" align = "center" style = "color: #940000;"><%=event.getEventName()%></h1>
             <div id = "event-body-div" align = "center">
-                <p class = "event-description">This is it! It's Thursday once again and I just want to have fun and forget 
-                    about leading my troops for a while. It's so stressful, 'ya know! Anyways, 
-                    see you there! :-)</p>
-                <p style = "color: #940000;"><b>March 5, 2015 | 7:00PM | Public Event</b></p>
-                <p>Venue: TBA</p>
+                <p class = "event-description"><%=event.getDescription()%></p>
+                <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
+                <p>Venue: ${eventDetails.getVenue()}</p>
                 <p>1,392 people are going</p>
-                <p>Hosted by <a href = "user-page.html">Napoleon Borntoparty</a></p>
+                <p>Hosted by <a href = "User?id=<%=event.getHost().getUserID()%>"><%=event.getHost().getFirstName()%> <%=event.getHost().getLastName()%></a></p>
                 <button class = "event-join">Join</button>
                 <hr>
             </div>
-            <h3 align = "center" class = "event-comment-header">Posts about "Happy Thursday!"</h3>
+
+            <!-- COMMENTS -->
+            <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
             <div class = "event-comment-div">
                 <img src = "img/event/party2.jpg" alt = "Sisa mistrit" class = "commenter-pic"/>
                 <br><p class = "event-comment-text"><a href = "user-page.html"><b>Sisa Mistrit</b></a> I love it! I'm also very stressed right now. I Need to take some time off. <a href = "event.html">#borntoparty</a></p>

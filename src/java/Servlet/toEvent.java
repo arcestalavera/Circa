@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Servlet;
 
-import Classes.User;
+import Classes.Event;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class CreateEvent extends HttpServlet {
+public class toEvent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class CreateEvent extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateEvent</title>");
+            out.println("<title>Servlet toEvent</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateEvent at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet toEvent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +60,14 @@ public class CreateEvent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        CircaDatabase db = CircaDatabase.getInstance();
+        int eventID = Integer.parseInt(request.getParameter("id"));
+        Event event = db.getEventDetails(eventID);
+        
+        request.getSession().setAttribute("eventDetails", event);
+        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event.jsp");
+        reqDispatcher.forward(request, response);
     }
 
     /**
@@ -76,40 +81,7 @@ public class CreateEvent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        
-        //get user id
-        User user = (User)request.getSession().getAttribute("loggedUser");
-        int userID = user.getUserID();
-        
-        //get event details
-        String eventName = request.getParameter("eventName");
-        String eventVenue = request.getParameter("eventVenue");
-        String eventDescription = request.getParameter("eventDescription");
-        String eventStartDate = request.getParameter("eventStartDate");
-        String eventStartTime = request.getParameter("eventStartTime");
-        String eventEndDate = request.getParameter("eventEndDate");
-        String eventEndTime = request.getParameter("eventEndTime");
-        String eventType = request.getParameter("eventType");
-        CircaDatabase db = CircaDatabase.getInstance();
-        Date startDate = null;
-        Date endDate = null;
-                
-        try {
-            //set start date with time
-            SimpleDateFormat startDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            startDate = startDateFormat.parse(eventStartDate + " " + eventStartTime + ":00");
-            
-            //set end date with time
-            SimpleDateFormat endDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            endDate = endDateFormat.parse(eventEndDate + " " + eventEndTime + ":00");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        db.addEvent(userID, eventName, new java.sql.Timestamp(startDate.getTime()), new java.sql.Timestamp(endDate.getTime()), eventVenue, eventType, eventDescription);
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("CreateEvent.jsp");
-        reqDispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**

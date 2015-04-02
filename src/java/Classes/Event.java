@@ -15,13 +15,13 @@ import java.util.Date;
  */
 public class Event {
     private int eventID;
-    private String eventName, venue, type, description;
+    private String eventName, venue, type, description, eventPicture;
     private User host;
     private Date startDate, endDate;
     private ArrayList<Post> postList;
     private ArrayList<User> attendingList, invitedList, requestList;
     
-    public Event(int eventID, String eventName, String venue, String type, String description, Date startDate, Date endDate, User host){
+    public Event(int eventID, String eventName, String venue, String type, String description, Date startDate, Date endDate, User host, String eventPicture){
         this.eventID = eventID;
         this.eventName = eventName;
         this.venue = venue;
@@ -30,6 +30,7 @@ public class Event {
         this.host = host;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.eventPicture = eventPicture;
         
         attendingList = new ArrayList<>();
         invitedList = new ArrayList<>();

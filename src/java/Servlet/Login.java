@@ -5,10 +5,12 @@
  */
 package Servlet;
 
+import Classes.Event;
 import Classes.User;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -87,36 +89,24 @@ public class Login extends HttpServlet {
         System.out.println("Referer " + referer);
         
         // if user is logging in
-        if(referer.equals("http://localhost:8080/Circa/") || referer.equals("http://localhost:8080/Circa/Logout")){
+       // if(referer.equals("http://localhost:8080/Circa/") || referer.equals("http://localhost:8080/Circa/Logout")){
             String inputUser = request.getParameter("inputUser");
             String inputPass = request.getParameter("inputPassword");
             
             if (inputPass.equals(db.getPassword(inputUser))) {
                 isCorrect = true;
 
-                //get user info
+                //get user ID
                 int userID = db.getUserID(inputUser);
-                String firstName = db.getFirstName(userID);
-                String lastName = db.getLastName(userID);
-                String emailAddress = db.getEmailAddress(userID);
-                Date birthDate = db.getBirthDay(userID);
-                String imgPath = db.getProfPic(userID);
 
-                //set user info
-                User loggedUser = new User(userID, firstName, lastName, emailAddress, birthDate, imgPath);
-
+                //get and set user info
+                User loggedUser = db.getUserDetails(userID);
+                
                 //put user info in session
-                System.out.println("USER DETAILS:\nid = " + userID
-                                    + "\nfirst name = " + firstName
-                                    + "\nlast name = " + lastName
-                                    + "\nemail address= " + emailAddress);
-                //redirect to home
                 reqSession.removeAttribute("isCorrect");
                 reqSession.setAttribute("loggedUser", loggedUser);
                 
-                //get events of user
-                
-                
+                //redirect to home
                 reqDispatcher = request.getRequestDispatcher("Home.jsp");
             } else {
                 isCorrect = false;
@@ -124,7 +114,7 @@ public class Login extends HttpServlet {
                 reqDispatcher = request.getRequestDispatcher("index.jsp");
             }
             reqDispatcher.forward(request, response);
-        }
+        //}
     }
 
     /**

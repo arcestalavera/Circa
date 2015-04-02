@@ -6,6 +6,7 @@
 package Database;
 
 import Classes.Event;
+import Classes.User;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -130,118 +131,43 @@ public class CircaDatabase { //singleton
         return userID;
     }
 
-    public String getFirstName(int userID) {
-        String firstName = "";
-
-        try {
-            sql = "SELECT firstName FROM user"
-                    + " WHERE userID = " + userID;
-
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                firstName = rs.getString("firstName");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return firstName;
-    }
-
-    public String getLastName(int userID) {
-        String lastName = "";
-
-        try {
-            sql = "SELECT lastName FROM user"
-                    + " WHERE userID = " + userID;
-
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                lastName = rs.getString("lastName");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return lastName;
-    }
-
-    public String getEmailAddress(int userID) {
-        String emailAddress = "";
-
-        try {
-            sql = "SELECT emailAddress FROM user"
-                    + " WHERE userID = " + userID;
-
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                emailAddress = rs.getString("emailAddress");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return emailAddress;
-    }
-
-    public Date getBirthDay(int userID) {
-        Date birthDay = null;
-
-        try {
-            sql = "SELECT birthDate FROM user"
-                    + " WHERE userID = " + userID;
-
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                birthDay = rs.getDate("birthDate");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return birthDay;
-    }
-
-    public String getProfPic(int userID) {
-        String profilePicture = "";
-
-        try {
-            sql = "SELECT profilePicture FROM user"
-                    + " WHERE userID = " + userID;
-
-            rs = stmt.executeQuery(sql);
-
-            if (rs.next()) {
-                profilePicture = rs.getString("profilePicture");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return profilePicture;
-    }
-
     public ArrayList<Event> getEvents(int userID) {
-        ArrayList<Event> eventList = null;
+        ArrayList<Event> eventList = new ArrayList<>();
+        String eventName, venue, type, description, eventPicture;
+        int eventID;
+        Date startDate, endDate;
+        User host;
 
         try {
+
+            host = getUserDetails(userID);
+
             sql = "SELECT * FROM event"
-                    + " WHERE userID = " + userID;
+                    + " WHERE hostID = " + userID;
 
             rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
+                eventID = rs.getInt("eventID");
+                eventName = rs.getString("name");
+                venue = rs.getString("venue");
+                eventPicture = rs.getString("eventPicture");
+                type = rs.getString("type");
+                description = rs.getString("description");
+                startDate = new Date(rs.getTimestamp("startDate").getTime());
+                endDate = new Date(rs.getTimestamp("endDate").getTime());
 
+                eventList.add(new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return eventList;
+        if (eventList.isEmpty()) {
+            return null;
+        } else {
+            return eventList;
+        }
     }
 
     public void addEvent(int hostID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
@@ -257,10 +183,73 @@ public class CircaDatabase { //singleton
 
             sql = "INSERT INTO EVENT(eventID, name, startDate, endDate, venue, type, hostID, description)"
                     + " VALUES(" + maxEvent + ", '" + name + "', '" + startDate + "', '" + endDate + "', '" + venue + "', '" + type + "', " + hostID + ", '" + description + "')";
-            
+
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public User getUserDetails(int userID) {
+        User user = null;
+        String firstName, lastName, emailAddress, profilePicture;
+        Date birthDate;
+
+        sql = "SELECT * FROM user"
+                + " WHERE userID = " + userID;
+
+        try {
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                firstName = rs.getString("firstName");
+                lastName = rs.getString("lastName");
+                emailAddress = rs.getString("emailAddress");
+                birthDate = rs.getDate("birthDate");
+                profilePicture = rs.getString("profilePicture");
+
+                user = new User(userID, firstName, lastName, emailAddress, birthDate, profilePicture);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public Event getEventDetails(int eventID) {
+        Event event = null;
+        String eventName, venue, type, description, eventPicture;
+        Date startDate, endDate;
+        int hostID = 0;
+        User host;
+
+        try {
+            //get event
+            sql = "SELECT * FROM event"
+                    + " WHERE eventID = " + eventID;
+
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                eventName = rs.getString("name");
+                venue = rs.getString("venue");
+                eventPicture = rs.getString("eventPicture");
+                type = rs.getString("type");
+                description = rs.getString("description");
+                startDate = new Date(rs.getTimestamp("startDate").getTime());
+                endDate = new Date(rs.getTimestamp("endDate").getTime());
+                hostID = rs.getInt("hostID");
+                
+                //get host details
+                host = getUserDetails(hostID);
+                event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return event;
     }
 }
