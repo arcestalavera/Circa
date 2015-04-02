@@ -87,7 +87,7 @@ public class Login extends HttpServlet {
         System.out.println("Referer " + referer);
         
         // if user is logging in
-        if(referer.equals("http://localhost:8084/Circa/") || referer.equals("http://localhost:8084/Circa/Logout")){
+        if(referer.equals("http://localhost:8080/Circa/") || referer.equals("http://localhost:8080/Circa/Logout")){
             String inputUser = request.getParameter("inputUser");
             String inputPass = request.getParameter("inputPassword");
             
@@ -113,6 +113,10 @@ public class Login extends HttpServlet {
                 //redirect to home
                 reqSession.removeAttribute("isCorrect");
                 reqSession.setAttribute("loggedUser", loggedUser);
+                
+                //get events of user
+                
+                
                 reqDispatcher = request.getRequestDispatcher("Home.jsp");
             } else {
                 isCorrect = false;

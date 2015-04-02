@@ -1,0 +1,96 @@
+#create-event-title{
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border: rgb(22, 22, 22) solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    margin-top: 80px;
+    text-align: center;
+    font-family: arial;
+    color: #940000;
+    margin-bottom: 10px;
+}
+
+#create-event-whole, #invite-user-whole{
+    width: 40%;
+    margin: 10px;
+    border-radius: 20px;
+}
+
+#create-event-whole{
+    background-color: #F0FFFF;
+    border: 1px solid;
+    border-color: #FFE0C0;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+
+.event-title, .invite-title{
+    width: 96.2%;
+    padding: 10px;
+    font-family: arial;
+    color: white;
+    text-align: center;
+    background-color: #940000;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.event-body{
+    background-color: whitesmoke;
+    margin: 10px;
+    height: 325px;   
+    padding: 10px;
+    overflow-y: scroll;
+}
+
+.event-body-title{
+    color: #940000;
+    margin: 2px;
+    text-align: center;
+    font-family: arial;
+    
+}
+
+.event-body-input{
+    padding: 5px;
+    width: 50%;
+    text-align: center;
+}
+
+#invite-user-whole{
+    background-color: #F0FFFF;
+    border: 1px solid;
+    border-color: #FFE0C0;
+    left: 29.2%;
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0;
+}
+
+.invite-title{
+    margin: 0;
+    opacity: .6;
+}
+
+.invite-title:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+.invite-body{
+    height: 400px;
+    display: none;
+}
+h1{
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-top: 0;
+}

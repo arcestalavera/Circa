@@ -5,13 +5,15 @@
  */
 package Database;
 
+import Classes.Event;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,7 +32,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
             stmt = con.createStatement();
@@ -227,5 +229,25 @@ public class CircaDatabase { //singleton
         }
         
         return profilePicture;
+    }
+    
+    public ArrayList<Event> getEvents(int userID){
+        ArrayList<Event> eventList = null;
+        
+        try{
+            sql = "SELECT * FROM event"
+                    + " WHERE userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            while(rs.next())
+            {
+                
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return eventList;
     }
 }

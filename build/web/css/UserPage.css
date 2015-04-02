@@ -136,7 +136,7 @@ IMG.profCover{
     max-width: 500px;
 }
 
-.event-header, .event-description{
+.event-header, .event-description, .event-no-event{
     width: 100%;
     font-family: arial;
     padding: 6px;
@@ -163,11 +163,16 @@ IMG.profCover{
 }
 
 .event-create{
-    background-color: rgb(230, 230, 230);
+    background-color: rgba(230, 230, 230, .4);
     width: 100%;
     padding-left: 16px;
     margin-bottom: 15px;
     height: 40px;
+}
+
+.event-no-event{
+    text-align: center;
+    color: #940000;
 }
 
 .event-create-button{
@@ -178,6 +183,11 @@ IMG.profCover{
     width: 50%;
     font-size: 14px;
     color: white;
+}
+
+button:hover{
+    cursor: pointer;
+    box-shadow: 0px 1px 1px 0px rgba(22, 22, 22, .8);
 }
 
 h6{

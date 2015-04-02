@@ -1,3 +1,5 @@
+<%@page import="Classes.Event"%>
+<%@page import="java.util.ArrayList"%>
 <html>
     <head>
         <title> ${loggedUser.getFirstName()} ${loggedUser.getLastName()}</title>
@@ -55,14 +57,30 @@
                 <h3 class = "text-heading" align = "center">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
                 <div id = "event-body">
                     <div class = "event-create" align = "center"><button class = "event-create-button"><b>Create Event!</b></button></div>
-                    <h4 class = "event-header"><b>Birthday</b></h4>
+                    <%
+                        ArrayList<Event> eventList = (ArrayList)request.getSession().getAttribute("eventList");
+                        
+                        if(eventList != null)
+                        {
+                            for(int i = 0; i < eventList.size(); i++)
+                            {
+                    %>
+                    <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
-                        Descriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd f<br/><h6>Type | Date</h6><br><button>View Event</button>
+                        <%=eventList.get(i).getDescription()%><br/>
+                        <h6><%=eventList.get(i).getType()%> | Date</h6><br><button>View Event</button>
                     </div>
-                    <h4 class = "event-header"><b>Birthday</b></h4>
-                    <div class = "event-description">
-                        Descriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd fDescriptionasdf asdf asd fsad fsd fsad fasd fasd f<br/><h6>Type | Date</h6><br><button>View Event</button>
-                    </div>
+                    <%
+                            }
+                        }
+                        else
+                        {
+                    %>
+                    <h3 class = "event-no-event">${loggedUser.getFirstName()} hasn't hosted any any events yet.</h3>
+                    <%
+                        }
+                    %>
+                    
                 </div>
             </div>
             <div id = "showSchedule" align = "center">
