@@ -10,9 +10,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create an event!</title>
-        
+
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
-        
+
         <!-- HEADER SCRIPT -->
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
@@ -44,30 +44,31 @@
             <img src = "img\clusters\CircaLogo.png" class = "header-logo" />
         </div>    
         <!-- END HEADER -->
-        
+
         <div id = "create-event-title">
             <h1>Create an Event</h1>
         </div>
-        <form>
+        <form action = "CreateEvent" method = "post">
             <div id = "create-event-whole">
                 <h2 class = "event-title">Enter event details here!</h2>
                 <div class = "event-body" align = "center">
-
-                        <h2 class = "event-body-title">Name of Event</h2> <input type = "text" class = "event-body-input" placeholder = "Name"/><br>
-                        <br><h2 class = "event-body-title">Venue</h2> <input type = "text" class = "event-body-input" placeholder = "Name"/><br>
-                        <br><h3 class = "event-body-title">Description</h3><textarea rows="5" cols = "50" placeholder = "Tell us something about your event"></textarea>
-                        <br><h2 class = "event-body-title">Start</h2><hr width = "30%">
-                        <text class = "event-body-title"><b>Date:</b></text> <input type = "date"/> 
-                        <text class = "event-body-title"><b>Time:</b></text> <input type = "time"/>
-                        <br><br><h2 class = "event-body-title">End</h2><hr width = "30%">
-                        <text class = "event-body-title"><b>Date:</b></text> <input type = "date"/> 
-                        <text class = "event-body-title"><b>Time:</b></text> <input type = "time"/>
-                        <br><br><h3 class = "event-body-title">Type</h3>
-                        <select class = "event-body-input">
-                            <option value = "Public">Public</option>
-                            <option value = "Closed">Closed</option>
-                            <option value = "Private">Private</option>
-                        </select>
+                    <h2 class = "event-body-title">Name of Event</h2> <input required type = "text" name = "eventName" class = "event-body-input" placeholder = "Name"/><br>
+                    <br><h2 class = "event-body-title">Venue</h2> <input required type = "text" name = "eventVenue" class = "event-body-input" placeholder = "Venue"/><br>
+                    <br><h3 class = "event-body-title">Description</h3><textarea rows="5" cols = "50" name = "eventDescription" placeholder = "Tell us something about your event"></textarea>
+                    <br><h2 class = "event-body-title">Start</h2><hr width = "30%">
+                    <text class = "event-body-title"><b>Date:</b></text> <input required type = "date" name = "eventStartDate"/> 
+                    <text class = "event-body-title"><b>Time:</b></text> <input required type = "time" name = "eventStartTime"/>
+                    <br><br><h2 class = "event-body-title">End</h2><hr width = "30%">
+                    <text class = "event-body-title"><b>Date:</b></text> <input required type = "date" name = "eventEndDate"/> 
+                    <text class = "event-body-title"><b>Time:</b></text> <input required type = "time" name = "eventEndTime"/>
+                    <br><br><h3 class = "event-body-title">Type</h3>
+                    <select class = "event-body-input"  name = "eventType" required>
+                        <option value = "Public">Public</option>
+                        <option value = "Closed">Closed</option>
+                        <option value = "Private">Private</option>
+                    </select>
+                    <br><br>
+                    <input type = "submit" value = "Publish Event!" class = "event-submit"/>
                 </div>
             </div>
 

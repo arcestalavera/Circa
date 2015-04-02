@@ -28,6 +28,10 @@
         <servlet-name>toUserPage</servlet-name>
         <servlet-class>Servlet.toUserPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateEvent</servlet-name>
+        <servlet-class>Servlet.CreateEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>toUserPage</servlet-name>
         <url-pattern>/User</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateEvent</servlet-name>
+        <url-pattern>/CreateEvent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,7 +4,7 @@
     <head>
         <title> ${loggedUser.getFirstName()} ${loggedUser.getLastName()}</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
-        
+
         <meta charset="UTF-8">
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
@@ -44,11 +44,10 @@
             <div class="infoText">${loggedUser.getFirstName()} ${loggedUser.getLastName()}</div>
             <div class="infoTitle">Clusters | Events</div> 
             <div class="infoTitleContent"> 126 || 7</div>
-
         </div>
 
         <div class="postDiv">
-            
+
             <ul class = "tabs">
                 <li><a href="#showEvents"><b>Events</b></a></li>
                 <li><a href="#showSchedule"><b>Schedule</b></a></li>
@@ -56,40 +55,37 @@
             <div id = "showEvents">
                 <h3 class = "text-heading" align = "center">Events of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
                 <div id = "event-body">
-                    <div class = "event-create" align = "center"><button class = "event-create-button"><b>Create Event!</b></button></div>
-                    <%
-                        ArrayList<Event> eventList = (ArrayList)request.getSession().getAttribute("eventList");
-                        
-                        if(eventList != null)
-                        {
-                            for(int i = 0; i < eventList.size(); i++)
-                            {
-                    %>
+                    <div class = "event-create" align = "center">
+                        <button class = "event-create-button" onclick = "window.location.href='CreateEvent.jsp'"><b>Create Event!</b></button></div>
+                        <%
+                            ArrayList<Event> eventList = (ArrayList) request.getSession().getAttribute("eventList");
+
+                            if (eventList != null) {
+                                for (int i = 0; i < eventList.size(); i++) {
+                        %>
                     <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
                         <%=eventList.get(i).getDescription()%><br/>
                         <h6><%=eventList.get(i).getType()%> | Date</h6><br><button>View Event</button>
                     </div>
                     <%
-                            }
                         }
-                        else
-                        {
+                    } else {
                     %>
                     <h3 class = "event-no-event">${loggedUser.getFirstName()} hasn't hosted any any events yet.</h3>
                     <%
                         }
                     %>
-                    
+
                 </div>
             </div>
             <div id = "showSchedule" align = "center">
                 <h3 class = "text-heading">Schedule of ${loggedUser.getFirstName()}<hr width = "70%"/></h3>
                 <input type = "date" class = "schedule-date"/>
             </div>
-                
-                
-                
+
+
+
             <!--
             <div class = "postBar" >
                 <div class="postBarTop"></div>
@@ -106,7 +102,7 @@
                 <div class ="postComment"><input type="text" placeholder="Write a comment..." class="textInput"/><IMG class ="commentPhoto" src="img/logo.png"/></div>
             </div>
             -->
-            
+
         </div>
     </body>
 </html>
