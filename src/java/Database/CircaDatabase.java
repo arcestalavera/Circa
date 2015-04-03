@@ -17,6 +17,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -254,23 +256,47 @@ public class CircaDatabase { //singleton
         return event;
     }
     
-    public ArrayList<Cluster> getUserClusters(int creatorID){
+    public ArrayList<Cluster> getUserClusters(int userID){
         ArrayList<Cluster> userClusters = new ArrayList<>();
         
-        String sql2;
-        
         sql = "SELECT * FROM cluster"
-                    + " WHERE creatorID = " + creatorID;
+                    + " WHERE creatorID = " + userID;
         
         try{
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 
+                int clusterID = rs.getInt("clusterID");
+                String clusterName = rs.getString("name");
+                
+                Cluster cluster = new Cluster(clusterID, clusterName);
+                cluster.setMemberList(getClusterMembers(cluster.getClusterID()));
+                userClusters.add(cluster);
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
         
         return userClusters;
+    }
+    
+    public ArrayList<User> getClusterMembers(int clusterID){
+        ArrayList<User> clusterMembers = new ArrayList<>();
+        
+        sql = "SELECT * FROM add_user_to_cluster"
+            + " WHERE clusterID = " + clusterID;
+        
+        try {
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                int clusterAddedID = rs.getInt("addedID");
+                User user = getUserDetails(clusterAddedID);
+                clusterMembers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return clusterMembers;
     }
 }

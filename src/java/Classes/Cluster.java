@@ -1,33 +1,42 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package Classes;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author Arces
- */
+
 public class Cluster {
+    private int clusterID;
     private String name;
     private ArrayList<User> memberList;
-    private User owner;
-    
-    public Cluster(String name, User owner){
+
+    public Cluster(int clusterID, String name){
+        this.clusterID = clusterID;
         this.name = name;
-        this.owner = owner;
         memberList = new ArrayList<>();
     }
     
-    public void addMember(User member){
-        memberList.add(member);
+    public int getClusterID(){
+        return clusterID;
     }
     
-    public void removeMember(User member){
-        memberList.remove(member);
+    public void setClusterID(int clusterID){
+        this.clusterID = clusterID;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<User> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(ArrayList<User> memberList) {
+        this.memberList = memberList;
     }
 }
+    

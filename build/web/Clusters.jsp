@@ -1,3 +1,4 @@
+<%@page import="Classes.Cluster"%>
 <%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.User"%>
 <html>
@@ -37,24 +38,28 @@
                 <% 
                     User user = (User)request.getSession().getAttribute("loggedUser");
                     CircaDatabase db = CircaDatabase.getInstance();
+                    db.getUserClusters(user.getUserID());
+                    user.setClusters(db.getUserClusters(user.getUserID()));
                     
-                    {
+                    for(Cluster cluster : user.getClusters()){
                 %>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        <p class = "cluster-name">Team Nerds United</p>
+                        <p class = "cluster-name"><%=cluster.getName()%></p>
                     </div>
                     <div class = "cluster-members-list">
-                        <div class = "cluster-members">
-                            <img src="img\clusters\party1.jpg" />
-                        </div>
-                        <div class = "cluster-members">
-                            <img src="img\clusters\party2.jpg" />
-                        </div>
+                        <%for(User clusterMember : cluster.getMemberList()){%>
+                            <div class = "cluster-members">
+                                <img src="<%=clusterMember.getProfilePicture()%>" />
+                            </div>
+                            <!--div class = "cluster-members">
+                                <img src="img\clusters\party2.jpg" />
+                            </div-->
+                        <%}%>
                     </div>
                 </li>
                 <%}%>
-                <li class = "cluster-item">
+                <!--li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name">Team Fabcon</p>
                     </div>
@@ -82,7 +87,7 @@
                             <img src="img\clusters\party2.jpg" />
                         </div>
                     </div>
-                </li>
+                </li-->
             </ul>
         </div>
     </body>
