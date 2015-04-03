@@ -33,18 +33,102 @@ public class Post {
     }
     
     public void addLike(Like like){
-        likeList.add(like);
+        getLikeList().add(like);
     }
     
     public void removeLike(Like like){
-        likeList.remove(like);
+        getLikeList().remove(like);
     }
     
     public void addComment(Comment comment){
-        commentList.add(comment);
+        getCommentList().add(comment);
     }
     
     public void removeComment(Comment comment){
-        commentList.remove(comment);
+        getCommentList().remove(comment);
+    }
+
+    /**
+     * @return the postText
+     */
+    public String getPostText() {
+        return postText;
+    }
+
+    /**
+     * @param postText the postText to set
+     */
+    public void setPostText(String postText) {
+        this.postText = postText;
+    }
+
+    /**
+     * @return the imgPath
+     */
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    /**
+     * @param imgPath the imgPath to set
+     */
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    /**
+     * @return the poster
+     */
+    public User getPoster() {
+        return poster;
+    }
+
+    /**
+     * @param poster the poster to set
+     */
+    public void setPoster(User poster) {
+        this.poster = poster;
+    }
+
+    /**
+     * @return the likeList
+     */
+    public ArrayList<Like> getLikeList() {
+        return likeList;
+    }
+
+    /**
+     * @param likeList the likeList to set
+     */
+    public void setLikeList(ArrayList<Like> likeList) {
+        this.likeList = likeList;
+    }
+
+    /**
+     * @return the commentList
+     */
+    public ArrayList<Comment> getCommentList() {
+        return commentList;
+    }
+
+    /**
+     * @param commentList the commentList to set
+     */
+    public void setCommentList(ArrayList<Comment> commentList) {
+        this.commentList = commentList;
+    }
+
+    /**
+     * @return the postID
+     */
+    public int getPostID() {
+        return postID;
+    }
+
+    /**
+     * @param postID the postID to set
+     */
+    public void setPostID(int postID) {
+        this.postID = postID;
     }
 }

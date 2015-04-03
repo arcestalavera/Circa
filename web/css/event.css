@@ -76,11 +76,11 @@ and open the template in the editor.
 }
 
 .event-join:hover{
-    cursor: hand;
+    cursor: pointer;
     text-decoration: underline;
 }
 
-.event-comment-div{
+.event-post-div{
     background-color: rgb(220, 220, 220);
     margin-left: auto;
     margin-right: auto;
@@ -101,7 +101,7 @@ and open the template in the editor.
     color: #940000;
 }
 
-.commenter-pic{
+.post-pic{
     width: 70px;
     float: left;
     height: 70px;
@@ -109,7 +109,7 @@ and open the template in the editor.
     margin: 10px;
 }
 
-.event-sub-comment{
+.post-comment{
     background-color: rgb(220, 220, 220);
     margin-left: auto;
     margin-right: auto;
@@ -120,7 +120,7 @@ and open the template in the editor.
     font-size: 14px;
 }
 
-.sub-commenter-pic{
+.comment-pic{
     width: 40px;
     float: left;
     height: 40px;
@@ -132,10 +132,9 @@ h2,p{
     margin: 10px;
 }
 
-.event-comment-text{
+.event-post-text{
     font-family: arial;
     margin: 20px;
-    
 }
 
 a{

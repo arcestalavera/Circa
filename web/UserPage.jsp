@@ -49,7 +49,7 @@
             User userDetails = (User) request.getSession().getAttribute("userDetails");
         %>
         
-        <div class = "profTop"><IMG class="profPic" src= "${userDetails.getProfilePicture()}"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
+        <div class = "profTop"><IMG class="profPic" src= "<%=userDetails.getProfilePicture()%>"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
 
         <div class="infoDiv">
             <div class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></div>

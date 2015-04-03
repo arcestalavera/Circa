@@ -25,8 +25,6 @@ public class CircaDatabase { //singleton
 
     private Connection con;
     private String sql;
-    private Statement stmt;
-    private ResultSet rs;
     private static CircaDatabase databaseInstance = new CircaDatabase();
 
     private CircaDatabase() {
@@ -37,7 +35,7 @@ public class CircaDatabase { //singleton
             String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
-            stmt = con.createStatement();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,10 +46,13 @@ public class CircaDatabase { //singleton
     }
 
     public String getPassword(String userInput) {
+        Statement stmt;
+        ResultSet rs;
         String password = "";
         boolean isFound = false;
 
         try {
+            stmt = con.createStatement();
             //get via email
             sql = "SELECT password FROM user"
                     + " WHERE emailAddress = '" + userInput + "'";
@@ -100,10 +101,13 @@ public class CircaDatabase { //singleton
 
     //-- GET INFO ------------------------------------------------------------
     public int getUserID(String userInput) {
+        Statement stmt;
+        ResultSet rs;
         int userID = 0;
         boolean isFound = false;
 
         try {
+            stmt = con.createStatement();
             //get via email
             sql = "SELECT userID FROM user"
                     + " WHERE emailAddress = '" + userInput + "'";
@@ -132,6 +136,8 @@ public class CircaDatabase { //singleton
     }
 
     public ArrayList<Event> getEvents(int userID) {
+        Statement stmt;
+        ResultSet rs;
         ArrayList<Event> eventList = new ArrayList<>();
         String eventName, venue, type, description, eventPicture;
         int eventID;
@@ -139,7 +145,7 @@ public class CircaDatabase { //singleton
         User host;
 
         try {
-
+            stmt = con.createStatement();
             host = getUserDetails(userID);
 
             sql = "SELECT * FROM event"
@@ -171,9 +177,12 @@ public class CircaDatabase { //singleton
     }
 
     public void addEvent(int hostID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
+        Statement stmt;
+        ResultSet rs;
         int maxEvent = 1;
 
         try {
+            stmt = con.createStatement();
             sql = "SELECT MAX(eventID) FROM event";
             rs = stmt.executeQuery(sql);
 
@@ -191,6 +200,8 @@ public class CircaDatabase { //singleton
     }
 
     public User getUserDetails(int userID) {
+        Statement stmt;
+        ResultSet rs;
         User user = null;
         String firstName, lastName, emailAddress, profilePicture;
         Date birthDate;
@@ -199,6 +210,7 @@ public class CircaDatabase { //singleton
                 + " WHERE userID = " + userID;
 
         try {
+            stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
@@ -222,6 +234,8 @@ public class CircaDatabase { //singleton
     }
 
     public Event getEventDetails(int eventID) {
+        Statement stmt;
+        ResultSet rs;
         Event event = null;
         String eventName, venue, type, description, eventPicture;
         Date startDate, endDate;
@@ -229,10 +243,12 @@ public class CircaDatabase { //singleton
         User host;
 
         try {
+            stmt = con.createStatement();
+            
             //get event
             sql = "SELECT * FROM event"
                     + " WHERE eventID = " + eventID;
-
+            
             rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
@@ -258,12 +274,15 @@ public class CircaDatabase { //singleton
     }
     
     public ArrayList<Cluster> getUserClusters(int userID){
+        Statement stmt;
+        ResultSet rs;
         ArrayList<Cluster> userClusters = new ArrayList<>();
         
         sql = "SELECT * FROM cluster"
                     + " WHERE creatorID = " + userID;
         
         try{
+            stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
             
             while(rs.next()){
@@ -283,12 +302,15 @@ public class CircaDatabase { //singleton
     }
     
     public ArrayList<User> getClusterMembers(int clusterID){
+        Statement stmt;
+        ResultSet rs;
         ArrayList<User> clusterMembers = new ArrayList<>();
         
         sql = "SELECT * FROM add_user_to_cluster"
             + " WHERE clusterID = " + clusterID;
         
         try {
+            stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 int clusterAddedID = rs.getInt("addedID");

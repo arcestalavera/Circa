@@ -67,37 +67,37 @@
 
             <!-- COMMENTS -->
             <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
-            <div class = "event-comment-div">
-                <img src = "img/event/party2.jpg" alt = "Sisa mistrit" class = "commenter-pic"/>
-                <br><p class = "event-comment-text"><a href = "user-page.html"><b>Sisa Mistrit</b></a> I love it! I'm also very stressed right now. I Need to take some time off. <a href = "event.html">#borntoparty</a></p>
+            <div class = "event-post-div">
+                <img src = "img/event/party2.jpg" alt = "Sisa mistrit" class = "post-pic"/>
+                <br><p class = "event-post-text"><a href = "user-page.html"><b>Sisa Mistrit</b></a> I love it! I'm also very stressed right now. I Need to take some time off. <a href = "event.html">#borntoparty</a></p>
                 <p align = "right">44 likes | <a>Comment</a> <a>Like</a></p>
             </div>
-            <div class = "event-sub-comment">
-                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "sub-commenter-pic"/>
-                <p class = "event-comment-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
+            <div class = "post-comment">
+                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
+                <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
             </div>
-            <div class = "event-comment-div">
-                <img src = "img/event/party3.jpg" alt = "harry party" class = "commenter-pic"/>
-                <br><p class = "event-comment-text"><a href = "user-page.html"><b>Harry Party</b></a> I'm gonna do a magic show later at this party. lol <a href = "event.html">#borntoparty</a></p>
+            <div class = "event-post-div">
+                <img src = "img/event/party3.jpg" alt = "harry party" class = "post-pic"/>
+                <br><p class = "event-post-text"><a href = "user-page.html"><b>Harry Party</b></a> I'm gonna do a magic show later at this party. lol <a href = "event.html">#borntoparty</a></p>
                 <p align = "right">37 likes | <a>Comment</a> <a>Like</a></p>
             </div>
-            <div class = "event-comment-div">
-                <img src = "img/event/party1.jpg" alt = "borntoparty" class = "commenter-pic"/>
-                <br><p class = "event-comment-text"><a href = "user-page.html"><b>Napoleon Borntoparty</b></a> Thank you guys for joining! I'm sure that you'll have fun! See you all ;) <a href = "event.html">#borntoparty</a></p>
+            <div class = "event-post-div">
+                <img src = "img/event/party1.jpg" alt = "borntoparty" class = "post-pic"/>
+                <br><p class = "event-post-text"><a href = "user-page.html"><b>Napoleon Borntoparty</b></a> Thank you guys for joining! I'm sure that you'll have fun! See you all ;) <a href = "event.html">#borntoparty</a></p>
                 <p align = "right">142 likes | <a>Comment</a> <a>Like</a></p>
             </div>
-            <div class = "event-comment-div">
-                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "commenter-pic"/>
-                <br><p class = "event-comment-text"><a href = "user-page.html"><b>Anchor Tis</b></a> Magdadala ako ng century tuna!</p>
+            <div class = "event-post-div">
+                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "post-pic"/>
+                <br><p class = "event-post-text"><a href = "user-page.html"><b>Anchor Tis</b></a> Magdadala ako ng century tuna!</p>
                 <p align = "right">23 likes | <a>Comment</a> <a>Like</a></p>
             </div>
-            <div class = "event-sub-comment">
-                <img src = "img/event/party2.jpg" alt = "anchor tis" class = "sub-commenter-pic"/>
-                <p class = "event-comment-text"><a href = "user-page.html"><b><br>Sisa Mistrit</b></a> Yummy!</p>
+            <div class = "post-comment">
+                <img src = "img/event/party2.jpg" alt = "anchor tis" class = "comment-pic"/>
+                <p class = "event-post-text"><a href = "user-page.html"><b><br>Sisa Mistrit</b></a> Yummy!</p>
             </div>
-            <div class = "event-sub-comment">
-                <img src = "img/event/party3.jpg" alt = "anchor tis" class = "sub-commenter-pic"/>
-                <p class = "event-comment-text"><a href = "user-page.html"><b><br>Harry Party</b></a> Cool!</p>
+            <div class = "post-comment">
+                <img src = "img/event/party3.jpg" alt = "anchor tis" class = "comment-pic"/>
+                <p class = "event-post-text"><a href = "user-page.html"><b><br>Harry Party</b></a> Cool!</p>
             </div>
         </div>
     </body>
