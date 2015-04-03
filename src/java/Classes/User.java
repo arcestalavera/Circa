@@ -18,6 +18,7 @@ public class User {
     private int userID;
     private Date birthDate;
     private ArrayList<User> buddyList;
+    private ArrayList<Cluster> clusters;
     
     public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate, String profilePicture){
         this.userID = userID;
@@ -124,5 +125,13 @@ public class User {
      */
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public ArrayList<Cluster> getClusters() {
+        return clusters;
+    }
+
+    public void setClusters(ArrayList<Cluster> clusters) {
+        this.clusters = clusters;
     }
 }

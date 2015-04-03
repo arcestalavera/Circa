@@ -1,3 +1,5 @@
+<%@page import="Database.CircaDatabase"%>
+<%@page import="Classes.User"%>
 <html>
     <head>
         <title>Your Clusters | Circa</title>
@@ -32,10 +34,15 @@
 
         <div id = "user-cluster">
             <ul id = "user-cluster-list">
+                <% 
+                    User user = (User)request.getSession().getAttribute("loggedUser");
+                    CircaDatabase db = CircaDatabase.getInstance();
+                    
+                    {
+                %>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name">Team Nerds United</p>
-                        <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
                         <div class = "cluster-members">
@@ -46,10 +53,10 @@
                         </div>
                     </div>
                 </li>
+                <%}%>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name">Team Fabcon</p>
-                        <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
                         <div class = "cluster-members">
@@ -63,7 +70,6 @@
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name">Born2Party</p>
-                        <!--button class = "cluster-view-members-button">View Members</button-->
                     </div>
                     <div class = "cluster-members-list">
                         <div class = "cluster-members">
