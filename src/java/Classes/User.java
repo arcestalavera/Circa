@@ -21,6 +21,9 @@ public class User {
     private ArrayList<Cluster> clusters;
     private ArrayList<Event> eventList;
     
+    public User(){
+    }
+    
     public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate, String profilePicture){
         this.userID = userID;
         this.firstName = firstName;

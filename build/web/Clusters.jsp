@@ -38,27 +38,34 @@
                 <% 
                     User user = (User)request.getSession().getAttribute("loggedUser");
                     CircaDatabase db = CircaDatabase.getInstance();
-                    db.getUserClusters(user.getUserID());
                     user.setClusters(db.getUserClusters(user.getUserID()));
                     
+                    //System.out.println("CLUSTER COUNT: " + user.getClusters().size());
+                    
                     for(Cluster cluster : user.getClusters()){
-                %>
-                <li class = "cluster-item">
-                    <div class = "cluster-item-elements">
-                        <p class = "cluster-name"><%=cluster.getName()%></p>
-                    </div>
-                    <div class = "cluster-members-list">
-                        <%for(User clusterMember : cluster.getMemberList()){%>
-                            <div class = "cluster-members">
-                                <img src="<%=clusterMember.getProfilePicture()%>" />
-                            </div>
-                            <!--div class = "cluster-members">
-                                <img src="img\clusters\party2.jpg" />
-                            </div-->
-                        <%}%>
-                    </div>
-                </li>
-                <%}%>
+                        cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
+                        for(User clusterMember : cluster.getMemberList()){
+                            clusterMember = db.getUserDetails(clusterMember.getUserID());
+                        }
+                        
+                    //System.out.println("MEMBER COUNT: " + cluster.getMemberList().size());
+                    %>
+                    <li class = "cluster-item">
+                        <div class = "cluster-item-elements">
+                            <p class = "cluster-name"><%=cluster.getName()%></p>
+                        </div>
+                        <div class = "cluster-members-list">
+                            <%for(User clusterMember : cluster.getMemberList()){%>
+                                <div class = "cluster-members">
+                                    <img src="<%clusterMember.getProfilePicture();%>" />
+                                </div>
+                                <!--div class = "cluster-members">
+                                    <img src="img\clusters\party2.jpg" />
+                                </div-->
+                            <%}%>
+                        </div>
+                    </li>
+                    <%}%>
                 <!--li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name">Team Fabcon</p>
