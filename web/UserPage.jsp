@@ -1,3 +1,4 @@
+<%@page import="Classes.User"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Calendar"%>
@@ -43,10 +44,15 @@
         </div>
         <!-- END HEADER -->	 
 
+        <%
+            //get user details
+            User userDetails = (User) request.getSession().getAttribute("userDetails");
+        %>
+        
         <div class = "profTop"><IMG class="profPic" src= "${userDetails.getProfilePicture()}"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
 
         <div class="infoDiv">
-            <div class="infoText">${userDetails.getFirstName()} ${userDetails.getLastName()}</div>
+            <div class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></div>
             <div class="infoTitle">Clusters | Events</div> 
             <div class="infoTitleContent"> 126 || 7</div>
         </div>
@@ -58,12 +64,12 @@
                 <li><a href="#showSchedule"><b>Schedule</b></a></li>
             </ul>
             <div id = "showEvents">
-                <h3 class = "text-heading" align = "center">Events of ${userDetails.getFirstName()}<hr width = "70%"/></h3>
+                <h3 class = "text-heading" align = "center">Events of <%=userDetails.getFirstName()%><hr width = "70%"/></h3>
                 <div id = "event-body">
                     <div class = "event-create" align = "center">
                         <button class = "event-create-button" onclick = "window.location.href = 'CreateEvent.jsp'"><b>Create Event!</b></button></div>
                         <%
-                            ArrayList<Event> eventList = (ArrayList) request.getSession().getAttribute("eventList");
+                            ArrayList<Event> eventList = userDetails.getEventList();
 
                             if (eventList != null) {
                                 for (int i = 0; i < eventList.size(); i++) {
@@ -91,7 +97,7 @@
                 </div>
             </div>
             <div id = "showSchedule" align = "center">
-                <h3 class = "text-heading">Schedule of ${userDetails.getFirstName()}<hr width = "70%"/></h3>
+                <h3 class = "text-heading">Schedule of <%=userDetails.getFirstName()%><hr width = "70%"/></h3>
                 <input type = "date" class = "schedule-date"/>
             </div>
 
