@@ -19,6 +19,7 @@ public class User {
     private Date birthDate;
     private ArrayList<User> buddyList;
     private ArrayList<Cluster> clusters;
+    private ArrayList<Event> eventList;
     
     public User(int userID, String firstName, String lastName, String emailAddress, Date birthDate, String profilePicture){
         this.userID = userID;
@@ -133,5 +134,19 @@ public class User {
 
     public void setClusters(ArrayList<Cluster> clusters) {
         this.clusters = clusters;
+    }
+
+    /**
+     * @return the eventList
+     */
+    public ArrayList<Event> getEventList() {
+        return eventList;
+    }
+
+    /**
+     * @param eventList the eventList to set
+     */
+    public void setEventList(ArrayList<Event> eventList) {
+        this.eventList = eventList;
     }
 }

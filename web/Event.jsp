@@ -1,3 +1,4 @@
+<%@page import="Classes.User"%>
 <%@page import="Classes.Event"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -45,19 +46,21 @@
             //get Event details of event
             Event event = (Event) request.getSession().getAttribute("eventDetails");
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            //get host
+            User host = event.getHost();
         %>
         <div id = "event-whole">
             <div id = "event-header-div" align = "center">
-                <img src = "<%=event.getHost().getProfilePicture()%>" alt = "napoleon" class = "profile-pic"/>
+                <img src = "<%=host.getProfilePicture()%>" alt = "napoleon" class = "profile-pic"/>
                 <img src = "img/event/event1.jpg" alt = "napoleon borntoparty" class = "event-header-img"/>
             </div>
             <h1 class = "event-title" align = "center" style = "color: #940000;"><%=event.getEventName()%></h1>
             <div id = "event-body-div" align = "center">
                 <p class = "event-description"><%=event.getDescription()%></p>
                 <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
-                <p>Venue: ${eventDetails.getVenue()}</p>
+                <p>Venue: <%=event.getVenue()%></p>
                 <p>1,392 people are going</p>
-                <p>Hosted by <a href = "User?id=<%=event.getHost().getUserID()%>"><%=event.getHost().getFirstName()%> <%=event.getHost().getLastName()%></a></p>
+                <p>Hosted by <a href = "User?id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
                 <button class = "event-join">Join</button>
                 <hr>
             </div>
