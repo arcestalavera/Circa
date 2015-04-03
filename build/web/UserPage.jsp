@@ -78,18 +78,19 @@
                         }
                     %>
                 <div id = "event-body">
+                    <%
+                        if (loggedUser.getUserID() == userDetails.getUserID()) {
+                    %>
                     <div class = "event-create" align = "center">
-                        <%
-                            if (loggedUser.getUserID() == userDetails.getUserID()) {
-                        %>
-                        <button class = "event-create-button" onclick = "window.location.href = 'CreateEvent.jsp'"><b>Create Event!</b></button></div>
-                        <%
-                            }
-                            ArrayList<Event> eventList = userDetails.getEventList();
+                        <button class = "event-create-button" onclick = "window.location.href = 'CreateEvent.jsp'"><b>Create Event!</b></button>
+                    </div>
+                    <%
+                        }
+                        ArrayList<Event> eventList = userDetails.getEventList();
 
-                            if (eventList != null) {
-                                for (int i = 0; i < eventList.size(); i++) {
-                        %>
+                        if (eventList != null) {
+                            for (int i = 0; i < eventList.size(); i++) {
+                    %>
                     <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
                         <%=eventList.get(i).getDescription()%><br/>
@@ -116,7 +117,6 @@
                             }
                         }
                     %>
-
                 </div>
             </div>
             <div id = "showSchedule" align = "center">
