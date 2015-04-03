@@ -50,7 +50,7 @@
                         <div class = "cluster-members-list">
                             <%for(User clusterMember : cluster.getMemberList()){%>
                                 <div class = "cluster-members">
-                                    <img src="<%=clusterMember.getProfilePicture()%>" />
+                                    <img src="<%=clusterMember.getProfilePicture()%>" width = "50px" height="50px"/>
                                 </div>
                                 <!--div class = "cluster-members">
                                     <img src="img\clusters\party2.jpg" />
