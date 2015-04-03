@@ -368,4 +368,29 @@ public class CircaDatabase { //singleton
         }
         return postList;
     }
+    
+    public void addPost(int eventID, int userID, String postText){
+        Statement stmt;
+        ResultSet rs;
+        int maxPost = 1;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "SELECT MAX(postID) FROM post";
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                maxPost = rs.getInt("MAX(postID)") + 1;
+            }
+            
+            sql = "INSERT INTO post(postID, eventID, userID, postText)"
+                    + " VALUES(" + maxPost + ", " + eventID + ", " + userID + ", '" + postText + "')";
+            
+            stmt.executeUpdate(sql);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

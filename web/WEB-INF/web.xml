@@ -40,6 +40,10 @@
         <servlet-name>PostToEvent</servlet-name>
         <servlet-class>Servlet.PostToEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CommentOnPost</servlet-name>
+        <servlet-class>Servlet.CommentOnPost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>PostToEvent</servlet-name>
         <url-pattern>/PostToEvent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CommentOnPost</servlet-name>
+        <url-pattern>/CommentOnPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

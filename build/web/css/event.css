@@ -166,13 +166,13 @@ a:hover{
     font-family: arial;
     border-radius: 20px;
     width: 30%;
-    height: 160px;
+    height: 170px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
     color: #940000;
     margin-bottom: 10px;
-    border: 5px groove;
+    border: 3px groove;
 }
 
 .input-post-submit{
@@ -180,8 +180,12 @@ a:hover{
     margin-right: 20px;
 }
 
+.input-post-submit:hover{
+    cursor: pointer;
+}
+
 #posts-div{
-    height: 1000px;
+    height: 800px;
     border: 1px groove;
     border-color: rgba(240, 240, 240, .2);
     overflow-y: scroll;
@@ -209,6 +213,7 @@ a:hover{
     margin-right: auto;
     padding: 3px;
     border: 2px groove;
+    margin-bottom: 10px;
 }
 
 .post-show-comment:hover{
@@ -224,5 +229,10 @@ a:hover{
     margin-left: auto;
     margin-right: auto;
     display: none;
-    
+    margin-bottom: 10px;
+}
+
+.comment-textarea{
+    resize: none;
+    font-family: arial;
 }

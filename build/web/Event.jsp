@@ -7,7 +7,7 @@
 <%@page import="java.text.DateFormat"%>
 <html>
     <head>
-        <title>Circa</title>
+        <title>${eventDetails.getEventName()}</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <!-- HEADER SCRIPT -->
@@ -72,9 +72,10 @@
 
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
-                <form action = "PostToEvent" onsubmit = "return checkPost()">
+                <form action = "PostToEvent" onsubmit = "return checkPost()" method = "post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
-                    <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>"></textarea>
+                    <hr width = "60%"/>
+                    <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
                     <br><input type = "submit" class = "input-post-submit"/>
                 </form>
             </div>
@@ -95,16 +96,14 @@
                         <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
                         <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a>Like</a></p>
                         <div class = "input-comment-div" align = "center">
-                            <form>
-                                <textarea rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
+                            <form action = "CommentOnPost" onsubmit = "return checkComment()">
+                                <textarea class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
                                 <br>
                                 <input type = "submit" class = "input-post-submit" value = "Comment!"/>
                             </form>
                         </div>
                     </div>
-                    <div class = "post-show-comment" align = "center">
-                        Show comments
-                    </div>
+                    <div class = "post-show-comment" align = "center">Show Comments</div>
                     <div class = "post-comments-whole">
                         <div class = "post-comment">
                             <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>

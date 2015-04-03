@@ -6,12 +6,8 @@
 
 package Servlet;
 
-import Classes.Event;
-import Classes.User;
-import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class PostToEvent extends HttpServlet {
+public class CommentOnPost extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class PostToEvent extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PostToEvent</title>");            
+            out.println("<title>Servlet CommentOnPost</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PostToEvent at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CommentOnPost at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,17 +71,7 @@ public class PostToEvent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        Event event = (Event) request.getSession().getAttribute("eventDetails");
-        User user = (User) request.getSession().getAttribute("loggedUser");
-        String postText = request.getParameter("postText");
-        CircaDatabase db = CircaDatabase.getInstance();
-        
-        System.out.println("USER = " + user.getFirstName() + " | EVENT = " + event.getEventName());
-        db.addPost(event.getEventID(), user.getUserID(), postText);
-        
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event?id=" + event.getEventID());
-        reqDispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
