@@ -89,7 +89,7 @@
                         }
                     } else {
                     %>
-                    <h3 class = "event-no-event">${userDetails.getFirstName()} hasn't hosted any any events yet.</h3>
+                    <h3 class = "event-no-event"><%=userDetails.getFirstName()%> hasn't hosted any events yet.</h3>
                     <%
                         }
                     %>

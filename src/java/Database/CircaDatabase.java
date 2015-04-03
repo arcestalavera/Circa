@@ -32,7 +32,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
             
@@ -139,14 +139,10 @@ public class CircaDatabase { //singleton
         Statement stmt;
         ResultSet rs;
         ArrayList<Event> eventList = new ArrayList<>();
-        String eventName, venue, type, description, eventPicture;
         int eventID;
-        Date startDate, endDate;
-        User host;
-
+        
         try {
             stmt = con.createStatement();
-            host = getUserDetails(userID);
 
             sql = "SELECT * FROM event"
                     + " WHERE hostID = " + userID;
@@ -155,15 +151,9 @@ public class CircaDatabase { //singleton
 
             while (rs.next()) {
                 eventID = rs.getInt("eventID");
-                eventName = rs.getString("name");
-                venue = rs.getString("venue");
-                eventPicture = rs.getString("eventPicture");
-                type = rs.getString("type");
-                description = rs.getString("description");
-                startDate = new Date(rs.getTimestamp("startDate").getTime());
-                endDate = new Date(rs.getTimestamp("endDate").getTime());
+                Event event = getEventDetails(eventID);
 
-                eventList.add(new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture));
+                eventList.add(event);
             }
         } catch (SQLException e) {
             e.printStackTrace();
