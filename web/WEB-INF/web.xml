@@ -36,6 +36,10 @@
         <servlet-name>toEvent</servlet-name>
         <servlet-class>Servlet.toEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostToEvent</servlet-name>
+        <servlet-class>Servlet.PostToEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>toEvent</servlet-name>
         <url-pattern>/Event</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostToEvent</servlet-name>
+        <url-pattern>/PostToEvent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

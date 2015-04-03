@@ -87,18 +87,23 @@ and open the template in the editor.
     width: 600px;
     min-height: 90px;
     font-family: arial;
+    margin-bottom: 0;
+    padding: 3px;
+    border: 4px groove;
 }
 
 .event-comment-header{
     font-family: arial;
     font-size: 20px;
-    background-color: rgb(200, 200, 203);
+    background-color: #940000;
     border-radius: 50px;
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    padding: 6px;
-    color: #940000;
+    color: white;
+    margin-top: 0;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
 .post-pic{
@@ -125,6 +130,7 @@ and open the template in the editor.
     float: left;
     height: 40px;
     border-radius: 50%;
+    margin-top: 0;
     margin: 10px;
 }
 
@@ -134,7 +140,6 @@ h2,p{
 
 .event-post-text{
     font-family: arial;
-    margin: 20px;
 }
 
 a{
@@ -144,5 +149,80 @@ a{
 
 a:hover{
     text-decoration: underline;
-    cursor: hand;
+    cursor: pointer;
+}
+
+.input-post-text{
+    margin-bottom: 5px;
+}
+
+.input-post-textarea{
+    resize: none;
+    font-family: arial;
+}
+
+#input-post-div{
+    background-color: rgb(220, 220, 220);
+    font-family: arial;
+    border-radius: 20px;
+    width: 30%;
+    height: 160px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    color: #940000;
+    margin-bottom: 10px;
+    border: 5px groove;
+}
+
+.input-post-submit{
+    float: right;
+    margin-right: 20px;
+}
+
+#posts-div{
+    height: 1000px;
+    border: 1px groove;
+    border-color: rgba(240, 240, 240, .2);
+    overflow-y: scroll;
+    width: 50%;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-comment-div{
+    padding: 10px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60px;
+    display: none;
+}
+
+.post-show-comment{
+    background-color: rgb(220, 220, 220);
+    color: black;
+    font-family: arial;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3px;
+    border: 2px groove;
+}
+
+.post-show-comment:hover{
+    color: white;
+    background-color: #940000;
+    cursor: pointer;
+}
+
+.post-comments-whole{
+    background-color: whitesmoke;
+    width: 70%;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+    
 }

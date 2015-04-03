@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Classes;
 
 import java.util.ArrayList;
@@ -13,38 +12,34 @@ import java.util.ArrayList;
  * @author Arces
  */
 public class Post {
+
     private String postText, imgPath;
+    private Event event;
     private User poster;
     private ArrayList<Like> likeList;
     private ArrayList<Comment> commentList;
     private int postID;
-    
-    public Post(int postID, String postText, User poster, String imgPath){
+
+    public Post(int postID, String postText, User poster, Event event) {
         this.postID = postID;
         this.postText = postText;
         this.poster = poster;
-        this.imgPath = imgPath;
+        this.event = event;
     }
-    
-    public Post(int postID, String postText, User poster){
-        this.postID = postID;
-        this.postText = postText;
-        this.poster = poster;
-    }
-    
-    public void addLike(Like like){
+
+    public void addLike(Like like) {
         getLikeList().add(like);
     }
-    
-    public void removeLike(Like like){
+
+    public void removeLike(Like like) {
         getLikeList().remove(like);
     }
-    
-    public void addComment(Comment comment){
+
+    public void addComment(Comment comment) {
         getCommentList().add(comment);
     }
-    
-    public void removeComment(Comment comment){
+
+    public void removeComment(Comment comment) {
         getCommentList().remove(comment);
     }
 

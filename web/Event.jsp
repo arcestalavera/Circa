@@ -1,3 +1,6 @@
+<%@page import="Classes.Post"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Classes.User"%>
 <%@page import="Classes.Event"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -11,6 +14,8 @@
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js">
         </script>
         <script type = "text/javascript" src = "js/header.js">
+        </script>
+        <script type = "text/javascript" src = "js/Event.js">
         </script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <!-- END HEADER -->
@@ -65,39 +70,56 @@
                 <hr>
             </div>
 
-            <!-- COMMENTS -->
-            <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
-            <div class = "event-post-div">
-                <img src = "img/event/party2.jpg" alt = "Sisa mistrit" class = "post-pic"/>
-                <br><p class = "event-post-text"><a href = "user-page.html"><b>Sisa Mistrit</b></a> I love it! I'm also very stressed right now. I Need to take some time off. <a href = "event.html">#borntoparty</a></p>
-                <p align = "right">44 likes | <a>Comment</a> <a>Like</a></p>
+            <!-- POSTS and COMMENTS -->
+            <div id = "input-post-div">
+                <form action = "PostToEvent" onsubmit = "return checkPost()">
+                    <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
+                    <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>"></textarea>
+                    <br><input type = "submit" class = "input-post-submit"/>
+                </form>
             </div>
-            <div class = "post-comment">
-                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
-                <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
-            </div>
-            <div class = "event-post-div">
-                <img src = "img/event/party3.jpg" alt = "harry party" class = "post-pic"/>
-                <br><p class = "event-post-text"><a href = "user-page.html"><b>Harry Party</b></a> I'm gonna do a magic show later at this party. lol <a href = "event.html">#borntoparty</a></p>
-                <p align = "right">37 likes | <a>Comment</a> <a>Like</a></p>
-            </div>
-            <div class = "event-post-div">
-                <img src = "img/event/party1.jpg" alt = "borntoparty" class = "post-pic"/>
-                <br><p class = "event-post-text"><a href = "user-page.html"><b>Napoleon Borntoparty</b></a> Thank you guys for joining! I'm sure that you'll have fun! See you all ;) <a href = "event.html">#borntoparty</a></p>
-                <p align = "right">142 likes | <a>Comment</a> <a>Like</a></p>
-            </div>
-            <div class = "event-post-div">
-                <img src = "img/event/party4.jpg" alt = "anchor tis" class = "post-pic"/>
-                <br><p class = "event-post-text"><a href = "user-page.html"><b>Anchor Tis</b></a> Magdadala ako ng century tuna!</p>
-                <p align = "right">23 likes | <a>Comment</a> <a>Like</a></p>
-            </div>
-            <div class = "post-comment">
-                <img src = "img/event/party2.jpg" alt = "anchor tis" class = "comment-pic"/>
-                <p class = "event-post-text"><a href = "user-page.html"><b><br>Sisa Mistrit</b></a> Yummy!</p>
-            </div>
-            <div class = "post-comment">
-                <img src = "img/event/party3.jpg" alt = "anchor tis" class = "comment-pic"/>
-                <p class = "event-post-text"><a href = "user-page.html"><b><br>Harry Party</b></a> Cool!</p>
+            <div id = "posts-div">
+                <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
+                <%
+                    //get posts of event
+                    ArrayList<Post> postList = event.getPostList();
+
+                    if (postList != null) {
+                        for (int i = 0; i < postList.size(); i++) {
+                            //get poster
+                            User poster = postList.get(i).getPoster();
+                %>
+                <div id = "event-post-whole">
+                    <div class = "event-post-div">
+                        <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
+                        <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
+                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a>Like</a></p>
+                        <div class = "input-comment-div" align = "center">
+                            <form>
+                                <textarea rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
+                                <br>
+                                <input type = "submit" class = "input-post-submit" value = "Comment!"/>
+                            </form>
+                        </div>
+                    </div>
+                    <div class = "post-show-comment" align = "center">
+                        Show comments
+                    </div>
+                    <div class = "post-comments-whole">
+                        <div class = "post-comment">
+                            <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
+                            <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
+                        </div>
+                        <div class = "post-comment">
+                            <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
+                            <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
+                        </div>
+                    </div>
+                </div>
+                <%
+                        }
+                    }
+                %>
             </div>
         </div>
     </body>

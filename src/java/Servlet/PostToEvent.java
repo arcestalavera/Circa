@@ -6,11 +6,8 @@
 
 package Servlet;
 
-import Classes.Event;
-import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class toEvent extends HttpServlet {
+public class PostToEvent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +36,10 @@ public class toEvent extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet toEvent</title>");            
+            out.println("<title>Servlet PostToEvent</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet toEvent at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PostToEvent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +57,7 @@ public class toEvent extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        CircaDatabase db = CircaDatabase.getInstance();
-        int eventID = Integer.parseInt(request.getParameter("id"));
-        Event event = db.getEventDetails(eventID);
-        event.setPostList(db.getPosts(eventID));
-        
-        request.getSession().setAttribute("eventDetails", event);
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event.jsp");
-        reqDispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -82,7 +71,8 @@ public class toEvent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
     }
 
     /**

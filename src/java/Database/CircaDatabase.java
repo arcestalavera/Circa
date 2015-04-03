@@ -7,6 +7,7 @@ package Database;
 
 import Classes.Cluster;
 import Classes.Event;
+import Classes.Post;
 import Classes.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+
 /**
  *
  * @author Arces
@@ -35,7 +37,7 @@ public class CircaDatabase { //singleton
             String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,7 +142,7 @@ public class CircaDatabase { //singleton
         ResultSet rs;
         ArrayList<Event> eventList = new ArrayList<>();
         int eventID;
-        
+
         try {
             stmt = con.createStatement();
 
@@ -152,7 +154,8 @@ public class CircaDatabase { //singleton
             while (rs.next()) {
                 eventID = rs.getInt("eventID");
                 Event event = getEventDetails(eventID);
-
+                event.setPostList(getPosts(eventID));
+                
                 eventList.add(event);
             }
         } catch (SQLException e) {
@@ -205,14 +208,10 @@ public class CircaDatabase { //singleton
 
             if (rs.next()) {
                 firstName = rs.getString("firstName");
-                System.out.println("\n" + firstName);
                 lastName = rs.getString("lastName");
-                System.out.println(lastName);
                 emailAddress = rs.getString("emailAddress");
-                System.out.println(emailAddress);
                 birthDate = rs.getDate("birthDate");
                 profilePicture = rs.getString("profilePicture");
-                System.out.println(profilePicture);
 
                 user = new User(userID, firstName, lastName, emailAddress, birthDate, profilePicture);
             }
@@ -234,11 +233,11 @@ public class CircaDatabase { //singleton
 
         try {
             stmt = con.createStatement();
-            
+
             //get event
             sql = "SELECT * FROM event"
                     + " WHERE eventID = " + eventID;
-            
+
             rs = stmt.executeQuery(sql);
 
             if (rs.next()) {
@@ -250,7 +249,7 @@ public class CircaDatabase { //singleton
                 startDate = new Date(rs.getTimestamp("startDate").getTime());
                 endDate = new Date(rs.getTimestamp("endDate").getTime());
                 hostID = rs.getInt("hostID");
-                
+
                 //get host details
                 host = getUserDetails(hostID);
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture);
@@ -262,47 +261,47 @@ public class CircaDatabase { //singleton
 
         return event;
     }
-    
-    public ArrayList<Cluster> getUserClusters(int userID){
+
+    public ArrayList<Cluster> getUserClusters(int userID) {
         Statement stmt;
         ResultSet rs;
         ArrayList<Cluster> userClusters = new ArrayList<>();
-        
+
         sql = "SELECT * FROM cluster"
-                    + " WHERE creatorID = " + userID;
-        
-        try{
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(sql);
-            
-            while(rs.next()){
-                int clusterID = rs.getInt("clusterID");
-                String clusterName = rs.getString("name");
-                
-                Cluster cluster = new Cluster(clusterID, clusterName);
-                cluster.setMemberList(getClusterMembers(cluster.getClusterID()));
-                
-                userClusters.add(cluster);
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        
-        return userClusters;
-    }
-    
-    public ArrayList<User> getClusterMembers(int clusterID){
-        Statement stmt;
-        ResultSet rs;
-        ArrayList<User> clusterMembers = new ArrayList<>();
-        
-        sql = "SELECT * FROM add_user_to_cluster"
-            + " WHERE clusterID = " + clusterID;
-        
+                + " WHERE creatorID = " + userID;
+
         try {
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
-            while(rs.next()){
+
+            while (rs.next()) {
+                int clusterID = rs.getInt("clusterID");
+                String clusterName = rs.getString("name");
+
+                Cluster cluster = new Cluster(clusterID, clusterName);
+                cluster.setMemberList(getClusterMembers(cluster.getClusterID()));
+
+                userClusters.add(cluster);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userClusters;
+    }
+
+    public ArrayList<User> getClusterMembers(int clusterID) {
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<User> clusterMembers = new ArrayList<>();
+
+        sql = "SELECT * FROM add_user_to_cluster"
+                + " WHERE clusterID = " + clusterID;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
                 int clusterAddedID = rs.getInt("addedID");
                 User user = getUserDetails(clusterAddedID);
                 clusterMembers.add(user);
@@ -310,7 +309,63 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return clusterMembers;
+    }
+
+    public Post getPostDetails(int postID) {
+        Statement stmt;
+        ResultSet rs;
+        Post post = null;
+        String postText;
+        int userID = 0, eventID = 0;
+        User poster;
+        Event event;
+
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM post"
+                    + " WHERE postID = " + postID;
+
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                userID = rs.getInt("userID");
+                eventID = rs.getInt("eventID");
+                postText = rs.getString("postText");
+
+                poster = getUserDetails(userID);
+                event = getEventDetails(eventID);
+                post = new Post(postID, postText, poster, event);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return post;
+    }
+
+    public ArrayList<Post> getPosts(int eventID) {
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<Post> postList = new ArrayList<>();
+        int postID = 0;
+        
+        try {
+            stmt = con.createStatement();
+
+            sql = "SELECT * FROM post"
+                    + " WHERE eventID = " + eventID;
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                postID = rs.getInt("postID");
+                Post post = getPostDetails(postID);
+                postList.add(post);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return postList;
     }
 }
