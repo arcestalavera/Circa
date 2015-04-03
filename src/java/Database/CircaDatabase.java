@@ -290,7 +290,7 @@ public class CircaDatabase { //singleton
                 String clusterName = rs.getString("name");
                 
                 Cluster cluster = new Cluster(clusterID, clusterName);
-                //cluster.setMemberList(getClusterMembers(cluster.getClusterID()));
+                cluster.setMemberList(getClusterMembers(cluster.getClusterID()));
                 
                 userClusters.add(cluster);
             }
@@ -314,8 +314,7 @@ public class CircaDatabase { //singleton
             rs = stmt.executeQuery(sql);
             while(rs.next()){
                 int clusterAddedID = rs.getInt("addedID");
-                User user = new User();
-                user.setUserID(clusterAddedID);
+                User user = getUserDetails(clusterAddedID);
                 clusterMembers.add(user);
             }
         } catch (SQLException e) {
