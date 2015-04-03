@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Create an event!</title>
+        <title>Create Event | Circa</title>
 
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 

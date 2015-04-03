@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title> Circa - Home </title>
+        <title>Home | Circa </title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
         
         <meta charset="UTF-8">

@@ -7,7 +7,7 @@
 <%@page import="java.text.DateFormat"%>
 <html>
     <head>
-        <title>${eventDetails.getEventName()}</title>
+        <title>${eventDetails.getEventName()} | Circa</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <!-- HEADER SCRIPT -->
