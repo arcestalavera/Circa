@@ -42,14 +42,7 @@
                     
                     //System.out.println("CLUSTER COUNT: " + user.getClusters().size());
                     
-                    for(Cluster cluster : user.getClusters()){
-                        cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
-                        for(User clusterMember : cluster.getMemberList()){
-                            clusterMember = db.getUserDetails(clusterMember.getUserID());
-                        }
-                        
-                    //System.out.println("MEMBER COUNT: " + cluster.getMemberList().size());
-                    %>
+                    for(Cluster cluster : user.getClusters()){%>
                     <li class = "cluster-item">
                         <div class = "cluster-item-elements">
                             <p class = "cluster-name"><%=cluster.getName()%></p>
@@ -57,7 +50,7 @@
                         <div class = "cluster-members-list">
                             <%for(User clusterMember : cluster.getMemberList()){%>
                                 <div class = "cluster-members">
-                                    <img src="<%clusterMember.getProfilePicture();%>" />
+                                    <img src="<%=clusterMember.getProfilePicture()%>" width = "50px" height="50px"/>
                                 </div>
                                 <!--div class = "cluster-members">
                                     <img src="img\clusters\party2.jpg" />
