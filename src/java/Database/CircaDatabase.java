@@ -6,6 +6,7 @@
 package Database;
 
 import Classes.Cluster;
+import Classes.Comment;
 import Classes.Event;
 import Classes.Post;
 import Classes.User;
@@ -155,7 +156,7 @@ public class CircaDatabase { //singleton
                 eventID = rs.getInt("eventID");
                 Event event = getEventDetails(eventID);
                 event.setPostList(getPosts(eventID));
-                
+
                 eventList.add(event);
             }
         } catch (SQLException e) {
@@ -349,7 +350,7 @@ public class CircaDatabase { //singleton
         ResultSet rs;
         ArrayList<Post> postList = new ArrayList<>();
         int postID = 0;
-        
+
         try {
             stmt = con.createStatement();
 
@@ -361,6 +362,7 @@ public class CircaDatabase { //singleton
             while (rs.next()) {
                 postID = rs.getInt("postID");
                 Post post = getPostDetails(postID);
+                post.setCommentList(getComments(postID));
                 postList.add(post);
             }
         } catch (SQLException e) {
@@ -368,28 +370,72 @@ public class CircaDatabase { //singleton
         }
         return postList;
     }
-    
-    public void addPost(int eventID, int userID, String postText){
+
+    public void addPost(int eventID, int userID, String postText) {
         Statement stmt;
         ResultSet rs;
         int maxPost = 1;
+
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT MAX(postID) FROM post";
+
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                maxPost = rs.getInt("MAX(postID)") + 1;
+            }
+
+            sql = "INSERT INTO post(postID, eventID, userID, postText)"
+                    + " VALUES(" + maxPost + ", " + eventID + ", " + userID + ", '" + postText + "')";
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public ArrayList<Comment> getComments(int postID){
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<Comment> commentList = new ArrayList<>();
+        User commenter;
+        String commentText;
+        int userID = 0;
+        
+        sql = "SELECT * FROM comment"
+                + " WHERE postID = " + postID;
         
         try{
             stmt = con.createStatement();
-            sql = "SELECT MAX(postID) FROM post";
-            
             rs = stmt.executeQuery(sql);
             
-            if(rs.next())
-            {
-                maxPost = rs.getInt("MAX(postID)") + 1;
+            while(rs.next()){
+                userID = rs.getInt("userID");
+                commentText = rs.getString("commentText");
+                commenter = getUserDetails(userID);
+                
+                Comment comment = new Comment(commenter, commentText);
+                commentList.add(comment);
             }
-            
-            sql = "INSERT INTO post(postID, eventID, userID, postText)"
-                    + " VALUES(" + maxPost + ", " + eventID + ", " + userID + ", '" + postText + "')";
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return commentList;
+    }
+    
+    public void addComment(int postID, String comment, int userID) {
+        Statement stmt;
+
+        sql = "INSERT INTO comment"
+                + " VALUES(" + postID + ", '" + comment + "', " + userID + ")";
+
+        try {
+            stmt = con.createStatement();
             
             stmt.executeUpdate(sql);
-        }catch(SQLException e){
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

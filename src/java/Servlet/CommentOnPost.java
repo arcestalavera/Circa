@@ -6,8 +6,12 @@
 
 package Servlet;
 
+import Classes.Post;
+import Classes.User;
+import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -71,7 +75,19 @@ public class CommentOnPost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        int postID = Integer.parseInt(request.getParameter("id"));
+        User user = (User)request.getSession().getAttribute("loggedUser");
+        String commentText = request.getParameter("commentText");
+        int userID = user.getUserID();
+        CircaDatabase db = CircaDatabase.getInstance();
+        
+        db.addComment(postID, commentText, userID);
+        
+        //getpost
+        Post post = db.getPostDetails(postID);
+        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event?id=" + post.getEvent().getEventID());
+        reqDispatcher.forward(request, response);
     }
 
     /**

@@ -82,11 +82,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostToEvent</servlet-name>
-        <url-pattern>/PostToEvent</url-pattern>
+        <url-pattern>/Post</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CommentOnPost</servlet-name>
-        <url-pattern>/CommentOnPost</url-pattern>
+        <url-pattern>/Comment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

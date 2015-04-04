@@ -12,8 +12,8 @@ function checkPost() {
     }
 }
 
-function checkComment() {
-    var input = $(".comment-textarea").val();
+function checkComment(i) {
+    var input = $(".comment-textarea").eq(i).val();
     console.log("input = " + input);
     if (input === "")
     {

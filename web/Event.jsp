@@ -1,3 +1,4 @@
+<%@page import="Classes.Comment"%>
 <%@page import="Classes.Post"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.ArrayList"%>
@@ -72,7 +73,7 @@
 
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
-                <form action = "PostToEvent" onsubmit = "return checkPost()" method = "post">
+                <form action = "Post" onsubmit = "return checkPost()" method = "post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
                     <hr width = "60%"/>
                     <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
@@ -89,6 +90,8 @@
                         for (int i = 0; i < postList.size(); i++) {
                             //get poster
                             User poster = postList.get(i).getPoster();
+                            //get commentList
+                            ArrayList<Comment> commentList = postList.get(i).getCommentList();
                 %>
                 <div id = "event-post-whole">
                     <div class = "event-post-div">
@@ -96,23 +99,29 @@
                         <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
                         <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a>Like</a></p>
                         <div class = "input-comment-div" align = "center">
-                            <form action = "CommentOnPost" onsubmit = "return checkComment()">
-                                <textarea class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
+                            <form action = "Comment?id=<%=postList.get(i).getPostID()%>" method = "post" onsubmit = "return checkComment('<%=i%>')">
+                                <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
                                 <br>
                                 <input type = "submit" class = "input-post-submit" value = "Comment!"/>
                             </form>
                         </div>
                     </div>
                     <div class = "post-show-comment" align = "center">Show Comments</div>
+
                     <div class = "post-comments-whole">
+                        <%
+                            for (int j = 0; j < commentList.size(); j++) {
+                                //get commenter
+                                User commenter = commentList.get(j).getCommenter();
+                        %>
                         <div class = "post-comment">
-                            <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
-                            <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
+                            <img src = "<%=commenter.getProfilePicture()%>" alt = "<%=commenter.getFirstName()%> <%=commenter.getLastName()%>" class = "comment-pic"/>
+                            <p class = "event-post-text"><a href = "User?id=<%=commenter.getUserID()%>"><b>
+                                        <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
                         </div>
-                        <div class = "post-comment">
-                            <img src = "img/event/party4.jpg" alt = "anchor tis" class = "comment-pic"/>
-                            <p class = "event-post-text"><a href = "user-page.html"><b><br>Anchor Tis</b></a> I know right!</p>
-                        </div>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
                 <%

@@ -13,17 +13,39 @@ import java.util.ArrayList;
  * @author Arces
  */
 public class Comment {
-    private int commentID;
     private User commenter;
     private String commentText;
     
-    public Comment(int commentID, User commenter, String commentText){
-        this.commentID = commentID;
+    public Comment(User commenter, String commentText){
         this.commenter = commenter;
         this.commentText = commentText;
     }
     
-    public String getComment(){
+    /**
+     * @return the commenter
+     */
+    public User getCommenter() {
+        return commenter;
+    }
+
+    /**
+     * @param commenter the commenter to set
+     */
+    public void setCommenter(User commenter) {
+        this.commenter = commenter;
+    }
+
+    /**
+     * @return the commentText
+     */
+    public String getCommentText() {
         return commentText;
+    }
+
+    /**
+     * @param commentText the commentText to set
+     */
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
     }
 }

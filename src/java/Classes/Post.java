@@ -126,4 +126,18 @@ public class Post {
     public void setPostID(int postID) {
         this.postID = postID;
     }
+
+    /**
+     * @return the event
+     */
+    public Event getEvent() {
+        return event;
+    }
+
+    /**
+     * @param event the event to set
+     */
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 }
