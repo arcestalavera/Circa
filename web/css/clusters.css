@@ -10,7 +10,15 @@ html, body{
     top: 30px;
 }
 
+#new-cluster-form{
+    float: right;
+    position: relative;
+    right: 0;
+}
+
 #user-cluster-list {
+    position: relative;
+    clear: both;
     list-style-type: none;
     margin: 0px;
     display: block;
@@ -41,22 +49,6 @@ html, body{
     left: 10px;
     top: 8px;
     margin: 0;
-}
-
-.cluster-view-members-button{
-    float: right;
-    color: white;
-    background-color: #940000;
-    border-radius: 5px;
-    border: 1px solid #940000;
-    cursor: pointer;
-}
-
-.cluster-view-members-button:hover{
-    background-color: white;
-    border-radius: 5px;
-    border: 1px solid #940000;
-    color: #940000;
 }
 
 .cluster-members-list{
