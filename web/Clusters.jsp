@@ -52,6 +52,7 @@
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name"><%=cluster.getName()%></p>
+                        <img src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>
                     </div>
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>

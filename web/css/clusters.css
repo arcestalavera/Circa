@@ -61,6 +61,18 @@ html, body{
     left: 10px;
     top: 8px;
     margin: 0;
+    display: inline-block;
+}
+
+.delete-cluster-button{
+    float: right;
+    position: relative;
+    top: 8px;
+    right: 10px;
+}
+
+.delete-cluster-button:hover{
+    cursor: pointer;
 }
 
 .cluster-members-list{

@@ -6,7 +6,7 @@
 <%@page import="java.util.ArrayList"%>
 <html>
     <head>
-        <title> ${loggedUser.getFirstName()} ${loggedUser.getLastName()} | Circa</title>
+        <title> ${userDetails.getFirstName()} ${userDetails.getLastName()} | Circa</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <meta charset="UTF-8">
