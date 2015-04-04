@@ -14,11 +14,13 @@ import java.util.ArrayList;
  */
 public class Comment {
     private User commenter;
+    private int commentID;
     private String commentText;
     
-    public Comment(User commenter, String commentText){
+    public Comment(User commenter, String commentText, int commentID){
         this.commenter = commenter;
         this.commentText = commentText;
+        this.commentID = commentID;
     }
     
     /**
@@ -47,5 +49,19 @@ public class Comment {
      */
     public void setCommentText(String commentText) {
         this.commentText = commentText;
+    }
+
+    /**
+     * @return the commentID
+     */
+    public int getCommentID() {
+        return commentID;
+    }
+
+    /**
+     * @param commentID the commentID to set
+     */
+    public void setCommentID(int commentID) {
+        this.commentID = commentID;
     }
 }

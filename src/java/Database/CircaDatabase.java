@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -394,98 +394,108 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public ArrayList<Comment> getComments(int postID){
+
+    public ArrayList<Comment> getComments(int postID) {
         Statement stmt;
         ResultSet rs;
         ArrayList<Comment> commentList = new ArrayList<>();
         User commenter;
         String commentText;
-        int userID = 0;
-        
+        int userID = 0, commentID = 0;
+
         sql = "SELECT * FROM comment"
                 + " WHERE postID = " + postID;
-        
-        try{
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(sql);
-            
-            while(rs.next()){
-                userID = rs.getInt("userID");
-                commentText = rs.getString("commentText");
-                commenter = getUserDetails(userID);
-                
-                Comment comment = new Comment(commenter, commentText);
-                commentList.add(comment);
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        
-        return commentList;
-    }
-    
-    public void addComment(int postID, String comment, int userID) {
-        Statement stmt;
-
-        sql = "INSERT INTO comment"
-                + " VALUES(" + postID + ", '" + comment + "', " + userID + ")";
 
         try {
             stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                userID = rs.getInt("userID");
+                commentText = rs.getString("commentText");
+                commentID = rs.getInt("commentID");
+                commenter = getUserDetails(userID);
+
+                Comment comment = new Comment(commenter, commentText, commentID);
+                commentList.add(comment);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return commentList;
+    }
+
+    public void addComment(int postID, String comment, int userID) {
+        Statement stmt;
+        ResultSet rs;
+        int maxComment = 0;
+        
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT MAX(commentID) from comment";
             
+            rs = stmt.executeQuery(sql);
+            if(rs.next())
+            {
+                maxComment = rs.getInt("MAX(commentID)");
+            }
+            
+            sql = "INSERT INTO comment"
+                    + " VALUES(" + postID + ", '" + comment + "', " + userID + ", " + maxComment + ")";
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
+
     public void deleteCluster(int clusterID) {
 
-        sql = "UPDATE cluster SET isDeleted = ?" +
-                " WHERE clusterID = ?;";
+        sql = "UPDATE cluster SET isDeleted = ?"
+                + " WHERE clusterID = ?;";
 
         try {
             PreparedStatement preparedStmt = con.prepareStatement(sql);
-            
+
             preparedStmt.setBoolean(1, true);
             preparedStmt.setInt(2, clusterID);
             emptyClusterMembers(clusterID);
             preparedStmt.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void emptyClusterMembers(int clusterID){
-        
-        sql = "DELETE FROM add_user_to_cluster " +
-              "WHERE clusterID = ?;";
+
+    public void emptyClusterMembers(int clusterID) {
+
+        sql = "DELETE FROM add_user_to_cluster "
+                + "WHERE clusterID = ?;";
 
         try {
             PreparedStatement preparedStmt = con.prepareStatement(sql);
-            
+
             preparedStmt.setInt(1, clusterID);
-            
+
             preparedStmt.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void addNewCluster(int creatorID, String clusterName){
-        
-        sql = "INSERT INTO cluster(creatorID, Name) " +
-              "VALUES(?, ?)";
+
+    public void addNewCluster(int creatorID, String clusterName) {
+
+        sql = "INSERT INTO cluster(creatorID, Name) "
+                + "VALUES(?, ?)";
 
         try {
             PreparedStatement preparedStmt = con.prepareStatement(sql);
-            
+
             preparedStmt.setInt(1, creatorID);
             preparedStmt.setString(2, clusterName);
-            
+
             preparedStmt.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
