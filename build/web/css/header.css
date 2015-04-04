@@ -84,8 +84,9 @@
 }
 
 .header-logo:hover{
-    opacity: .5;
+    //opacity: .5;
     transform: rotate(360deg);
+    cursor: pointer;
 }
 
 #header-whole{
