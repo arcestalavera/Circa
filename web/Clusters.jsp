@@ -52,7 +52,10 @@
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <p class = "cluster-name"><%=cluster.getName()%></p>
-                        <img src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>
+                        <form action = "DeleteCluster" method="POST" id = "delete-cluster-form">
+                            <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
+                            <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>
+                        </form>
                     </div>
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>

@@ -269,7 +269,7 @@ public class CircaDatabase { //singleton
         ArrayList<Cluster> userClusters = new ArrayList<>();
 
         sql = "SELECT * FROM cluster"
-                + " WHERE creatorID = " + userID;
+                + " WHERE creatorID = " + userID + " AND isDeleted = 0";
 
         try {
             stmt = con.createStatement();
@@ -435,6 +435,39 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
             
             stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteCluster(int clusterID) {
+
+        sql = "UPDATE cluster SET isDeleted = ?" +
+                " WHERE clusterID = ?;";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+            
+            preparedStmt.setBoolean(1, true);
+            preparedStmt.setInt(2, clusterID);
+            emptyClusterMembers(clusterID);
+            preparedStmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void emptyClusterMembers(int clusterID){
+        
+        sql = "DELETE FROM add_user_to_cluster " +
+              "WHERE clusterID = ?;";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+            
+            preparedStmt.setInt(1, clusterID);
+            
+            preparedStmt.executeUpdate();
         } catch(SQLException e){
             e.printStackTrace();
         }

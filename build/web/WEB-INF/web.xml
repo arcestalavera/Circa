@@ -44,6 +44,10 @@
         <servlet-name>CommentOnPost</servlet-name>
         <servlet-class>Servlet.CommentOnPost</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteCluster</servlet-name>
+        <servlet-class>Servlet.DeleteCluster</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>CommentOnPost</servlet-name>
         <url-pattern>/Comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCluster</servlet-name>
+        <url-pattern>/DeleteCluster</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

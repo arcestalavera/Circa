@@ -56,19 +56,20 @@ html, body{
     font-weight: 700;
 }
 
+#delete-cluster-form{
+    margin:0;
+    float: right;
+    position: relative;
+    top: 8px;
+    right: 10px;
+}
+
 .cluster-name{
     position: relative;
     left: 10px;
     top: 8px;
     margin: 0;
     display: inline-block;
-}
-
-.delete-cluster-button{
-    float: right;
-    position: relative;
-    top: 8px;
-    right: 10px;
 }
 
 .delete-cluster-button:hover{
