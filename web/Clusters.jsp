@@ -36,12 +36,11 @@
         
         
         <div id = "user-cluster">
-            
-                <form id = "new-cluster-form">
-                    <input type = "text" name = "new-cluster-name"placeholder = "Cluster Name" />
-                    <input type = "submit" value ="Add Cluster" />
-                </form>
-            
+            <form id = "new-cluster-form">
+                <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
+                <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
+            </form>
+
             <ul id = "user-cluster-list">
                 <% 
                 User user = (User)request.getSession().getAttribute("loggedUser");
@@ -57,7 +56,9 @@
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>
                             <div class = "cluster-members">
-                                <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "50px" height="50px"/>
+                                <a href = "User?id=<%=clusterMember.getUserID()%>">
+                                    <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "50px" height="50px"/>
+                                </a>
                             </div>
                         <%}%>
                     </div>
