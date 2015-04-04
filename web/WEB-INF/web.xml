@@ -48,6 +48,10 @@
         <servlet-name>DeleteCluster</servlet-name>
         <servlet-class>Servlet.DeleteCluster</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddCluster</servlet-name>
+        <servlet-class>Servlet.AddCluster</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>DeleteCluster</servlet-name>
         <url-pattern>/DeleteCluster</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddCluster</servlet-name>
+        <url-pattern>/AddCluster</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

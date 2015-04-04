@@ -36,7 +36,7 @@
         
         
         <div id = "user-cluster">
-            <form id = "new-cluster-form">
+            <form id = "new-cluster-form" action = "AddCluster" method = "POST">
                 <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
                 <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
             </form>

@@ -472,4 +472,21 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
+    
+    public void addNewCluster(int creatorID, String clusterName){
+        
+        sql = "INSERT INTO cluster(creatorID, Name) " +
+              "VALUES(?, ?)";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+            
+            preparedStmt.setInt(1, creatorID);
+            preparedStmt.setString(2, clusterName);
+            
+            preparedStmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
