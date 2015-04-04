@@ -499,4 +499,38 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
+    
+    public ArrayList<User> getUserBuddies(int userID){
+        ArrayList<User> userBuddies = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+
+            sql = "SELECT * FROM buddy"
+                    + " WHERE friend_1 = " + userID + " or "
+                    + "friend_2 = " + userID;
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int friend_1 = rs.getInt("friend_1");
+                int friend_2 = rs.getInt("friend_2");
+                
+                User user = new User();
+                
+                if(friend_1 == userID){
+                    user = getUserDetails(friend_2);
+                }else if(friend_2 == userID){
+                    user = getUserDetails(friend_1);
+                }
+                userBuddies.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return userBuddies;
+    }
 }
