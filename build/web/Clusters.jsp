@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <link rel="stylesheet" type="text/css" 	media="all" href="css/clusters.css" />
     </head>
-    <body>
+    <body bgcolor = "f4f4f4">
         <!-- HEADER -->
         <div id = "header-whole">
             <div id = "header-temp">
@@ -34,18 +34,35 @@
         <!-- END HEADER -->
 
         
-        
         <div id = "user-cluster">
+            <p id = "cluster-heading">Clusters</p>
+            
             <form id = "new-cluster-form" action = "AddCluster" method = "POST">
                 <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
                 <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
             </form>
-
+            
             <ul id = "user-cluster-list">
-                <% 
-                User user = (User)request.getSession().getAttribute("loggedUser");
-                CircaDatabase db = CircaDatabase.getInstance();
-                user.setClusters(db.getUserClusters(user.getUserID()));
+                <li class = "cluster-item">
+                    <div class = "cluster-item-elements">
+                        <p class = "cluster-name">Buddies</p>
+                    </div>
+                    <div class = "cluster-members-list">
+                        <%  User user = (User)request.getSession().getAttribute("loggedUser");
+                            CircaDatabase db = CircaDatabase.getInstance();
+                            user.setBuddyList(db.getUserBuddies(user.getUserID()));
+                            
+                            for(User buddy : user.getBuddyList()){%>
+                            <div class = "cluster-members">
+                                <a href = "User?id=<%=buddy.getUserID()%>">
+                                    <img src="<%=buddy.getProfilePicture()%>" title = "<%=buddy.getFirstName()%> <%=buddy.getLastName()%>"width = "50px" height="50px"/>
+                                </a>
+                            </div>
+                        <%}%>
+                    </div>
+                </li>
+                
+                <% user.setClusters(db.getUserClusters(user.getUserID()));
                     
                 for(Cluster cluster : user.getClusters()){
                 %>
