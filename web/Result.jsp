@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Circa</title>
+        <title>Search Result | Circa</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
         
         <!-- HEADER SCRIPT -->

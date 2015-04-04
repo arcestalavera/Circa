@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
