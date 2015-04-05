@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -263,6 +263,28 @@ public class CircaDatabase { //singleton
         return event;
     }
 
+    public String getClusterName(int clusterID){
+        Statement stmt;
+        ResultSet rs;
+        String clusterName = "";
+
+        sql = "SELECT * FROM cluster"
+                + " WHERE clusterID = " + clusterID;
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                clusterName = rs.getString("name");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return clusterName;
+    }
+    
     public ArrayList<Cluster> getUserClusters(int userID) {
         Statement stmt;
         ResultSet rs;

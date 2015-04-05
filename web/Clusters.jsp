@@ -35,17 +35,18 @@
 
         
         <div id = "user-cluster">
-            <p id = "cluster-heading">Clusters</p>
-            
-            <form id = "new-cluster-form" action = "AddCluster" method = "POST">
-                <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
-                <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
-            </form>
-            
+            <div id = "cluster-heading">
+                <div id = "cluster-tag">Clusters</div>
+
+                <form id = "new-cluster-form" action = "AddCluster" method = "POST">
+                    <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
+                    <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
+                </form>
+            </div>
             <ul id = "user-cluster-list">
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        <p class = "cluster-name">Buddies</p>
+                        <p id = "buddies-tag">Buddies</p>
                     </div>
                     <div class = "cluster-members-list">
                         <%  User user = (User)request.getSession().getAttribute("loggedUser");
@@ -68,8 +69,11 @@
                 %>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        <p class = "cluster-name"><%=cluster.getName()%></p>
-                        <form action = "DeleteCluster" method="POST" id = "delete-cluster-form">
+                        <form action = "ClusterMembers" method="GET" class = "view-members-form">
+                            <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
+                            <input type = "submit" class = "cluster-name" value = "<%=cluster.getName()%>">
+                        </form>
+                        <form action = "DeleteCluster" method="POST" class = "delete-cluster-form">
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
                             <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>
                         </form>
@@ -77,7 +81,7 @@
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>
                             <div class = "cluster-members">
-                                <a href = "User?id=<%=clusterMember.getUserID()%>">
+                                <a href = "User?username=<%=clusterMember.getUserID()%>">
                                     <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "50px" height="50px"/>
                                 </a>
                             </div>

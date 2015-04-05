@@ -60,6 +60,10 @@
         <servlet-name>DeleteComment</servlet-name>
         <servlet-class>Servlet.DeleteComment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddClusterMembers</servlet-name>
+        <servlet-class>Servlet.AddClusterMembers</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>DeleteComment</servlet-name>
         <url-pattern>/DeleteComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddClusterMembers</servlet-name>
+        <url-pattern>/ClusterMembers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

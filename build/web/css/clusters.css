@@ -12,19 +12,23 @@ html, body{
 
 #cluster-heading{
     position:relative;
-    display: inline;
     margin-top: 0;
     margin-bottom: 10px;
+}
+
+#cluster-tag{
     font-family: sans-serif;
     font-size: 25px;
     color: #AD0000;
+    display: inline;
 }
 
 #new-cluster-form{
     float: right;
+    margin-bottom: 0;
+    display: inline;
     position: relative;
     right: 0;
-    margin-bottom: 10px;
 }
 
 #add-cluster-button{
@@ -61,26 +65,49 @@ html, body{
     width: 100%;
     height: 28px;
     border-bottom: 1px solid #BCBCB3;
-    font-family: sans-serif;
-    font-size: 14px;
-    color: #940000;
-    font-weight: 700;
+    
 }
 
-#delete-cluster-form{
+.delete-cluster-form, .view-members-form{
     margin:0;
+}
+
+.delete-cluster-form{
     float: right;
     position: relative;
     top: 6px;
     right: 6px;
 }
 
-.cluster-name{
+.cluster-name-link{
+    color: #AD0000;
+}
+
+.cluster-name:hover{
+    text-decoration: underline;
+}
+
+.view-members-form, #buddies-tag{
     position: relative;
     left: 10px;
     top: 8px;
+    display: inline;
+}
+
+.cluster-name, #buddies-tag{    
     margin: 0;
     display: inline-block;
+    border: none;
+    background-color: white;
+    color: #AD0000;
+    padding: 0;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.cluster-name:hover{
+    cursor: pointer;
 }
 
 .delete-cluster-button:hover{
