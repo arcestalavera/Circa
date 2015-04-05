@@ -14,8 +14,6 @@
         </script>
         <script type = "text/javascript" src = "js/header.js">
         </script>
-        <script type = "text/javascript" src = "js/Redirector.js">
-        </script>
         <script type = "text/javascript" src = "js/UserPage.js"></script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <link rel="stylesheet" type="text/css" 	media="all" href="css/UserPage.css" />

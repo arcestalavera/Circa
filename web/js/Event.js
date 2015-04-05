@@ -26,6 +26,20 @@ function checkComment(i) {
     }
 }
 
+function deletePost(){
+    if(confirm("Do you really want to delete this post?"))
+        return true;
+    else
+        return false;
+}
+
+function deleteComment(){
+    if(confirm("Do you really want to delete this comment?"))
+        return true;
+    else
+        return false;
+}
+
 $(document).ready(function() {
     $('.comment-link').click(function() {
         $(this).parent().next(".input-comment-div").slideToggle("medium");

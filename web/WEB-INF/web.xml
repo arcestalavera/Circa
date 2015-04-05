@@ -52,6 +52,14 @@
         <servlet-name>AddCluster</servlet-name>
         <servlet-class>Servlet.AddCluster</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeletePost</servlet-name>
+        <servlet-class>Servlet.DeletePost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteComment</servlet-name>
+        <servlet-class>Servlet.DeleteComment</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -103,6 +111,14 @@
     <servlet-mapping>
         <servlet-name>AddCluster</servlet-name>
         <url-pattern>/AddCluster</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePost</servlet-name>
+        <url-pattern>/DeletePost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteComment</servlet-name>
+        <url-pattern>/DeleteComment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

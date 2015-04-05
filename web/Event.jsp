@@ -54,6 +54,7 @@
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             //get host
             User host = event.getHost();
+            User loggedUser = (User) request.getSession().getAttribute("loggedUser");
         %>
         <div id = "event-whole">
             <div id = "event-header-div" align = "center">
@@ -88,13 +89,22 @@
 
                     if (postList != null) {
                         for (int i = 0; i < postList.size(); i++) {
-                            //get poster
-                            User poster = postList.get(i).getPoster();
-                            //get commentList
-                            ArrayList<Comment> commentList = postList.get(i).getCommentList();
+                            if (!postList.get(i).isDeleted()) {
+                                //get poster
+                                User poster = postList.get(i).getPoster();
+                                //get commentList
+                                ArrayList<Comment> commentList = postList.get(i).getCommentList();
                 %>
                 <div id = "event-post-whole">
                     <div class = "event-post-div">
+                        <%
+                            if (poster.getUserID() == loggedUser.getUserID()) {
+                        %>
+                        <form action = "DeletePost?id=<%=postList.get(i).getPostID()%>" onsubmit = "return deletePost()" method = "post">
+                            <input type = "submit" class = "remove-post" value = "x"/>
+                        </form>
+                        <%                 }
+                        %>
                         <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
                         <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
                         <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a>Like</a></p>
@@ -115,6 +125,15 @@
                                 User commenter = commentList.get(j).getCommenter();
                         %>
                         <div class = "post-comment">
+                            <%
+                                if (commenter.getUserID() == loggedUser.getUserID()) {
+                            %>
+                            <form action = "DeleteComment?id=<%=commentList.get(j).getCommentID()%>" onsubmit = "return deleteComment()" method = "post">
+                                <input type = "submit" class = "remove-post" value = "x"/>
+                            </form>
+                            <%
+                                }
+                            %>
                             <img src = "<%=commenter.getProfilePicture()%>" alt = "<%=commenter.getFirstName()%> <%=commenter.getLastName()%>" class = "comment-pic"/>
                             <p class = "event-post-text"><a href = "User?id=<%=commenter.getUserID()%>"><b>
                                         <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
@@ -125,6 +144,7 @@
                     </div>
                 </div>
                 <%
+                            }
                         }
                     }
                 %>

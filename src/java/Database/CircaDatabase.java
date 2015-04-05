@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -318,7 +318,8 @@ public class CircaDatabase { //singleton
         Statement stmt;
         ResultSet rs;
         Post post = null;
-        String postText;
+        String postText, stringDeleted;
+        boolean isDeleted;
         int userID = 0, eventID = 0;
         User poster;
         Event event;
@@ -334,10 +335,16 @@ public class CircaDatabase { //singleton
                 userID = rs.getInt("userID");
                 eventID = rs.getInt("eventID");
                 postText = rs.getString("postText");
-
+                stringDeleted = rs.getString("isDeleted");
+                
                 poster = getUserDetails(userID);
                 event = getEventDetails(eventID);
-                post = new Post(postID, postText, poster, event);
+                
+                if(stringDeleted.equals("1"))
+                    isDeleted = true;
+                else
+                    isDeleted = false;
+                post = new Post(postID, postText, poster, event, isDeleted);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -430,17 +437,16 @@ public class CircaDatabase { //singleton
         Statement stmt;
         ResultSet rs;
         int maxComment = 0;
-        
+
         try {
             stmt = con.createStatement();
             sql = "SELECT MAX(commentID) from comment";
-            
+
             rs = stmt.executeQuery(sql);
-            if(rs.next())
-            {
-                maxComment = rs.getInt("MAX(commentID)");
+            if (rs.next()) {
+                maxComment = rs.getInt("MAX(commentID)") + 1;
             }
-            
+
             sql = "INSERT INTO comment"
                     + " VALUES(" + postID + ", '" + comment + "', " + userID + ", " + maxComment + ")";
 
@@ -499,8 +505,8 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public ArrayList<User> getUserBuddies(int userID){
+
+    public ArrayList<User> getUserBuddies(int userID) {
         ArrayList<User> userBuddies = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
@@ -517,12 +523,12 @@ public class CircaDatabase { //singleton
             while (rs.next()) {
                 int friend_1 = rs.getInt("friend_1");
                 int friend_2 = rs.getInt("friend_2");
-                
+
                 User user = new User();
-                
-                if(friend_1 == userID){
+
+                if (friend_1 == userID) {
                     user = getUserDetails(friend_2);
-                }else if(friend_2 == userID){
+                } else if (friend_2 == userID) {
                     user = getUserDetails(friend_1);
                 }
                 userBuddies.add(user);
@@ -530,7 +536,42 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return userBuddies;
+    }
+
+    public void deletePost(int postID) {
+        Statement stmt;
+        try {
+            stmt = con.createStatement();
+            
+            sql = "UPDATE post"
+                    + " SET isDeleted = true"
+                    + " WHERE postID = " + postID;
+        
+            stmt.executeUpdate(sql);
+
+            sql = "DELETE FROM comment"
+                    + " WHERE postID = " + postID;
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteComment(int commentID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            
+            sql = "DELETE FROM comment"
+                    + " where commentID = " + commentID;
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -48,7 +48,7 @@ and open the template in the editor.
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-    
+
 }
 
 .event-description, .event-title{
@@ -235,4 +235,19 @@ a:hover{
 .comment-textarea{
     resize: none;
     font-family: arial;
+}
+
+.remove-post{
+    float: right;
+    background: none;
+    border: none;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+.remove-post:hover{
+    background-color: #940000;
+    text-decoration: none;
+    color: white;
+    cursor: pointer
 }

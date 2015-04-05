@@ -19,12 +19,14 @@ public class Post {
     private ArrayList<Like> likeList;
     private ArrayList<Comment> commentList;
     private int postID;
+    private boolean isDeleted;
 
-    public Post(int postID, String postText, User poster, Event event) {
+    public Post(int postID, String postText, User poster, Event event, boolean isDeleted) {
         this.postID = postID;
         this.postText = postText;
         this.poster = poster;
         this.event = event;
+        this.isDeleted = isDeleted;
     }
 
     public void addLike(Like like) {
@@ -139,5 +141,19 @@ public class Post {
      */
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    /**
+     * @return the isDeleted
+     */
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
