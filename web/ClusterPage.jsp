@@ -4,6 +4,7 @@
     Author     : Arren Antioquia
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.Event"%>
 <%@page import="Classes.User"%>
@@ -12,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Cluster | Circa</title>
+        <title>${clusterToProcess.getName()}  Cluster | Circa</title>
         <link rel ="shortcut icon" href="img/CircaLogoIcon.ico">
 
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js"></script>
@@ -61,15 +62,24 @@
             </div>
             
             <div id = "cluster-other-panel">
-                <ul>
+                <div id = "event-tag-div">
+                    <p id = "event-tag">Events</p>
+                </div>
+                
+                <ul id = "cluster-event-list">
                     <%  User user = (User)request.getSession().getAttribute("loggedUser");
                         CircaDatabase db = CircaDatabase.getInstance();
                         for(Event event : user.getEventList()){
                             if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
-                    
+                                SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+                                String strDate = ddMMMMyyFormat.format(event.getStartDate());
                     %>
-                    <li>
-                        <img src = "<%=event.getEventPicture()%>" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
+                    <li class = "cluster-event-item">
+                        <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
+                        <div class = "cluster-event-info-div">
+                            <p class = "cluster-event-name"><%=event.getEventName()%></p>
+                            <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
+                        </div>
                     </li>
                     <%
                             }
