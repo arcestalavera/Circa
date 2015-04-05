@@ -4,6 +4,8 @@
     Author     : Arren Antioquia
 --%>
 
+<%@page import="Classes.User"%>
+<%@page import="Classes.Cluster"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,9 +15,9 @@
 
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js"></script>
         <script type = "text/javascript" src = "js/header.js"></script>
-        <script type = "text/javascript" src = "js/clusters.js"></script>
+        <!--script type = "text/javascript" src = "js/clusters.js"></script-->
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
-        <link rel="stylesheet" type="text/css" 	media="all" href="css/clusters.css" />
+        <link rel="stylesheet" type="text/css" 	media="all" href="css/ClusterPage.css" />
     </head>
     <body bgcolor = "f4f4f4">
         <!-- HEADER -->
@@ -37,7 +39,27 @@
             <img src = "img\clusters\CircaLogo.png" class = "header-logo" />
         </div>    
         <!-- END HEADER -->
-        
-        <div>${clusterToProcess.getName()}</div>
+        <div id = "cluster-main-panel">
+            <div id = "cluster-info-panel">
+                <div id = "cluster-name-div"><p id = "cluster-name">${clusterToProcess.getName()}</p></div>
+                <div id = "cluster-members-list">
+                    <% Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+                        for(User clusterMember : cluster.getMemberList()){
+                    %>
+                    <div class = "cluster-member">
+                        <a href = "User?id=<%=clusterMember.getUserID()%>">
+                            <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "60px" height="60px"/>
+                        </a>
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+            
+            <div id = "cluster-post-panel">
+            </div>
+            
+            <div id = "cluster-add-member-panel">
+            </div>
+        </div>
     </body>
 </html>

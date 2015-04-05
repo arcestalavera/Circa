@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arren Antioquia
  */
-public class AddClusterMembers extends HttpServlet {
+public class ViewCluster extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,7 +64,7 @@ public class AddClusterMembers extends HttpServlet {
         
         CircaDatabase db = CircaDatabase.getInstance();
         String clusterName = db.getClusterName(clusterID);
-        System.out.println("HOOOO" + clusterName);
+        
         Cluster cluster = new Cluster(clusterID, clusterName);
         
         cluster.setMemberList(db.getClusterMembers(clusterID));

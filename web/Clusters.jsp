@@ -69,7 +69,7 @@
                 %>
                 <li class = "cluster-item">
                     <div class = "cluster-item-elements">
-                        <form action = "ClusterMembers" method="GET" class = "view-members-form">
+                        <form action = "ViewCluster" method="GET" class = "view-members-form">
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
                             <input type = "submit" class = "cluster-name" value = "<%=cluster.getName()%>">
                         </form>

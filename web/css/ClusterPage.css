@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 5, 2015, 1:54:32 PM
+    Author     : Arren Antioquia
+*/
+
+html, body{
+    margin: 0;
+}
+
+#cluster-main-panel{
+    width: 85%;
+    min-width: 950px;
+    margin: auto;
+    position: relative;
+    top: 50px;
+}
+
+#cluster-info-panel{
+    background-color: white;
+    width: 24.5%;
+    float: left;
+    border-radius: 6px;
+}
+
+#cluster-name-div{
+    text-align: center;
+    background-color: #AD0000;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#cluster-name{
+    font-family: sans-serif;
+    font-size: 25px;
+    color: white;
+    display: inline;
+}
+
+#cluster-members-list{
+    font-size: 0;
+    margin-top: 9px;
+}
+
+.cluster-member{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    background-color: red;
+    display: inline-block;
+    margin: 0 0 9px 9px;
+}
+
+#cluster-post-panel{
+    margin-left: 0.5%;
+    background-color: white;
+    width: 49.5%;
+    height: 100px;
+    float: left;
+}
+
+#cluster-add-member-panel{
+    margin-left: 0.5%;
+    background-color: blue;
+    width: 25%;
+    height: 100px;
+    float: left;
+}
