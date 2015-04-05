@@ -239,14 +239,14 @@ public class Event {
         this.description = description;
     }
 
-<<<<<<< HEAD
+
     public String getEventPicture() {
         return eventPicture;
     }
 
     public void setEventPicture(String eventPicture) {
         this.eventPicture = eventPicture;
-=======
+    }
     /**
      * @return the isDeleted
      */
@@ -259,6 +259,6 @@ public class Event {
      */
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
->>>>>>> origin/CircaOne
+
     }
 }
