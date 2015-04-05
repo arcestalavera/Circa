@@ -6,6 +6,7 @@
 package Servlet;
 
 import Classes.Cluster;
+import Classes.User;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -70,6 +71,9 @@ public class ViewCluster extends HttpServlet {
         cluster.setMemberList(db.getClusterMembers(clusterID));
         
         request.getSession().setAttribute("clusterToProcess", cluster);
+        
+        User user = (User)request.getSession().getAttribute("loggedUser");
+        user.setEventList(db.getEvents(user.getUserID()));
         
         RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
         reqDispatcher.forward(request, response);
