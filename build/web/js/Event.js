@@ -46,6 +46,7 @@ function deleteEvent(){
     else
         return false;
 }
+
 $(document).ready(function() {
     $('.comment-link').click(function() {
         $(this).parent().next(".input-comment-div").slideToggle("medium");

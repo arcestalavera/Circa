@@ -77,7 +77,9 @@
                 <%
                 } else {
                 %>
-                <button class = "event-join" onclick = "editEvent('<%=event.getEventID()%>')">Edit Event Details</button>
+                <form action = "EditEvent" method = "post">
+                    <input type = "submit" class = "event-join" value = "Edit Event Details"/>
+                </form>
                 <form action = "DeleteEvent?id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
                     <input type = "submit" class = "event-join" value = "Cancel Event"/>
                 </form>

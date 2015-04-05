@@ -76,6 +76,10 @@
         <servlet-name>deleteEvent</servlet-name>
         <servlet-class>Servlet.DeleteEvent</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditEvent</servlet-name>
+        <servlet-class>Servlet.EditEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -149,8 +153,12 @@
         <url-pattern>/Unlike</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteEvent</servlet-name>
+        <servlet-name>deleteEvent</servlet-name>
         <url-pattern>/DeleteEvent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditEvent</servlet-name>
+        <url-pattern>/EditEvent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
