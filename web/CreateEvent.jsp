@@ -103,7 +103,7 @@
                 <div class = "event-body" align = "center">
                     <h2 class = "event-body-title">Name of Event</h2> <input required value = "<%=name%>" type = "text" name = "eventName" class = "event-body-input" placeholder = "Name"/><br>
                     <br><h2 class = "event-body-title">Venue</h2> <input required value = "<%=venue%>" type = "text" name = "eventVenue" class = "event-body-input" placeholder = "Venue"/><br>
-                    <br><h3 class = "event-body-title">Description</h3><textarea value = "<%=description%>" rows="5" cols = "50" name = "eventDescription" placeholder = "Tell us something about your event"></textarea>
+                    <br><h3 class = "event-body-title">Description</h3><textarea rows="5" cols = "50" name = "eventDescription" placeholder = "Tell us something about your event"><%=description%></textarea>
                     <br><h2 class = "event-body-title">Start</h2><hr width = "30%">
                     <text class = "event-body-title"><b>Date:</b></text> <input required value = "<%=startDate%>" type = "date" name = "eventStartDate"/> 
                     <text class = "event-body-title"><b>Time:</b></text> <input required value = "<%=startTime%>" type = "time" name = "eventStartTime"/>

@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -690,5 +690,21 @@ public class CircaDatabase { //singleton
         }
         
         return isViewable;
+    }
+    
+    public void editEvent(int eventID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+            sql = "UPDATE event"
+                    + " SET name = '" + name + "', startDate = '" + startDate + "', endDate = '" + endDate + "',"
+                    + " venue = '" + venue + "', type = '" + type + "', description = '" + description + "'"
+                    + " WHERE eventID = " + eventID;
+            stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
