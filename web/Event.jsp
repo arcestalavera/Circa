@@ -1,3 +1,4 @@
+<%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.Comment"%>
 <%@page import="Classes.Post"%>
 <%@page import="java.util.ArrayList"%>
@@ -55,6 +56,7 @@
             //get host
             User host = event.getHost();
             User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+            CircaDatabase db = CircaDatabase.getInstance();
         %>
         <div id = "event-whole">
             <div id = "event-header-div" align = "center">
@@ -103,11 +105,22 @@
                         <form action = "DeletePost?id=<%=postList.get(i).getPostID()%>" onsubmit = "return deletePost()" method = "post">
                             <input type = "submit" class = "remove-post" value = "x"/>
                         </form>
-                        <%                 }
+                        <%
+                            }
                         %>
                         <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
                         <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
-                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a>Like</a></p>
+                        <%
+                            if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
+                        %>                      
+                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a href= "Like?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Like</a></p>
+                        <%
+                        } else {
+                        %>
+                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a href= "Unlike?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Unlike</a></p>
+                        <%
+                            }
+                        %>
                         <div class = "input-comment-div" align = "center">
                             <form action = "Comment?id=<%=postList.get(i).getPostID()%>" method = "post" onsubmit = "return checkComment('<%=i%>')">
                                 <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>

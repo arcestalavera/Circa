@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -595,5 +595,57 @@ public class CircaDatabase { //singleton
         } catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public void likePost(int postID, int userID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            
+            sql = "INSERT INTO likes"
+                    + " VALUES(" + postID + ", " + userID + ")";
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void unlikePost(int postID, int userID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            
+            sql = "DELETE FROM likes"
+                    + " WHERE postID = " + postID + " AND userID = " + userID;
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean isLiked(int postID, int userID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isLiked = false;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "SELECT * FROM likes"
+                    + " WHERE postID = " + postID + " AND userID = " + userID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next()){
+                isLiked = true;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return isLiked;
     }
 }

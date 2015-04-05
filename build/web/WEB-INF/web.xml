@@ -64,6 +64,14 @@
         <servlet-name>ViewCluster</servlet-name>
         <servlet-class>Servlet.ViewCluster</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LikePost</servlet-name>
+        <servlet-class>Servlet.LikePost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UnlikePost</servlet-name>
+        <servlet-class>Servlet.UnlikePost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -127,6 +135,14 @@
     <servlet-mapping>
         <servlet-name>ViewCluster</servlet-name>
         <url-pattern>/ViewCluster</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikePost</servlet-name>
+        <url-pattern>/Like</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UnlikePost</servlet-name>
+        <url-pattern>/Unlike</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
