@@ -20,8 +20,9 @@ public class Event {
     private Date startDate, endDate;
     private ArrayList<Post> postList;
     private ArrayList<User> attendingList, invitedList, requestList;
+    private boolean isDeleted;
     
-    public Event(int eventID, String eventName, String venue, String type, String description, Date startDate, Date endDate, User host, String eventPicture){
+    public Event(int eventID, String eventName, String venue, String type, String description, Date startDate, Date endDate, User host, String eventPicture, boolean isDeleted){
         this.eventID = eventID;
         this.eventName = eventName;
         this.venue = venue;
@@ -31,6 +32,7 @@ public class Event {
         this.startDate = startDate;
         this.endDate = endDate;
         this.eventPicture = eventPicture;
+        this.isDeleted = isDeleted;
         
         attendingList = new ArrayList<>();
         invitedList = new ArrayList<>();
@@ -237,11 +239,26 @@ public class Event {
         this.description = description;
     }
 
+<<<<<<< HEAD
     public String getEventPicture() {
         return eventPicture;
     }
 
     public void setEventPicture(String eventPicture) {
         this.eventPicture = eventPicture;
+=======
+    /**
+     * @return the isDeleted
+     */
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted the isDeleted to set
+     */
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+>>>>>>> origin/CircaOne
     }
 }

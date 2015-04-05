@@ -88,6 +88,7 @@
 
                         if (eventList != null) {
                             for (int i = 0; i < eventList.size(); i++) {
+                                if (!eventList.get(i).isDeleted()) {
                     %>
                     <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
@@ -101,6 +102,7 @@
                         </h6><br><button onclick = "goToEvent('<%=eventList.get(i).getEventID()%>')">View Event</button>
                     </div>
                     <%
+                            }
                         }
                     } else {
                         if (loggedUser.getUserID() == userDetails.getUserID()) {

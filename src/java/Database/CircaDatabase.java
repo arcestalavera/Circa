@@ -231,6 +231,7 @@ public class CircaDatabase { //singleton
         Date startDate, endDate;
         int hostID = 0;
         User host;
+        boolean isDeleted;
 
         try {
             stmt = con.createStatement();
@@ -250,10 +251,11 @@ public class CircaDatabase { //singleton
                 startDate = new Date(rs.getTimestamp("startDate").getTime());
                 endDate = new Date(rs.getTimestamp("endDate").getTime());
                 hostID = rs.getInt("hostID");
+                isDeleted = rs.getBoolean("isDeleted");
 
                 //get host details
                 host = getUserDetails(hostID);
-                event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture);
+                event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
             }
 
         } catch (SQLException e) {
@@ -263,7 +265,7 @@ public class CircaDatabase { //singleton
         return event;
     }
 
-    public String getClusterName(int clusterID){
+    public String getClusterName(int clusterID) {
         Statement stmt;
         ResultSet rs;
         String clusterName = "";
@@ -284,7 +286,7 @@ public class CircaDatabase { //singleton
 
         return clusterName;
     }
-    
+
     public ArrayList<Cluster> getUserClusters(int userID) {
         Statement stmt;
         ResultSet rs;
@@ -357,15 +359,10 @@ public class CircaDatabase { //singleton
                 userID = rs.getInt("userID");
                 eventID = rs.getInt("eventID");
                 postText = rs.getString("postText");
-                stringDeleted = rs.getString("isDeleted");
-                
+                isDeleted = rs.getBoolean("isDeleted");
+
                 poster = getUserDetails(userID);
                 event = getEventDetails(eventID);
-                
-                if(stringDeleted.equals("1"))
-                    isDeleted = true;
-                else
-                    isDeleted = false;
                 post = new Post(postID, postText, poster, event, isDeleted);
             }
         } catch (SQLException e) {
@@ -566,11 +563,11 @@ public class CircaDatabase { //singleton
         Statement stmt;
         try {
             stmt = con.createStatement();
-            
+
             sql = "UPDATE post"
                     + " SET isDeleted = true"
                     + " WHERE postID = " + postID;
-        
+
             stmt.executeUpdate(sql);
 
             sql = "DELETE FROM comment"
@@ -581,74 +578,74 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public void deleteComment(int commentID){
+
+    public void deleteComment(int commentID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            
+
             sql = "DELETE FROM comment"
                     + " where commentID = " + commentID;
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void likePost(int postID, int userID){
+
+    public void likePost(int postID, int userID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            
+
             sql = "INSERT INTO likes"
                     + " VALUES(" + postID + ", " + userID + ")";
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void unlikePost(int postID, int userID){
+
+    public void unlikePost(int postID, int userID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            
+
             sql = "DELETE FROM likes"
                     + " WHERE postID = " + postID + " AND userID = " + userID;
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public boolean isLiked(int postID, int userID){
+
+    public boolean isLiked(int postID, int userID) {
         Statement stmt;
         ResultSet rs;
         boolean isLiked = false;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "SELECT * FROM likes"
                     + " WHERE postID = " + postID + " AND userID = " + userID;
-            
+
             rs = stmt.executeQuery(sql);
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 isLiked = true;
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return isLiked;
     }
-    
+
     public void deleteEvent(int eventID) {
         Event event;
         ArrayList<Post> postList;
@@ -659,15 +656,15 @@ public class CircaDatabase { //singleton
             sql = "UPDATE event"
                     + " SET isDeleted = true"
                     + " WHERE eventID = " + eventID;
-        
-            stmt.executeUpdate(sql);
-            
-            postList = event.getPostList();
-            
-            for (Post post : postList) {
-                deletePost(post.getPostID());
-            }
 
+            stmt.executeUpdate(sql);
+
+            postList = event.getPostList();
+            if (postList != null) {
+                for (Post post : postList) {
+                    deletePost(post.getPostID());
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
