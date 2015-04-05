@@ -648,4 +648,28 @@ public class CircaDatabase { //singleton
         
         return isLiked;
     }
+    
+    public void deleteEvent(int eventID) {
+        Event event;
+        ArrayList<Post> postList;
+        Statement stmt;
+        try {
+            stmt = con.createStatement();
+            event = getEventDetails(eventID);
+            sql = "UPDATE event"
+                    + " SET isDeleted = true"
+                    + " WHERE eventID = " + eventID;
+        
+            stmt.executeUpdate(sql);
+            
+            postList = event.getPostList();
+            
+            for (Post post : postList) {
+                deletePost(post.getPostID());
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

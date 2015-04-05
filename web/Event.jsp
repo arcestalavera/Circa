@@ -70,7 +70,20 @@
                 <p>Venue: <%=event.getVenue()%></p>
                 <p>1,392 people are going</p>
                 <p>Hosted by <a href = "User?id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
+                <%
+                    if (loggedUser.getUserID() != host.getUserID()) {
+                %>
                 <button class = "event-join">Join</button>
+                <%
+                } else {
+                %>
+                <button class = "event-join" onclick = "editEvent('<%=event.getEventID()%>')">Edit Event Details</button>
+                <form action = "DeleteEvent?id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
+                    <input type = "submit" class = "event-join" value = "Cancel Event"/>
+                </form>
+                <%
+                    }
+                %>
                 <hr>
             </div>
 

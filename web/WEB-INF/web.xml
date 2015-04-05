@@ -72,6 +72,10 @@
         <servlet-name>UnlikePost</servlet-name>
         <servlet-class>Servlet.UnlikePost</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteEvent</servlet-name>
+        <servlet-class>Servlet.DeleteEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -143,6 +147,10 @@
     <servlet-mapping>
         <servlet-name>UnlikePost</servlet-name>
         <url-pattern>/Unlike</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteEvent</servlet-name>
+        <url-pattern>/DeleteEvent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

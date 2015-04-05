@@ -40,6 +40,12 @@ function deleteComment(){
         return false;
 }
 
+function deleteEvent(){
+    if(confirm("Do you really want to cancel this event?"))
+        return true;
+    else
+        return false;
+}
 $(document).ready(function() {
     $('.comment-link').click(function() {
         $(this).parent().next(".input-comment-div").slideToggle("medium");
