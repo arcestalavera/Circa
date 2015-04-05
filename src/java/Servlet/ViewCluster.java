@@ -90,7 +90,18 @@ public class ViewCluster extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String[] newmember = request.getParameterValues("new-member");
+        User user = (User)request.getSession().getAttribute("loggedUser");
+        Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+        CircaDatabase db = CircaDatabase.getInstance();
+        
+        for(String s : newmember){
+            db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+        }
+        
+        RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+        reqDispatcher.forward(request, response);
     }
 
     /**

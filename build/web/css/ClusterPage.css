@@ -66,21 +66,28 @@ html, body{
 
 #cluster-other-panel{
     margin-left: 0.5%;
-    background-color: white;
     width: 25%;
     float: left;
+}
+
+#cluster-other-event-panel, #cluster-other-addmember-panel{
+    background-color: white;
     border: 1px solid #DCDCDC;
     border-radius: 6px;
 }
 
-#event-tag-div{
+#cluster-other-addmember-panel{
+    margin-top: 3px;
+}
+
+#event-tag-div, #addmember-tag-div{
     margin-top: 5px;
     border-bottom: 1px solid #DCDCDC;
 }
 
-#event-tag{
+#event-tag, #addmember-tag{
     font-family: sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     color: #AD0000;
     margin-left: 5px;
     display: inline;
@@ -107,6 +114,15 @@ html, body{
     left: 5px;
 }
 
+.cluster-name-link{
+    color: #AD0000;
+    text-decoration: none;
+}
+
+.cluster-name-link:hover{
+    text-decoration: underline;
+}
+
 .cluster-event-name, .cluster-event-info{
     margin: 0;
     font-family: sans-serif;
@@ -122,6 +138,41 @@ html, body{
     color: #DCDCDC;
     font-size: 12px;
     margin-top: 2px;
+}
+
+#addmember-form{
+    
+    margin-top: 5px;
+    margin-left: 5px;
+    
+}
+
+#cluster-addmember-list{
+    height: 80px;
+    overflow-y: auto;
+}
+
+.new-member-item{
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+#addmember-submit-button{
+    font-size: 12px;
+    width: 95%;
+    background-color: #AD0000;
+    border: 1px solid #AD0000;
+    color: white;
+    
+    margin: 5px 0 5px 4px;
+    border-radius: 4px;
+}
+
+#addmember-submit-button:hover{
+    color: #AD0000;
+    background-color: white;
+    border: 1px solid #AD0000;
+    cursor: pointer;
 }
 
 ul{

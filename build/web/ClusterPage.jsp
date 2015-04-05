@@ -46,7 +46,9 @@
             <div id = "cluster-info-panel">
                 <div id = "cluster-name-div"><p id = "cluster-name">${clusterToProcess.getName()}</p></div>
                 <ul id = "cluster-members-list">
-                    <% Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+                    <%  Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+                        CircaDatabase db = CircaDatabase.getInstance();
+                        cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
                         for(User clusterMember : cluster.getMemberList()){
                     %>
                     <li class = "cluster-member">
@@ -62,30 +64,59 @@
             </div>
             
             <div id = "cluster-other-panel">
-                <div id = "event-tag-div">
-                    <p id = "event-tag">Events</p>
-                </div>
-                
-                <ul id = "cluster-event-list">
-                    <%  User user = (User)request.getSession().getAttribute("loggedUser");
-                        CircaDatabase db = CircaDatabase.getInstance();
-                        for(Event event : user.getEventList()){
-                            if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
-                                SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
-                                String strDate = ddMMMMyyFormat.format(event.getStartDate());
-                    %>
-                    <li class = "cluster-event-item">
-                        <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
-                        <div class = "cluster-event-info-div">
-                            <p class = "cluster-event-name"><%=event.getEventName()%></p>
-                            <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
-                        </div>
-                    </li>
-                    <%
+                <div id = "cluster-other-event-panel">
+                    <div id = "event-tag-div">
+                        <p id = "event-tag">Events</p>
+                    </div>
+
+                    <ul id = "cluster-event-list">
+                        <%  User user = (User) request.getSession().getAttribute("loggedUser");
+                            
+                            for (Event event : user.getEventList()) {
+                                if (db.isViewableToCluster(event.getEventID(), cluster.getClusterID())) {
+                                    SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+                                    String strDate = ddMMMMyyFormat.format(event.getStartDate());
+                        %>
+                        <li class = "cluster-event-item">
+                            <a href = "Event?id=<%=event.getEventID()%>">
+                                <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
+                            </a>
+                            <div class = "cluster-event-info-div">
+                                <a href = "Event?id=<%=event.getEventID()%>" class = "cluster-name-link">
+                                    <p class = "cluster-event-name"><%=event.getEventName()%></p>
+                                </a>
+                                <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
+                            </div>
+                        </li>
+                        <%
+                                }
                             }
-                        }
-                    %>
-                </ul>
+                        %>
+                    </ul>
+                </div>
+                <div id = "cluster-other-addmember-panel">
+                    <div id = "addmember-tag-div">
+                        <p id = "addmember-tag">Add Members</p>
+                    </div>
+                    <div id = "add-member-div">
+                        <form id = "addmember-form" action = "ViewCluster" method="POST">
+                            <ul id = "cluster-addmember-list">
+                                <%  user.setBuddyList(db.getUserBuddies(user.getUserID()));
+                                    for(User buddy : user.getBuddyList()){
+                                        if(!db.isClusterMember(buddy.getUserID(), cluster.getClusterID())){
+                                %>
+                                <li class = "new-member-item">
+                                    <input type = "checkbox" id = "new-member" name = "new-member" value = "<%=buddy.getUserID()%>"/>
+                                    <label for="new-member"><%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
+                                </li>
+                                <%      }
+                                    }
+                                %>
+                            </ul>
+                            <input type = "submit" id = "addmember-submit-button" value = "Add to Cluster"/>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </body>

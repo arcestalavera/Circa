@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -690,6 +690,46 @@ public class CircaDatabase { //singleton
         }
         
         return isViewable;
+    }
+    
+    public boolean isClusterMember(int userID, int clusterID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isClusterMember = false;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "SELECT * FROM add_user_to_cluster"
+                    + " WHERE addedID = " + userID + " AND clusterID = " + clusterID + ";";
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next()){
+                isClusterMember = true;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return isClusterMember;
+    }
+    
+    public void addUserToCluster(int adderID, int addedID, int clusterID) {
+
+        sql = "INSERT INTO add_user_to_cluster(adderID, addedID, clusterID) "
+                + "VALUES(?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+
+            preparedStmt.setInt(1, adderID);
+            preparedStmt.setInt(2, addedID);
+            preparedStmt.setInt(3, clusterID);
+
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     public void editEvent(int eventID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
