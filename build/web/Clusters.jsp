@@ -81,7 +81,7 @@
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>
                             <div class = "cluster-members">
-                                <a href = "User?username=<%=clusterMember.getUserID()%>">
+                                <a href = "User?id=<%=clusterMember.getUserID()%>">
                                     <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "50px" height="50px"/>
                                 </a>
                             </div>

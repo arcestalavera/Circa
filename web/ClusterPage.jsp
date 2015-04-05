@@ -4,6 +4,8 @@
     Author     : Arren Antioquia
 --%>
 
+<%@page import="Database.CircaDatabase"%>
+<%@page import="Classes.Event"%>
 <%@page import="Classes.User"%>
 <%@page import="Classes.Cluster"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -42,23 +44,38 @@
         <div id = "cluster-main-panel">
             <div id = "cluster-info-panel">
                 <div id = "cluster-name-div"><p id = "cluster-name">${clusterToProcess.getName()}</p></div>
-                <div id = "cluster-members-list">
+                <ul id = "cluster-members-list">
                     <% Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
                         for(User clusterMember : cluster.getMemberList()){
                     %>
-                    <div class = "cluster-member">
+                    <li class = "cluster-member">
                         <a href = "User?id=<%=clusterMember.getUserID()%>">
-                            <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "60px" height="60px"/>
+                            <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>" width = "60px" height="60px" />
                         </a>
-                    </div>
+                    </li>
                     <%}%>
-                </div>
+                </ul>
             </div>
             
             <div id = "cluster-post-panel">
             </div>
             
-            <div id = "cluster-add-member-panel">
+            <div id = "cluster-other-panel">
+                <ul>
+                    <%  User user = (User)request.getSession().getAttribute("loggedUser");
+                        CircaDatabase db = CircaDatabase.getInstance();
+                        for(Event event : user.getEventList()){
+                            if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
+                    
+                    %>
+                    <li>
+                        <img src = "<%=event.getEventPicture()%>" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
+                    </li>
+                    <%
+                            }
+                        }
+                    %>
+                </ul>
             </div>
         </div>
     </body>

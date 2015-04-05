@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -671,5 +671,27 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    public boolean isViewableToCluster(int eventID, int clusterID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isViewable = false;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "SELECT * FROM event_view_restriction"
+                    + " WHERE eventID = " + eventID + " AND clusterID = "+ clusterID + ";";
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next()){
+                isViewable = true;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return isViewable;
     }
 }

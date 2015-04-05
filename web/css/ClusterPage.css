@@ -22,8 +22,9 @@ html, body{
 
 #cluster-info-panel{
     background-color: white;
-    width: 24.5%;
+    width: 24%;
     float: left;
+    border: 1px solid #DCDCDC;
     border-radius: 6px;
 }
 
@@ -63,10 +64,17 @@ html, body{
     float: left;
 }
 
-#cluster-add-member-panel{
+#cluster-other-panel{
     margin-left: 0.5%;
-    background-color: blue;
+    background-color: white;
     width: 25%;
     height: 100px;
     float: left;
+    border: 1px solid #DCDCDC;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }

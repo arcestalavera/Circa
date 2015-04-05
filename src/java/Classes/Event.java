@@ -236,4 +236,12 @@ public class Event {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getEventPicture() {
+        return eventPicture;
+    }
+
+    public void setEventPicture(String eventPicture) {
+        this.eventPicture = eventPicture;
+    }
 }
