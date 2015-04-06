@@ -32,7 +32,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?action=view&id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -99,7 +99,10 @@
                         <h6><%=eventList.get(i).getType()%> | 
                             <%=dateFormat.format(eventList.get(i).getStartDate())%> - 
                             <%=dateFormat.format(eventList.get(i).getEndDate())%>
-                        </h6><br><button onclick = "goToEvent('<%=eventList.get(i).getEventID()%>')">View Event</button>
+                        </h6><br>
+                        
+                        <button type = "submit" onclick = "window.location.href = 'Event?action=view&id=<%=eventList.get(i).getEventID()%>'">View Event</button>
+
                     </div>
                     <%
                             }

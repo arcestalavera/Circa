@@ -38,7 +38,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?action=view&id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -55,9 +55,8 @@
             String name, venue, description, startDate, startTime, endDate, endTime, type;
             Event event = null;
             if (isEditing != null && isEditing) {
-                System.out.println("EDIT WEE");
                 event = (Event) request.getSession().getAttribute("eventDetails");
-                action = "ConfirmEdit?id=" + event.getEventID();
+                action = "Event?action=confirm&id=" + event.getEventID();
 
                 //if it's editing, set the details
                 name = event.getEventName();
@@ -72,7 +71,7 @@
                 endTime = timeFormat.format(event.getEndDate());
                 type = event.getType();
             } else {
-                action = "CreateEvent";
+                action = "Event?action=create";
                 name = "";
                 venue = "";
                 description = "";

@@ -36,7 +36,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -156,7 +156,6 @@ public class CircaDatabase { //singleton
             while (rs.next()) {
                 eventID = rs.getInt("eventID");
                 Event event = getEventDetails(eventID);
-                event.setPostList(getPosts(eventID));
 
                 eventList.add(event);
             }
@@ -257,6 +256,7 @@ public class CircaDatabase { //singleton
                 //get host details
                 host = getUserDetails(hostID);
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
+                
             }
 
         } catch (SQLException e) {

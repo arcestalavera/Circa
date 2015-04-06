@@ -22,6 +22,22 @@ public class Event {
     private ArrayList<User> attendingList, invitedList, requestList;
     private boolean isDeleted;
     
+    //for servlet use
+    public Event(String eventName, String venue, String type, String description, Date startDate, Date endDate){
+        this.eventID = 0;
+        this.eventName = eventName;
+        this.venue = venue;
+        this.type = type;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        
+        attendingList = new ArrayList<>();
+        invitedList = new ArrayList<>();
+        requestList = new ArrayList<>();
+    }
+    
+    //for official event
     public Event(int eventID, String eventName, String venue, String type, String description, Date startDate, Date endDate, User host, String eventPicture, boolean isDeleted){
         this.eventID = eventID;
         this.eventName = eventName;

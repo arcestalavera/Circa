@@ -38,7 +38,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?action=view&id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -69,7 +69,7 @@
                 <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
                 <p>Venue: <%=event.getVenue()%></p>
                 <p>1,392 people are going</p>
-                <p>Hosted by <a href = "User?id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
+                <p>Hosted by <a href = "User?action=view&id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
                 <%
                     if (loggedUser.getUserID() != host.getUserID()) {
                 %>
@@ -77,10 +77,10 @@
                 <%
                 } else {
                 %>
-                <form action = "EditEvent" method = "post">
+                <form action = "Event?action=edit" method = "post">
                     <input type = "submit" class = "event-join" value = "Edit Event Details"/>
                 </form>
-                <form action = "DeleteEvent?id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
+                <form action = "Event?action=delete&id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
                     <input type = "submit" class = "event-join" value = "Cancel Event"/>
                 </form>
                 <%
@@ -126,7 +126,7 @@
                         <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
                         <br>
 
-                        <a href = "User?id=<%=poster.getUserID()%>">
+                        <a href = "User?action=view&id=<%=poster.getUserID()%>">
                             <b><%=poster.getFirstName()%> <%=poster.getLastName()%></b>
                         </a>
 
@@ -189,7 +189,7 @@
                                 }
                             %>
                             <img src = "<%=commenter.getProfilePicture()%>" alt = "<%=commenter.getFirstName()%> <%=commenter.getLastName()%>" class = "comment-pic"/>
-                            <p class = "event-post-text"><a href = "User?id=<%=commenter.getUserID()%>"><b>
+                            <p class = "event-post-text"><a href = "User?action=view&id=<%=commenter.getUserID()%>"><b>
                                         <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
                         </div>
                         <%
