@@ -23,7 +23,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?action=view&id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -56,7 +56,7 @@
                             
                             for(User buddy : user.getBuddyList()){%>
                             <div class = "cluster-members">
-                                <a href = "User?id=<%=buddy.getUserID()%>">
+                                <a href = "User?action=view&id=<%=buddy.getUserID()%>">
                                     <img src="<%=buddy.getProfilePicture()%>" title = "<%=buddy.getFirstName()%> <%=buddy.getLastName()%>"width = "50px" height="50px"/>
                                 </a>
                             </div>
@@ -83,7 +83,7 @@
                     <div class = "cluster-members-list">
                         <%for(User clusterMember : cluster.getMemberList()){%>
                             <div class = "cluster-members">
-                                <a href = "User?id=<%=clusterMember.getUserID()%>">
+                                <a href = "User?action=view&id=<%=clusterMember.getUserID()%>">
                                     <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>"width = "50px" height="50px"/>
                                 </a>
                             </div>

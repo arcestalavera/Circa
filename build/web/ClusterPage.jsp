@@ -33,7 +33,7 @@
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
-                    <a href = "User?id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
+                    <a href = "User?action=view&id=${loggedUser.getUserID()}" class = "text">${loggedUser.getFirstName()}</a>
                     <a href = "Cluster" class = "text">Clusters</a>
                     <a href = "Home" class = "text">Home</a>
                     <a href = "Logout" class = "text">Logout</a>
@@ -57,7 +57,7 @@
                             <input type = "hidden" name = "form-type" value = "delete-cluster-member" />
                             <input class = "delete-cluster-member-button" type = "image" src = "img/clusterpage/DeleteButtonSmall.png">
                         </form>
-                        <a href = "User?id=<%=clusterMember.getUserID()%>">
+                        <a href = "User?action=view&id=<%=clusterMember.getUserID()%>">
                             <img src="<%=clusterMember.getProfilePicture()%>" class = "cluster-member-img" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>" width = "60px" height="60px" />
                         </a>
                     </li>
@@ -83,11 +83,11 @@
                                     String strDate = ddMMMMyyFormat.format(event.getStartDate());
                         %>
                         <li class = "cluster-event-item">
-                            <a href = "Event?id=<%=event.getEventID()%>">
+                            <a href = "Event?action=view&id=<%=event.getEventID()%>">
                                 <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
                             </a>
                             <div class = "cluster-event-info-div">
-                                <a href = "Event?id=<%=event.getEventID()%>" class = "cluster-name-link">
+                                <a href = "Event?action=view&id=<%=event.getEventID()%>" class = "cluster-name-link">
                                     <p class = "cluster-event-name"><%=event.getEventName()%></p>
                                 </a>
                                 <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
