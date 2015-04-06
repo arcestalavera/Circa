@@ -18,7 +18,7 @@
 
         <script type = "text/javascript" src = "js/jquery-1.11.2.min.js"></script>
         <script type = "text/javascript" src = "js/header.js"></script>
-        <!--script type = "text/javascript" src = "js/clusters.js"></script-->
+        <script type = "text/javascript" src = "js/ClusterPage.js"></script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <link rel="stylesheet" type="text/css" 	media="all" href="css/ClusterPage.css" />
     </head>
@@ -46,14 +46,18 @@
             <div id = "cluster-info-panel">
                 <div id = "cluster-name-div"><p id = "cluster-name">${clusterToProcess.getName()}</p></div>
                 <ul id = "cluster-members-list">
-                    <%  Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+                    <%  Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
                         CircaDatabase db = CircaDatabase.getInstance();
                         cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
-                        for(User clusterMember : cluster.getMemberList()){
+                        for (User clusterMember : cluster.getMemberList()) {
                     %>
                     <li class = "cluster-member">
+                        <form class = "delete-cluster-member-form">
+                            <input type = "hidden" name = "cluster-member-id" value = "<%=clusterMember.getUserID()%>">
+                            <input class = "delete-cluster-member-button" type = "image" src = "img/clusterpage/DeleteButtonSmall.png">
+                        </form>
                         <a href = "User?id=<%=clusterMember.getUserID()%>">
-                            <img src="<%=clusterMember.getProfilePicture()%>" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>" width = "60px" height="60px" />
+                            <img src="<%=clusterMember.getProfilePicture()%>" class = "cluster-member-img" title = "<%=clusterMember.getFirstName()%> <%=clusterMember.getLastName()%>" width = "60px" height="60px" />
                         </a>
                     </li>
                     <%}%>

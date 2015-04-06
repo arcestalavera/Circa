@@ -734,6 +734,24 @@ public class CircaDatabase { //singleton
         }
     }
     
+    public void deleteUsertoCluster(int addedID, int clusterID){
+        
+        sql = "DELETE FROM add_user_to_cluster "
+                + "WHERE addedID = ? AND clusterID = ?;";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+
+            preparedStmt.setInt(1, addedID);
+            preparedStmt.setInt(2, clusterID);
+
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
     public void editEvent(int eventID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
         Statement stmt;
 
