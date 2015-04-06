@@ -8,6 +8,7 @@ package Database;
 import Classes.Cluster;
 import Classes.Comment;
 import Classes.Event;
+import Classes.Like;
 import Classes.Post;
 import Classes.User;
 import java.sql.Connection;
@@ -389,6 +390,7 @@ public class CircaDatabase { //singleton
                 postID = rs.getInt("postID");
                 Post post = getPostDetails(postID);
                 post.setCommentList(getComments(postID));
+                post.setLikeList(getLikes(postID));
                 postList.add(post);
             }
         } catch (SQLException e) {
@@ -761,5 +763,34 @@ public class CircaDatabase { //singleton
         } catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public ArrayList<Like> getLikes(int postID){
+        ArrayList<Like> likeList = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+        
+        try{
+            stmt = con.createStatement();
+            
+            Post post = getPostDetails(postID);
+            
+            sql = "SELECT * FROM likes"
+                    + " WHERE postID = " + postID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            while(rs.next())
+            {
+                int userID = rs.getInt("userID");
+                User liker = getUserDetails(userID);
+                
+                likeList.add(new Like(post, liker));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        System.out.println("LIKE SIZE = " + likeList.size());
+        return likeList;
     }
 }

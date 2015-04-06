@@ -154,11 +154,11 @@
                             }
                             if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
                         %>                      
-                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a href= "Like?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Like</a></p>
+                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Like</a></p>
                         <%
                         } else {
                         %>
-                        <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a href= "Unlike?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Unlike</a></p>
+                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Unlike?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Unlike</a></p>
                         <%
                             }
                         %>

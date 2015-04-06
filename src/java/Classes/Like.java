@@ -12,14 +12,35 @@ package Classes;
  */
 public class Like {
     private User liker;
-    private int likeID;
+    private Post post;
     
-    public Like(int likeID, User liker){
-        this.likeID = likeID;
+    public Like(Post post, User liker){
+        this.post = post;
         this.liker = liker;
     }
     
     public User getLiker(){
         return liker;
+    }
+
+    /**
+     * @param liker the liker to set
+     */
+    public void setLiker(User liker) {
+        this.liker = liker;
+    }
+
+    /**
+     * @return the post
+     */
+    public Post getPost() {
+        return post;
+    }
+
+    /**
+     * @param post the post to set
+     */
+    public void setPost(Post post) {
+        this.post = post;
     }
 }
