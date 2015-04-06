@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlet;
 
 import Classes.Event;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class DeleteComment extends HttpServlet {
+public class toLike extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +32,24 @@ public class DeleteComment extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteComment</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteComment at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        RequestDispatcher reqDispatcher;
+        int postID = Integer.parseInt(request.getParameter("pid"));
+        int userID = Integer.parseInt(request.getParameter("uid"));
+        String action = request.getParameter("action");
+        Event event = (Event) request.getSession().getAttribute("eventDetails");
+        CircaDatabase db = CircaDatabase.getInstance();
+
+        switch (action) {
+            case "like":
+                db.likePost(postID, userID);
+                break;
+            case "unlike":
+                db.unlikePost(postID, userID);
+                break;
         }
+        reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+
+        reqDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,6 +65,7 @@ public class DeleteComment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**
@@ -74,14 +79,7 @@ public class DeleteComment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int commentID = Integer.parseInt(request.getParameter("id"));
-        Event event = (Event) request.getSession().getAttribute("eventDetails");
-        CircaDatabase db = CircaDatabase.getInstance();
-
-        db.deleteComment(commentID);
-
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event?id=" + event.getEventID());
-        reqDispatcher.forward(request, response);
+        processRequest(request, response);
     }
 
     /**

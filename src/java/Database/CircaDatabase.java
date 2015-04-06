@@ -468,7 +468,7 @@ public class CircaDatabase { //singleton
                 maxComment = rs.getInt("MAX(commentID)") + 1;
             }
 
-            sql = "INSERT INTO comment"
+            sql = "INSERT INTO comment(postID, commentText, userID, commentID)"
                     + " VALUES(" + postID + ", '" + comment + "', " + userID + ", " + maxComment + ")";
 
             stmt.executeUpdate(sql);

@@ -91,7 +91,7 @@
 
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
-                <form action = "Post" onsubmit = "return checkPost()" method = "post">
+                <form action = "Post?action=post" onsubmit = "return checkPost()" method = "post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
                     <hr width = "60%"/>
                     <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
@@ -117,7 +117,7 @@
                         <%
                             if (poster.getUserID() == loggedUser.getUserID()) {
                         %>
-                        <form action = "DeletePost?id=<%=postList.get(i).getPostID()%>" onsubmit = "return deletePost()" method = "post">
+                        <form action = "Post?action=delete&id=<%=postList.get(i).getPostID()%>" onsubmit = "return deletePost()" method = "post">
                             <input type = "submit" class = "remove-post" value = "x"/>
                         </form>
                         <%
@@ -140,7 +140,7 @@
                                 <%=postList.get(i).getPostText()%>
                             </div>
                             <div class = "edit-post-div" align = "center">
-                                <form action = "EditPost?id=<%=postList.get(i).getPostID()%>" method = "post">
+                                <form action = "Post?action=edit&id=<%=postList.get(i).getPostID()%>" method = "post">
                                     <textarea name = "postEditText" class = "edit-post-textarea" rows = "5" cols = "40"><%=postList.get(i).getPostText()%></textarea><br>
                                     <input type = "submit" value = "Submit" class = "post-edit-submit"/>
                                 </form>
@@ -154,16 +154,16 @@
                             }
                             if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
                         %>                      
-                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Like</a></p>
+                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=like&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>">Like</a></p>
                         <%
                         } else {
                         %>
-                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Unlike?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Unlike</a></p>
+                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=unlike&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>">Unlike</a></p>
                         <%
                             }
                         %>
                         <div class = "input-comment-div" align = "center">
-                            <form action = "Comment?id=<%=postList.get(i).getPostID()%>" method = "post" onsubmit = "return checkComment('<%=i%>')">
+                            <form action = "Comment?action=add&id=<%=postList.get(i).getPostID()%>" method = "post" onsubmit = "return checkComment('<%=i%>')">
                                 <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
                                 <br>
                                 <input type = "submit" class = "input-post-submit" value = "Comment!"/>
@@ -182,7 +182,7 @@
                             <%
                                 if (commenter.getUserID() == loggedUser.getUserID()) {
                             %>
-                            <form action = "DeleteComment?id=<%=commentList.get(j).getCommentID()%>" onsubmit = "return deleteComment()" method = "post">
+                            <form action = "Comment?action=delete&id=<%=commentList.get(j).getCommentID()%>" onsubmit = "return deleteComment()" method = "post">
                                 <input type = "submit" class = "remove-post" value = "x"/>
                             </form>
                             <%

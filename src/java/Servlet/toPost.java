@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlet;
 
-import Classes.Post;
+import Classes.Event;
 import Classes.User;
 import Database.CircaDatabase;
 import java.io.IOException;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class CommentOnPost extends HttpServlet {
+public class toPost extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class CommentOnPost extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CommentOnPost</title>");            
+            out.println("<title>Servlet PostToEvent</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CommentOnPost at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet PostToEvent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,17 +75,38 @@ public class CommentOnPost extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int postID = Integer.parseInt(request.getParameter("id"));
-        User user = (User)request.getSession().getAttribute("loggedUser");
-        String commentText = request.getParameter("commentText");
-        int userID = user.getUserID();
+        String action = request.getParameter("action");
+        RequestDispatcher reqDispatcher = null;
+        Event event = null;
         CircaDatabase db = CircaDatabase.getInstance();
-        
-        db.addComment(postID, commentText, userID);
-        
-        //getpost
-        Post post = db.getPostDetails(postID);
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event?id=" + post.getEvent().getEventID());
+        int postID;
+        String postText;
+
+        switch (action) {
+            case "post":
+                event = (Event) request.getSession().getAttribute("eventDetails");
+                User user = (User) request.getSession().getAttribute("loggedUser");
+                postText = request.getParameter("postText");
+
+                db.addPost(event.getEventID(), user.getUserID(), postText);
+
+                break;
+            case "delete":
+                postID = Integer.parseInt(request.getParameter("id"));
+                event = (Event) request.getSession().getAttribute("eventDetails");
+
+                db.deletePost(postID);
+
+                break;
+            case "edit":
+                postID = Integer.parseInt(request.getParameter("id"));
+                postText = request.getParameter("postEditText");
+                event = (Event) request.getSession().getAttribute("eventDetails");
+
+                db.editPost(postID, postText);
+                break;
+        }
+        reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
         reqDispatcher.forward(request, response);
     }
 

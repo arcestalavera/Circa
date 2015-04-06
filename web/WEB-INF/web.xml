@@ -38,11 +38,7 @@
     </servlet>
     <servlet>
         <servlet-name>PostToEvent</servlet-name>
-        <servlet-class>Servlet.PostToEvent</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CommentOnPost</servlet-name>
-        <servlet-class>Servlet.CommentOnPost</servlet-class>
+        <servlet-class>Servlet.toPost</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteCluster</servlet-name>
@@ -65,10 +61,6 @@
         <servlet-class>Servlet.ViewCluster</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LikePost</servlet-name>
-        <servlet-class>Servlet.LikePost</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UnlikePost</servlet-name>
         <servlet-class>Servlet.UnlikePost</servlet-class>
     </servlet>
@@ -87,6 +79,14 @@
     <servlet>
         <servlet-name>EditPost</servlet-name>
         <servlet-class>Servlet.EditPost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>toLike</servlet-name>
+        <servlet-class>Servlet.toLike</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>toComment</servlet-name>
+        <servlet-class>Servlet.toComment</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
@@ -129,10 +129,6 @@
         <url-pattern>/Post</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CommentOnPost</servlet-name>
-        <url-pattern>/Comment</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeleteCluster</servlet-name>
         <url-pattern>/DeleteCluster</url-pattern>
     </servlet-mapping>
@@ -153,10 +149,6 @@
         <url-pattern>/ViewCluster</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LikePost</servlet-name>
-        <url-pattern>/Like</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UnlikePost</servlet-name>
         <url-pattern>/Unlike</url-pattern>
     </servlet-mapping>
@@ -175,6 +167,14 @@
     <servlet-mapping>
         <servlet-name>EditPost</servlet-name>
         <url-pattern>/EditPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toLike</servlet-name>
+        <url-pattern>/Like</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toComment</servlet-name>
+        <url-pattern>/Comment</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

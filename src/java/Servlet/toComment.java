@@ -6,6 +6,7 @@
 package Servlet;
 
 import Classes.Event;
+import Classes.Post;
 import Classes.User;
 import Database.CircaDatabase;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Arces
  */
-public class DeletePost extends HttpServlet {
+public class toComment extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,19 +34,36 @@ public class DeletePost extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeletePost</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeletePost at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String action = request.getParameter("action");
+        int postID;
+        String commentText;
+        int userID;
+        RequestDispatcher reqDispatcher = null;
+        CircaDatabase db = CircaDatabase.getInstance();
+
+        switch (action) {
+            case "add":
+                User user = (User) request.getSession().getAttribute("loggedUser");
+                userID = user.getUserID();
+                postID = Integer.parseInt(request.getParameter("id"));
+                commentText = request.getParameter("commentText");
+                db.addComment(postID, commentText, userID);
+                //getpost
+                Post post = db.getPostDetails(postID);
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + post.getEvent().getEventID());
+                break;
+            
+            case "delete":
+                int commentID = Integer.parseInt(request.getParameter("id"));
+                Event event = (Event) request.getSession().getAttribute("eventDetails");
+
+                db.deleteComment(commentID);
+
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+                break;
         }
+
+        reqDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,7 +79,6 @@ public class DeletePost extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -75,14 +92,8 @@ public class DeletePost extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int postID = Integer.parseInt(request.getParameter("id"));
-        Event event = (Event) request.getSession().getAttribute("eventDetails");
-        CircaDatabase db = CircaDatabase.getInstance();
-
-        db.deletePost(postID);
-
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Event?id=" + event.getEventID());
-        reqDispatcher.forward(request, response);
+        processRequest(request, response);
+        
     }
 
     /**
