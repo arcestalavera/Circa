@@ -52,8 +52,9 @@
                         for (User clusterMember : cluster.getMemberList()) {
                     %>
                     <li class = "cluster-member">
-                        <form class = "delete-cluster-member-form">
-                            <input type = "hidden" name = "cluster-member-id" value = "<%=clusterMember.getUserID()%>">
+                        <form class = "delete-cluster-member-form" action = "ViewCluster" method = "POST">
+                            <input type = "hidden" name = "cluster-member-id" value = "<%=clusterMember.getUserID()%>" />
+                            <input type = "hidden" name = "form-type" value = "delete-cluster-member" />
                             <input class = "delete-cluster-member-button" type = "image" src = "img/clusterpage/DeleteButtonSmall.png">
                         </form>
                         <a href = "User?id=<%=clusterMember.getUserID()%>">
@@ -117,6 +118,7 @@
                                     }
                                 %>
                             </ul>
+                            <input type = "hidden" name = "form-type" value = "add-cluster-member" />
                             <input type = "submit" id = "addmember-submit-button" value = "Add to Cluster"/>
                         </form>
                     </div>

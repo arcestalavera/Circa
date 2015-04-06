@@ -90,18 +90,27 @@ public class ViewCluster extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String[] newmember = request.getParameterValues("new-member");
-        User user = (User)request.getSession().getAttribute("loggedUser");
-        Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
-        CircaDatabase db = CircaDatabase.getInstance();
         
-        for(String s : newmember){
-            db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+        String type = request.getParameter("form-type");
+        User user = (User) request.getSession().getAttribute("loggedUser");
+        Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
+        CircaDatabase db = CircaDatabase.getInstance();
+            
+        if(type.equals("add-cluster-member")){
+            String[] newmember = request.getParameterValues("new-member");
+            
+            for (String s : newmember) {
+                db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+            }
+        }
+        else if(type.equals("delete-cluster-member")){
+            int clusterMemberID = Integer.parseInt(request.getParameter("cluster-member-id"));
+            
+            db.deleteUsertoCluster(clusterMemberID, cluster.getClusterID());
         }
         
         RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
-        reqDispatcher.forward(request, response);
+            reqDispatcher.forward(request, response);
     }
 
     /**
