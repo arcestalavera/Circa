@@ -5,6 +5,8 @@
  */
 package Servlet;
 
+import Classes.User;
+import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -73,7 +75,23 @@ public class toCluster extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
+        String type = request.getParameter("form-type");
+        CircaDatabase db = CircaDatabase.getInstance();
+        User user = (User)request.getSession().getAttribute("loggedUser");
+        
+        if(type.equals("add-cluster")){
+            String clusterName = request.getParameter("new-cluster-name");
+            db.addNewCluster(user.getUserID(), clusterName);
+             
+        } else if(type.equals("delete-cluster")){
+            int clusterID = Integer.parseInt(request.getParameter("clusterID"));
+            db.deleteCluster(clusterID);
+        }
+        
+        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Clusters.jsp");
+        reqDispatcher.forward(request, response);
     }
 
     /**

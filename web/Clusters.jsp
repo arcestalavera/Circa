@@ -38,8 +38,9 @@
             <div id = "cluster-heading">
                 <div id = "cluster-tag">Clusters</div>
 
-                <form id = "new-cluster-form" action = "AddCluster" method = "POST">
+                <form id = "new-cluster-form" action = "Cluster" method = "POST">
                     <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
+                    <input type = "hidden" name = "form-type" value = "add-cluster" />
                     <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
                 </form>
             </div>
@@ -73,8 +74,9 @@
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
                             <input type = "submit" class = "cluster-name" value = "<%=cluster.getName()%>">
                         </form>
-                        <form action = "DeleteCluster" method="POST" class = "delete-cluster-form">
+                        <form action = "Cluster" method="POST" class = "delete-cluster-form">
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
+                            <input type = "hidden" name = "form-type" value = "delete-cluster" />
                             <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>
                         </form>
                     </div>
