@@ -251,3 +251,41 @@ a:hover{
     color: white;
     cursor: pointer
 }
+
+.edit-post-div{
+    background-color: whitesmoke;
+    width: 60%;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    display: none;
+}
+
+.edit-post-textarea{
+    resize: none;
+    margin-top: 10px;
+    font-family: arial;
+}
+
+.edit-button, .post-edit-submit{
+    background-color: whitesmoke;
+    border: none;
+    font-family: arial;
+    margin-bottom: 10px;
+}
+.edit-button{
+    display: inline;
+}
+
+.post-edit-submit{
+    margin-top: 5px;
+    margin-right: 10px;
+    float: right;
+    border: 1px groove;
+}
+
+.edit-button:hover, .post-edit-submit:hover{
+    background-color: #940000;
+    color: white;
+    cursor: pointer;
+}

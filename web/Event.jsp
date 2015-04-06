@@ -124,8 +124,34 @@
                             }
                         %>
                         <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
-                        <br><p class = "event-post-text"><a href = "User?id=<%=poster.getUserID()%>"><b><%=poster.getFirstName()%> <%=poster.getLastName()%></b></a> <%=postList.get(i).getPostText()%></p>
+                        <br>
+
+                        <a href = "User?id=<%=poster.getUserID()%>">
+                            <b><%=poster.getFirstName()%> <%=poster.getLastName()%></b>
+                        </a>
+
                         <%
+                            if (poster.getUserID() == loggedUser.getUserID()) {
+                        %>
+                        <div id = "edit-container">
+                            <button class = "edit-button">Edit This Post</button>
+
+                            <div class = "post-text-div"> 
+                                <%=postList.get(i).getPostText()%>
+                            </div>
+                            <div class = "edit-post-div" align = "center">
+                                <form action = "EditPost?id=<%=postList.get(i).getPostID()%>" method = "post">
+                                    <textarea name = "postEditText" class = "edit-post-textarea" rows = "5" cols = "40"><%=postList.get(i).getPostText()%></textarea><br>
+                                    <input type = "submit" value = "Submit" class = "post-edit-submit"/>
+                                </form>
+                            </div>
+                        </div>
+                        <%
+                        } else {
+                        %>
+                        <%=postList.get(i).getPostText()%>
+                        <%
+                            }
                             if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
                         %>                      
                         <p align = "right">44 likes | <a class = "comment-link">Comment</a> <a href= "Like?post=<%=postList.get(i).getPostID()%>&user=<%=loggedUser.getUserID()%>">Like</a></p>

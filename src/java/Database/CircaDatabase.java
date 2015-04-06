@@ -35,7 +35,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -342,7 +342,7 @@ public class CircaDatabase { //singleton
         Statement stmt;
         ResultSet rs;
         Post post = null;
-        String postText, stringDeleted;
+        String postText;
         boolean isDeleted;
         int userID = 0, eventID = 0;
         User poster;
@@ -744,6 +744,21 @@ public class CircaDatabase { //singleton
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void editPost(int postID, String postText){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "UPDATE post"
+                    + " SET postText = '" + postText + "'"
+                    + " WHERE postID = " + postID;
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
             e.printStackTrace();
         }
     }

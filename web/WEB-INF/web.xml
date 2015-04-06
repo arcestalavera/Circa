@@ -84,6 +84,10 @@
         <servlet-name>ConfirmEdit</servlet-name>
         <servlet-class>Servlet.ConfirmEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditPost</servlet-name>
+        <servlet-class>Servlet.EditPost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>ConfirmEdit</servlet-name>
         <url-pattern>/ConfirmEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPost</servlet-name>
+        <url-pattern>/EditPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
