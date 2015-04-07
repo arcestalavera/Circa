@@ -98,9 +98,10 @@ public class ViewCluster extends HttpServlet {
             
         if(type.equals("add-cluster-member")){
             String[] newmember = request.getParameterValues("new-member");
-            
-            for (String s : newmember) {
-                db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+            if (newmember != null) {
+                for (String s : newmember) {
+                    db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+                }
             }
         }
         else if(type.equals("delete-cluster-member")){

@@ -85,11 +85,19 @@
                 %>
                 <div class = "post-div">
                     <div class = "post-container">
-                        <img src ="<%=post.getPoster().getProfilePicture()%>" class ="post-poster-img" height = "60px" width="60px"/>
-                        <div class = "post-div-header">
-                            <p class = "post-poster-name"><%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%> <em class = "post-event-name"> ><%=post.getEvent().getEventName()%></em></p>
-                            <p class = "post-text"><%=post.getPostText()%></p>
-                        </div>
+                        <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>">
+                            <img src ="<%=post.getPoster().getProfilePicture()%>" class ="post-poster-img" height = "50px" width="50px"/>
+                        </a>
+
+                        <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>" class = "post-poster-name-link">
+                            <p class = "post-poster-name"><%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%></p>
+                        </a>
+
+                        <a href = "Event?action=view&id=<%=post.getEvent().getEventID()%>" class = "post-event-name-link">
+                            <p class = "post-event-name"><%=post.getEvent().getEventName()%></p>
+                        </a>
+
+                        <p class = "post-text"><%=post.getPostText()%></p>
                     </div>
                 </div>
                 <%
@@ -109,6 +117,8 @@
             </div>
             
             <div id = "cluster-other-panel">
+                <%  if(viewableEvents.size() != 0){
+                %>
                 <div id = "cluster-other-event-panel">
                     <div id = "event-tag-div">
                         <p id = "event-tag">Events</p>
@@ -136,6 +146,17 @@
                         %>
                     </ul>
                 </div>
+                <%  }
+                    user.setBuddyList(db.getUserBuddies(user.getUserID()));
+                    ArrayList<User> addableBuddyToCluster = new ArrayList<>();
+                    for(User buddy : user.getBuddyList()){
+                        if(!db.isClusterMember(buddy.getUserID(), cluster.getClusterID())){
+                            addableBuddyToCluster.add(buddy);
+                        }
+                    }
+                    
+                    if(addableBuddyToCluster.size() != 0){
+                %>
                 <div id = "cluster-other-addmember-panel">
                     <div id = "addmember-tag-div">
                         <p id = "addmember-tag">Add Members</p>
@@ -143,15 +164,13 @@
                     <div id = "add-member-div">
                         <form id = "addmember-form" action = "ViewCluster" method="POST">
                             <ul id = "cluster-addmember-list">
-                                <%  user.setBuddyList(db.getUserBuddies(user.getUserID()));
-                                    for(User buddy : user.getBuddyList()){
-                                        if(!db.isClusterMember(buddy.getUserID(), cluster.getClusterID())){
+                                <%  for(User buddy : addableBuddyToCluster){
                                 %>
                                 <li class = "new-member-item">
                                     <input type = "checkbox" id = "new-member" name = "new-member" value = "<%=buddy.getUserID()%>"/>
                                     <label for="new-member"><%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
                                 </li>
-                                <%      }
+                                <%
                                     }
                                 %>
                             </ul>
@@ -160,6 +179,7 @@
                         </form>
                     </div>
                 </div>
+                <%}%>
             </div>
         </div>
     </body>

@@ -74,7 +74,6 @@ html, body{
 }
 
 .post-div{
-    //height: 200px;
     font-size: 0;
     background-color: white;
     border: 1px solid #DCDCDC;
@@ -83,8 +82,9 @@ html, body{
 }
 
 .post-container{
-    margin: 6px;
-    min-width: 100%;
+    padding: 10px;
+    width: 100%;
+    font-size: 0;
 }
 
 .post-poster-img{
@@ -92,34 +92,71 @@ html, body{
     display: inline-block;
 }
 
-.post-div-header{
-    display: inline-block;
-    position: absolute;
-    margin-top: 2px;
-    margin-left: 5px;
-}
-
 .post-poster-name, .post-event-name, .post-text{
     margin-top: 0;
     font-family: sans-serif;
 }
 
-.post-poster-name{
+.post-poster-name-link{
+    text-decoration: none;
     color: #AD0000;
-    margin-bottom: 4px;
+}
+
+.post-poster-name-link:hover{
+    text-decoration: underline;
+}
+
+.post-poster-name{
+    display: inline;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: #AD0000;
+    margin-bottom: 2px;
     font-weight: 600;
     font-size: 15px;
 }
 
 .post-event-name{
-    color: gray;
-    font-size: 13px;
+    display: inline;
+    position: absolute;
+    margin-top: 22px;
+    margin-left: 5px;
+    padding: 4px;
+    text-align: center;
+    background-color: #DCDCDC;
+    color: white;
+    border: 1px solid #DCDCDC;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    font-size: 12px;
+    margin-bottom: 0;
     font-weight: 500;
     font-style: normal;
 }
 
+.post-event-name:hover{
+    color: #AD0000;
+    background-color: white;
+    border: 1px solid #AD0000;
+}
+
+.post-event-name-link{
+    text-decoration: none;
+    color: white;
+}
+
+.post-event-name-link:hover{
+    color: #AD0000;
+    background-color: white;
+    border: 1px solid #AD0000;
+}
+
 .post-text{
     word-wrap: break-word;
+    display: block;
+    width: 97%;
+    margin-top: 4px;
     margin-bottom: 0;
     font-size: 14px;
 }
