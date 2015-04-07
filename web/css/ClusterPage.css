@@ -69,10 +69,77 @@ html, body{
 
 #cluster-post-panel{
     margin-left: 0.5%;
-    background-color: white;
     width: 49.5%;
-    height: 100px;
     float: left;
+}
+
+.post-div{
+    //height: 200px;
+    font-size: 0;
+    background-color: white;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.post-container{
+    margin: 6px;
+    min-width: 100%;
+}
+
+.post-poster-img{
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.post-div-header{
+    display: inline-block;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 5px;
+}
+
+.post-poster-name, .post-event-name, .post-text{
+    margin-top: 0;
+    font-family: sans-serif;
+}
+
+.post-poster-name{
+    color: #AD0000;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.post-event-name{
+    color: gray;
+    font-size: 13px;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.post-text{
+    word-wrap: break-word;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+#post-no-post-container-div{
+    margin: 20px;
+}
+
+#post-no-post-img{
+    display: block;
+    margin: 0 auto;
+}
+
+#post-no-post-text{
+    text-align: center;
+    margin-top: 20px;
+    
+    font-family: sans-serif;
+    font-size: 30px;
+    color: gray;
 }
 
 #cluster-other-panel{
@@ -111,6 +178,7 @@ html, body{
 
 .cluster-event-item{
     margin-left: 6px;
+    margin-bottom: 4px;
     font-size: 0;
 }
 
@@ -120,9 +188,9 @@ html, body{
 
 .cluster-event-info-div{
     display: inline-block;
-    position: relative;
-    top: -8px;
-    left: 5px;
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 5px;
 }
 
 .cluster-name-link{

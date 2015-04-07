@@ -4,6 +4,8 @@
     Author     : Arren Antioquia
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Classes.Post"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.Event"%>
@@ -66,6 +68,44 @@
             </div>
             
             <div id = "cluster-post-panel">
+                <%
+                    User user = (User) request.getSession().getAttribute("loggedUser");
+                    
+                    ArrayList<Event> viewableEvents = new ArrayList<>();
+                    
+                    for(Event event : user.getEventList()){
+                        if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
+                            event.setPostList(db.getPosts(event.getEventID()));
+                            viewableEvents.add(event);
+                        }
+                    }
+                    if(viewableEvents.size() != 0){
+                        for(Event event : viewableEvents){
+                            for(Post post : event.getPostList()){
+                %>
+                <div class = "post-div">
+                    <div class = "post-container">
+                        <img src ="<%=post.getPoster().getProfilePicture()%>" class ="post-poster-img" height = "60px" width="60px"/>
+                        <div class = "post-div-header">
+                            <p class = "post-poster-name"><%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%> <em class = "post-event-name"> ><%=post.getEvent().getEventName()%></em></p>
+                            <p class = "post-text"><%=post.getPostText()%></p>
+                        </div>
+                    </div>
+                </div>
+                <%
+                            }
+                        }
+                    }
+                    else{
+                %>
+                <div class = "post-div">
+                    <div id = "post-no-post-container-div">
+                        <img src ="img/clusterpage/SorryIcon.png" id ="post-no-post-img" height = "100px" width="100px"/>
+                        <p id = "post-no-post-text">Sorry, no post to show.</p>
+                    </div>
+                </div>
+                <%  }
+                %>
             </div>
             
             <div id = "cluster-other-panel">
@@ -75,12 +115,10 @@
                     </div>
 
                     <ul id = "cluster-event-list">
-                        <%  User user = (User) request.getSession().getAttribute("loggedUser");
-                            
-                            for (Event event : user.getEventList()) {
-                                if (db.isViewableToCluster(event.getEventID(), cluster.getClusterID())) {
-                                    SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
-                                    String strDate = ddMMMMyyFormat.format(event.getStartDate());
+                        <%  user.setEventList(db.getEvents(user.getUserID()));
+                            for (Event event : viewableEvents) {
+                                SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+                                String strDate = ddMMMMyyFormat.format(event.getStartDate());
                         %>
                         <li class = "cluster-event-item">
                             <a href = "Event?action=view&id=<%=event.getEventID()%>">
@@ -94,7 +132,6 @@
                             </div>
                         </li>
                         <%
-                                }
                             }
                         %>
                     </ul>
