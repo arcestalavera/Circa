@@ -109,7 +109,12 @@ public class ViewCluster extends HttpServlet {
             
             db.deleteUsertoCluster(clusterMemberID, cluster.getClusterID());
         }
-        
+        else if(type.equals("edit-cluster-name")){
+            String name = request.getParameter("cluster-name");
+            int clusterID = Integer.parseInt(request.getParameter("cluster-id"));
+            cluster.setName(name);
+            db.editClusterName(clusterID, name);
+        }
         RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
             reqDispatcher.forward(request, response);
     }

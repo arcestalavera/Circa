@@ -11,4 +11,11 @@ $(document).ready(function () {
     }, function() {
         $(this).attr('src', 'img/clusterpage/DeleteButtonSmall.png'); 
     });
+    
+    $("#cluster-name").keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $("#cluster-name-div").submit();
+        }
+    });
 });

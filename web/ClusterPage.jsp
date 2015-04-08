@@ -46,7 +46,11 @@
         <!-- END HEADER -->
         <div id = "cluster-main-panel">
             <div id = "cluster-info-panel">
-                <div id = "cluster-name-div"><p id = "cluster-name">${clusterToProcess.getName()}</p></div>
+                <form id = "cluster-name-div" action = "ViewCluster" method="POST">
+                    <input type ="text" id = "cluster-name" name = "cluster-name" value ="${clusterToProcess.getName()}" />
+                    <input type="hidden" name = "cluster-id" value = "${clusterToProcess.getClusterID()}"/>
+                    <input type="hidden" name = "form-type" value = "edit-cluster-name"/>
+                </form>
                 <ul id = "cluster-members-list">
                     <%  Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
                         CircaDatabase db = CircaDatabase.getInstance();

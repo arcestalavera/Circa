@@ -672,6 +672,21 @@ public class CircaDatabase { //singleton
         }
     }
     
+    public void editClusterName(int clusterID, String name){
+        sql = "UPDATE cluster SET name = ?"
+                + " WHERE clusterID = ?;";
+
+        try {
+            PreparedStatement preparedStmt = con.prepareStatement(sql);
+
+            preparedStmt.setString(1, name);
+            preparedStmt.setInt(2, clusterID);
+            preparedStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public boolean isViewableToCluster(int eventID, int clusterID){
         Statement stmt;
         ResultSet rs;

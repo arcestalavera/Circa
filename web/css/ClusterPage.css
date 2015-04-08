@@ -39,6 +39,10 @@ html, body{
     font-family: sans-serif;
     font-size: 25px;
     color: white;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: center;
     display: inline;
 }
 
@@ -102,7 +106,7 @@ html, body{
     color: #AD0000;
 }
 
-.post-poster-name-link:hover{
+.post-poster-name:hover{
     text-decoration: underline;
 }
 
@@ -120,7 +124,7 @@ html, body{
 .post-event-name{
     display: inline;
     position: absolute;
-    margin-top: 22px;
+    margin-top: 24px;
     margin-left: 5px;
     padding: 4px;
     text-align: center;
