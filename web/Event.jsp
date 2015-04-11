@@ -64,6 +64,7 @@
                 <img src = "img/event/event1.jpg" alt = "napoleon borntoparty" class = "event-header-img"/>
             </div>
             <h1 class = "event-title" align = "center" style = "color: #940000;"><%=event.getEventName()%></h1>
+
             <div id = "event-body-div" align = "center">
                 <p class = "event-description"><%=event.getDescription()%></p>
                 <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
@@ -82,28 +83,27 @@
                     <input type = "submit" class = "event-join" value = "Decline"/>
                 </form>
                 <%
-                                } else if (db.isRequested(event.getEventID(), loggedUser.getUserID())){
+                } else if (db.isRequested(event.getEventID(), loggedUser.getUserID())) {
                 %>
                 You have already requested to join this event.
                 <%
-                                }else{
-                    %>
+                } else {
+                %>
                 This is a closed event. You need to ask the host's permission to join!
                 <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
                     <input type = "submit" class = "event-join" value = "Request to Join"/>
                 </form>
                 <%
-                                }
-                            }
-                            else if(event.getType().equals("Public")){
+                    }
+                } else if (event.getType().equals("Public")) {
                 %>
                 <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
                     <input type = "submit" class = "event-join" value = "Join"/>
                 </form>
                 <%
-                            }
-                //if not joining
-                        } else {
+                    }
+                    //if not joining
+                } else {
                 %>
                 <form action = "Event?action=leave&id=<%=event.getEventID()%>" method = "post">
                     <input type = "submit" class = "event-join" value = "Leave"/>
@@ -124,8 +124,7 @@
                 <hr>
             </div>
             <%
-                if (event.getType()
-                        .equals("Closed")) {
+                if (event.getType().equals("Closed")) {
                     if (loggedUser.getUserID() == host.getUserID()) {
             %>
 
@@ -295,7 +294,7 @@
                 %>
             </div>
             <%
-                }
+                    }
             %>
         </div>
     </body>

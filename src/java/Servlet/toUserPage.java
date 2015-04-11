@@ -46,6 +46,7 @@ public class toUserPage extends HttpServlet {
                 //get details of user
                 User user = db.getUserDetails(userID);
                 user.setEventList(db.getEvents(userID));
+                user.setClusters(db.getUserClusters(userID));
                 request.getSession().setAttribute("userDetails", user);
 
                 reqDispatcher = request.getRequestDispatcher("UserPage.jsp");

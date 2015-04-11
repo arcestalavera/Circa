@@ -36,7 +36,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -149,7 +149,7 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
 
             sql = "SELECT * FROM event"
-                    + " WHERE hostID = " + userID;
+                    + " WHERE hostID = " + userID + " AND isDeleted = 0";
 
             rs = stmt.executeQuery(sql);
 
@@ -163,11 +163,7 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
 
-        if (eventList.isEmpty()) {
-            return null;
-        } else {
-            return eventList;
-        }
+        return eventList;
     }
 
     public int addEvent(int hostID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
@@ -1007,12 +1003,12 @@ public class CircaDatabase { //singleton
 
         return isInvited;
     }
-    
-    public boolean isRequested(int eventID, int requestorID){
+
+    public boolean isRequested(int eventID, int requestorID) {
         Statement stmt;
         ResultSet rs;
         boolean isRequested = false;
-        
+
         try {
             stmt = con.createStatement();
             sql = "SELECT * FROM request_to_join"
@@ -1026,5 +1022,32 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
         return isRequested;
+    }
+
+    public boolean isBuddy(int userID, int buddyID) {
+        Statement stmt;
+        ResultSet rs;
+        boolean isBuddy = false;
+
+        try {
+            stmt = con.createStatement();
+
+            sql = "select * from buddy"
+                    + " WHERE friend_1 = " + userID + " AND friend_2 = " + buddyID
+                    + " UNION"
+                    + " select * from buddy"
+                    + " WHERE friend_2 = " + userID + " AND friend_1 = " + buddyID;
+            
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                isBuddy = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isBuddy;
     }
 }

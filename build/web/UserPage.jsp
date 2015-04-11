@@ -1,3 +1,4 @@
+<%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.User"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
@@ -47,14 +48,32 @@
             User userDetails = (User) request.getSession().getAttribute("userDetails");
             //get logged user
             User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+            CircaDatabase db = CircaDatabase.getInstance();
         %>
 
         <div class = "profTop"><IMG class="profPic" src= "<%=userDetails.getProfilePicture()%>"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
 
         <div class="infoDiv">
-            <div class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></div>
-            <div class="infoTitle">Clusters | Events</div> 
-            <div class="infoTitleContent"> 126 || 7</div>
+            <h2 class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></h2>
+            <%
+                if (loggedUser.getUserID() != userDetails.getUserID()) {
+                    if (!db.isBuddy(loggedUser.getUserID(), userDetails.getUserID())) {
+            %>
+            <form>
+                <input type = "submit" value = "Add Buddy" class = "buddy-button"/>
+            </form>
+            <%
+            } else {
+            %>
+            <form>
+                <input type = "submit" value = "Remove Buddy" class = "buddy-button"/>
+            </form>   
+            <%
+                    }
+                }
+            %>
+            <p class="infoTitle">Clusters | Events</p> 
+            <p class="infoTitleContent"> <%=userDetails.getClusters().size()%> || <%=userDetails.getEventList().size()%></p>
         </div>
 
         <div class="postDiv">
@@ -86,7 +105,7 @@
                         }
                         ArrayList<Event> eventList = userDetails.getEventList();
 
-                        if (eventList != null) {
+                        if (!eventList.isEmpty()) {
                             for (int i = 0; i < eventList.size(); i++) {
                                 if (!eventList.get(i).isDeleted()) {
                     %>

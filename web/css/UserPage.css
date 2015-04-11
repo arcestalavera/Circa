@@ -23,19 +23,20 @@ body{
     margin-top: 15px;
     margin-left: 40px;
     font-weight: bold;
+    margin-bottom: 0;
 }
 .infoTitle{
     font-family: Tahoma;
     font-size: 15px;
+    margin: 0;
     color: white;
-    margin-top: 15px;
     margin-left: 40px;
 }
 .infoTitleContent{
     font-family: Tahoma;
     font-size: 20px;
     color: white;
-    margin-top: 15px;
+    margin: 0;
     margin-left: 40px;
     font-weight: bold;
 }
@@ -202,4 +203,17 @@ button:hover{
 
 h6{
     margin: 0;
+}
+
+.buddy-button{
+    margin: 0;
+    margin-left: 40px;
+    margin-bottom: 0;
+    background-color: whitesmoke;
+}
+
+.buddy-button:hover{
+    background-color: rgb(150, 150, 150);
+    cursor: pointer;
+    color: white;
 }
