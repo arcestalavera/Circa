@@ -151,6 +151,12 @@
             <div id = "invite-user-whole">
                 <h2 class = "invite-title">Invite your buddies!</h2>
                 <div class = "invite-body">
+                    <div class = "invited-buddies-div">
+                        You have invited:
+                    </div>
+                    <div class = "invite-buddies-div">
+                        Invite:
+                    </div>
                 </div>
             </div>
         </form>

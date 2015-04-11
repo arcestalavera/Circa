@@ -98,7 +98,45 @@
                 %>
                 <hr>
             </div>
-
+            <%
+                if (event.getType().equals("Closed")) {
+            %>
+            <!-- EVENT REQUESTS FOR HOST TO APPROVE-->
+            <h3 align = "center" class = "event-comment-header">Requests to join your event</h3>
+            <%
+                ArrayList<User> requestList = event.getRequestList();
+                
+                if(requestList.isEmpty()){
+            %>
+            <h3 class = "empty-text" align = "center">Your event has no requests right now.</h3>
+            <hr width = "40%">
+            <%
+                }
+                else {
+            %>
+            <div id = "request-div">
+                <%
+                    for (User requestor : requestList) {
+                %>
+                <div class = "request-container">
+                    <a href = "User?action=view&id=<%=requestor.getUserID()%>">
+                        <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
+                    </a><br>
+                    <form action = "Event?action=approve&id=" method = "post">
+                        <input type = "submit" class = "request-button" value = "Approve"/>
+                    </form><br>
+                    <form action = "Event?action=reject&id=" method = "post">
+                        <input type = "submit" class = "request-button" value = "Reject"/>
+                    </form>
+                </div>
+                <%
+                    }
+                %>
+            </div>
+            <%
+                    }
+                }
+            %>
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
                 <form action = "Post?action=post" onsubmit = "return checkPost()" method = "post">
@@ -108,19 +146,24 @@
                     <br><input type = "submit" class = "input-post-submit"/>
                 </form>
             </div>
-            <div id = "posts-div">
-                <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
-                <%
-                    //get posts of event
-                    ArrayList<Post> postList = event.getPostList();
+            <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
+            <%
+                ArrayList<Post> postList = event.getPostList();
 
-                    if (postList != null) {
-                        for (int i = 0; i < postList.size(); i++) {
-                            if (!postList.get(i).isDeleted()) {
-                                //get poster
-                                User poster = postList.get(i).getPoster();
-                                //get commentList
-                                ArrayList<Comment> commentList = postList.get(i).getCommentList();
+                if (postList.isEmpty()) {
+            %>
+            <h2 align = "center" class = "empty-text">There are no posts to display.</h2>
+            <%
+            } else if (!postList.isEmpty()) {
+            %>
+            <div id = "posts-div">
+                <%
+                    for (int i = 0; i < postList.size(); i++) {
+                        if (!postList.get(i).isDeleted()) {
+                            //get poster
+                            User poster = postList.get(i).getPoster();
+                            //get commentList
+                            ArrayList<Comment> commentList = postList.get(i).getCommentList();
                 %>
                 <div id = "event-post-whole">
                     <div class = "event-post-div">
@@ -181,7 +224,15 @@
                         </div>
                     </div>
                     <div class = "post-show-comment" align = "center">Show Comments</div>
-
+                    <%
+                        if (commentList.isEmpty()) {
+                    %>
+                    <div class ="post-comments-whole">
+                        <h3 align = "center" class = "empty-text">This post has no comments yet.</h3>
+                    </div>
+                    <%
+                    } else {
+                    %>
                     <div class = "post-comments-whole">
                         <%
                             for (int j = 0; j < commentList.size(); j++) {
@@ -206,13 +257,18 @@
                             }
                         %>
                     </div>
+                    <%
+                        }
+                    %>
                 </div>
                 <%
-                            }
                         }
                     }
                 %>
             </div>
+            <%
+                }
+            %>
         </div>
     </body>
 </html>

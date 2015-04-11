@@ -5,12 +5,14 @@ $(document).ready(function() {
         {
             $("#create-event-whole").fadeOut("medium");
             $("#invite-user-whole").animate({bottom: '+=40px'});
+            $(this).css('opacity','1');
             isOpened = true;
         }
         else
         {
             $("#create-event-whole").fadeIn("medium");
             $("#invite-user-whole").animate({bottom: '-=40px'});
+            $(this).css('opacity','.6');
             isOpened = false;
         }
         

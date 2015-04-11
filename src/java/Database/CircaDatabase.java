@@ -170,7 +170,7 @@ public class CircaDatabase { //singleton
         }
     }
 
-    public void addEvent(int hostID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
+    public int addEvent(int hostID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
         Statement stmt;
         ResultSet rs;
         int maxEvent = 1;
@@ -191,6 +191,8 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return maxEvent;
     }
 
     public User getUserDetails(int userID) {
@@ -843,47 +845,65 @@ public class CircaDatabase { //singleton
 
     public void addJoinRequest(int hostID, int eventID, int requestorID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            
+
             sql = "INSERT INTO request_to_join"
-                    + " VALUES(" + hostID + ", " + eventID + ", " + requestorID + "false)";
-            
+                    + " VALUES(" + hostID + ", " + eventID + ", " + requestorID + "'Pending')";
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public ArrayList<User> getJoining(int eventID){
+
+    public void answerRequest(int hostID, int eventID, int requestorID, String action) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+            
+            sql = "UPDATE request_to_join"
+                    + " SET status = '" + action + "'"
+                    + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
+            
+            stmt.executeUpdate(sql);
+            if (action.equals("Approved")) {
+                addJoin(eventID, requestorID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<User> getJoining(int eventID) {
         Statement stmt;
         ResultSet rs;
         ArrayList<User> joiningList = new ArrayList<>();
         int attendingID;
-        try{
+        try {
             stmt = con.createStatement();
-            
+
             sql = "SELECT * FROM attending_an_event"
                     + " WHERE eventID = " + eventID;
-            
+
             rs = stmt.executeQuery(sql);
-            
-            while(rs.next())
-            {
+
+            while (rs.next()) {
                 attendingID = rs.getInt("attendingID");
                 User attendee = getUserDetails(attendingID);
-                
+
                 joiningList.add(attendee);
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return joiningList;
     }
-    
-    public boolean isJoining(int eventID, int attendingID){
+
+    public boolean isJoining(int eventID, int attendingID) {
         Statement stmt;
         ResultSet rs;
         boolean isJoining = false;
@@ -904,18 +924,18 @@ public class CircaDatabase { //singleton
 
         return isJoining;
     }
-    
-    public void deleteJoin(int eventID, int attendingID){
+
+    public void deleteJoin(int eventID, int attendingID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            
+
             sql = "DELETE FROM attending_an_event"
                     + " WHERE eventID = " + eventID + " AND attendingID = " + attendingID;
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

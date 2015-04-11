@@ -57,8 +57,8 @@ public class toEvent extends HttpServlet {
 
                 Event newEvent = getEvent(request);
 
-                db.addEvent(userID, newEvent.getEventName(), new java.sql.Timestamp(newEvent.getStartDate().getTime()), new java.sql.Timestamp(newEvent.getEndDate().getTime()), newEvent.getVenue(), newEvent.getType(), newEvent.getDescription());
-                reqDispatcher = request.getRequestDispatcher("CreateEvent.jsp");
+                eventID = db.addEvent(userID, newEvent.getEventName(), new java.sql.Timestamp(newEvent.getStartDate().getTime()), new java.sql.Timestamp(newEvent.getEndDate().getTime()), newEvent.getVenue(), newEvent.getType(), newEvent.getDescription());
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
             case "delete":

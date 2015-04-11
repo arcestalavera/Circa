@@ -284,8 +284,45 @@ a:hover{
     border: 1px groove;
 }
 
-.edit-button:hover, .post-edit-submit:hover{
+.edit-button:hover, .post-edit-submit:hover, .request-button:hover{
     background-color: #940000;
     color: white;
     cursor: pointer;
+}
+
+#request-div{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    width: 80%;
+    overflow-x: scroll;
+    border: 1px solid rgb(225, 225, 225);
+}
+
+.request-container{
+    display: table-cell;
+    padding: 3px;
+}
+
+.request-prof-pic{
+    width: 60px;
+    height: 60px;
+    margin-bottom: 5px;
+}
+
+.request-button{
+    width: 60px;
+    margin-bottom: 5px;
+    background: whitesmoke;
+    font-family: arial;
+}
+
+.empty-text{
+    font-family: arial;
+    color: rgb(150, 150, 150);
+}
+
+.post-text-div{
+    word-wrap: break-word;
 }
