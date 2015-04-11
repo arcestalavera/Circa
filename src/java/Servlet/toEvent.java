@@ -56,7 +56,7 @@ public class toEvent extends HttpServlet {
                 userID = user.getUserID();
 
                 Event newEvent = getEvent(request);
-                
+
                 db.addEvent(userID, newEvent.getEventName(), new java.sql.Timestamp(newEvent.getStartDate().getTime()), new java.sql.Timestamp(newEvent.getEndDate().getTime()), newEvent.getVenue(), newEvent.getType(), newEvent.getDescription());
                 reqDispatcher = request.getRequestDispatcher("CreateEvent.jsp");
                 break;
@@ -80,6 +80,30 @@ public class toEvent extends HttpServlet {
                 Event editEvent = getEvent(request);
 
                 db.editEvent(eventID, editEvent.getEventName(), new java.sql.Timestamp(editEvent.getStartDate().getTime()), new java.sql.Timestamp(editEvent.getEndDate().getTime()), editEvent.getVenue(), editEvent.getType(), editEvent.getDescription());
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                break;
+
+            case "join":
+                eventID = Integer.parseInt(request.getParameter("id"));
+                Event joinEvent = db.getEventDetails(eventID);
+                user = (User) request.getSession().getAttribute("loggedUser");
+
+                switch (joinEvent.getType()) {
+                    case "Public":
+                        db.addJoin(eventID, user.getUserID());
+                        break;
+                    case "Closed":
+                        db.addJoinRequest(joinEvent.getHost().getUserID(), eventID, user.getUserID());
+                        break;
+                }
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                break;
+                
+            case "leave":
+                eventID = Integer.parseInt(request.getParameter("id"));
+                user = (User) request.getSession().getAttribute("loggedUser");
+                
+                db.deleteJoin(eventID, user.getUserID());
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
         }

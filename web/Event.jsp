@@ -68,13 +68,23 @@
                 <p class = "event-description"><%=event.getDescription()%></p>
                 <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
                 <p>Venue: <%=event.getVenue()%></p>
-                <p>1,392 people are going</p>
+                <p><%=event.getAttendingList().size()%> people are going</p>
                 <p>Hosted by <a href = "User?action=view&id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
                 <%
                     if (loggedUser.getUserID() != host.getUserID()) {
+                        if (!db.isJoining(event.getEventID(), loggedUser.getUserID())) {
                 %>
-                <button class = "event-join">Join</button>
+                <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
+                    <input type = "submit" class = "event-join" value = "Join"/>
+                </form>
                 <%
+                } else {
+                %>
+                <form action = "Event?action=leave&id=<%=event.getEventID()%>" method = "post">
+                    <input type = "submit" class = "event-join" value = "Leave"/>
+                </form>
+                <%
+                    }
                 } else {
                 %>
                 <form action = "Event?action=edit" method = "post">
