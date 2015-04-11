@@ -85,16 +85,20 @@ html, body{
     margin-bottom: 6px;
 }
 
-.post-container{
+.post-container, .post-comment-container{
     position: relative;
-    padding: 10px;
     width: 100%;
     font-size: 0;
 }
 
+.post-container{
+    padding: 10px 10px 4px 10px;
+}
+
 .post-poster-img{
     border-radius: 6px;
-    display: inline-block;
+    float: left;
+    //display: inline-block;
 }
 
 .post-poster-name, .post-event-name, .post-text{
@@ -120,6 +124,52 @@ html, body{
     margin-bottom: 2px;
     font-weight: 600;
     font-size: 15px;
+}
+
+.post-comment-container{
+    padding-top: 10px;
+    background-color: #F6F7F8;
+    border-top: 1px solid #DCDCDC;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.post-comment-commenter-div{
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-bottom: 7px;
+}
+
+.post-comment-commenter-img{
+    clear: both;
+    float: left;
+    border-radius: 6px;
+}
+
+.post-comment-commenter-info{
+    padding-top: 2px;
+    padding-left: 5px;
+    overflow:auto;
+    display:block;
+}
+
+.post-comment-commenter-name, .post-comment-commenter-text{
+    font-family: sans-serif;
+    font-size: 13px;
+    margin: 0;
+}
+
+.post-comment-commenter-name{
+    color: #AD0000;
+    font-weight: 600;
+    display: inline;
+}
+
+.post-comment-commenter-text{
+    position: relative;
+    word-wrap: break-word;
+    width: 100%;
 }
 
 .post-event-name{
@@ -158,6 +208,8 @@ html, body{
 }
 
 .post-text{
+    padding-top: 5px;
+    clear:both; 
     word-wrap: break-word;
     display: block;
     width: 97%;
@@ -214,11 +266,11 @@ html, body{
 }
 
 #cluster-event-list{
-    margin-top: 5px;
-    margin-bottom: 5px;
+    padding-top: 5px;
 }
 
 .cluster-event-item{
+    padding-bottom: 5px;
     margin-left: 6px;
     margin-bottom: 4px;
     position: relative;
@@ -226,22 +278,24 @@ html, body{
 }
 
 .cluster-event-pic{
-    display: inline;
+    //display: inline;
+    float: left;
 }
 
 .cluster-event-info-div{
+    clear: both;
     display: inline-block;
-    position: absolute;
+    //position: absolute;
     margin-top: 3px;
     margin-left: 5px;
 }
 
-.cluster-name-link{
+.link{
     color: #AD0000;
     text-decoration: none;
 }
 
-.cluster-name-link:hover{
+.link:hover{
     text-decoration: underline;
 }
 

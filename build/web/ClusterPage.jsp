@@ -4,6 +4,7 @@
     Author     : Arren Antioquia
 --%>
 
+<%@page import="Classes.Comment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Classes.Post"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -90,7 +91,7 @@
                 <div class = "post-div">
                     <div class = "post-container">
                         <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>">
-                            <img src ="<%=post.getPoster().getProfilePicture()%>" class ="post-poster-img" height = "50px" width="50px"/>
+                            <img src ="<%=post.getPoster().getProfilePicture()%>" title = "<%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%>" class ="post-poster-img" height = "50px" width="50px"/>
                         </a>
 
                         <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>" class = "post-poster-name-link">
@@ -100,9 +101,24 @@
                         <a href = "Event?action=view&id=<%=post.getEvent().getEventID()%>" class = "post-event-name-link">
                             <p class = "post-event-name"><%=post.getEvent().getEventName()%></p>
                         </a>
-
+                        
                         <p class = "post-text"><%=post.getPostText()%></p>
                     </div>
+                    <ul class = "post-comment-container">
+                        <%  for(Comment comment : post.getCommentList()){ %>
+                            <li class = "post-comment-commenter-div">
+                                <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>">
+                                    <img src = "<%=comment.getCommenter().getProfilePicture()%>" title = "<%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>" class = "post-comment-commenter-img" height = "30px" width="30px">
+                                </a>
+                                <div class = "post-comment-commenter-info">
+                                    <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>" class = "link">
+                                        <p class = "post-comment-commenter-name"><%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%></p>
+                                    </a>
+                                    <p class = "post-comment-commenter-text"><%=comment.getCommentText()%></p>
+                                </div>
+                            </li>
+                        <%}%>
+                    </ul>
                 </div>
                 <%
                             }
@@ -129,6 +145,7 @@
                     </div>
 
                     <ul id = "cluster-event-list">
+                        <!--div class = "clearer"></div-->
                         <%  user.setEventList(db.getEvents(user.getUserID()));
                             for (Event event : viewableEvents) {
                                 SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -139,12 +156,13 @@
                                 <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
                             </a>
                             <div class = "cluster-event-info-div">
-                                <a href = "Event?action=view&id=<%=event.getEventID()%>" class = "cluster-name-link">
+                                <a href = "Event?action=view&id=<%=event.getEventID()%>" class = "link">
                                     <p class = "cluster-event-name"><%=event.getEventName()%></p>
                                 </a>
                                 <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
                             </div>
                         </li>
+                        <div class = "clearer"></div>
                         <%
                             }
                         %>
