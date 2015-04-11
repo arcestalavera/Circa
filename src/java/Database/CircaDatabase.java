@@ -36,7 +36,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -256,7 +256,7 @@ public class CircaDatabase { //singleton
                 //get host details
                 host = getUserDetails(hostID);
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
-                
+                event.setAttendingList(getJoining(event.getEventID()));
             }
 
         } catch (SQLException e) {
@@ -671,8 +671,8 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public void editClusterName(int clusterID, String name){
+
+    public void editClusterName(int clusterID, String name) {
         sql = "UPDATE cluster SET name = ?"
                 + " WHERE clusterID = ?;";
 
@@ -686,51 +686,51 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public boolean isViewableToCluster(int eventID, int clusterID){
+
+    public boolean isViewableToCluster(int eventID, int clusterID) {
         Statement stmt;
         ResultSet rs;
         boolean isViewable = false;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "SELECT * FROM event_view_restriction"
-                    + " WHERE eventID = " + eventID + " AND clusterID = "+ clusterID + ";";
-            
+                    + " WHERE eventID = " + eventID + " AND clusterID = " + clusterID + ";";
+
             rs = stmt.executeQuery(sql);
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 isViewable = true;
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return isViewable;
     }
-    
-    public boolean isClusterMember(int userID, int clusterID){
+
+    public boolean isClusterMember(int userID, int clusterID) {
         Statement stmt;
         ResultSet rs;
         boolean isClusterMember = false;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "SELECT * FROM add_user_to_cluster"
                     + " WHERE addedID = " + userID + " AND clusterID = " + clusterID + ";";
-            
+
             rs = stmt.executeQuery(sql);
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 isClusterMember = true;
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return isClusterMember;
     }
-    
+
     public void addUserToCluster(int adderID, int addedID, int clusterID) {
 
         sql = "INSERT INTO add_user_to_cluster(adderID, addedID, clusterID) "
@@ -748,9 +748,9 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public void deleteUsertoCluster(int addedID, int clusterID){
-        
+
+    public void deleteUsertoCluster(int addedID, int clusterID) {
+
         sql = "DELETE FROM add_user_to_cluster "
                 + "WHERE addedID = ? AND clusterID = ?;";
 
@@ -764,9 +764,9 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
     }
-    
+
     public void editEvent(int eventID, String name, Timestamp startDate, Timestamp endDate, String venue, String type, String description) {
         Statement stmt;
 
@@ -782,15 +782,73 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
-    
-    public void editPost(int postID, String postText){
+
+    public void editPost(int postID, String postText) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "UPDATE post"
                     + " SET postText = '" + postText + "'"
                     + " WHERE postID = " + postID;
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Like> getLikes(int postID) {
+        ArrayList<Like> likeList = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+
+            Post post = getPostDetails(postID);
+
+            sql = "SELECT * FROM likes"
+                    + " WHERE postID = " + postID;
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                int userID = rs.getInt("userID");
+                User liker = getUserDetails(userID);
+
+                likeList.add(new Like(post, liker));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("LIKE SIZE = " + likeList.size());
+        return likeList;
+    }
+
+    public void addJoin(int eventID, int attendingID) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+
+            sql = "INSERT INTO attending_an_event"
+                    + " VALUES(" + eventID + ", " + attendingID + ")";
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addJoinRequest(int hostID, int eventID, int requestorID) {
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            
+            sql = "INSERT INTO request_to_join"
+                    + " VALUES(" + hostID + ", " + eventID + ", " + requestorID + "false)";
             
             stmt.executeUpdate(sql);
         } catch(SQLException e){
@@ -798,32 +856,67 @@ public class CircaDatabase { //singleton
         }
     }
     
-    public ArrayList<Like> getLikes(int postID){
-        ArrayList<Like> likeList = new ArrayList<>();
+    public ArrayList<User> getJoining(int eventID){
         Statement stmt;
         ResultSet rs;
-        
+        ArrayList<User> joiningList = new ArrayList<>();
+        int attendingID;
         try{
             stmt = con.createStatement();
             
-            Post post = getPostDetails(postID);
-            
-            sql = "SELECT * FROM likes"
-                    + " WHERE postID = " + postID;
+            sql = "SELECT * FROM attending_an_event"
+                    + " WHERE eventID = " + eventID;
             
             rs = stmt.executeQuery(sql);
             
             while(rs.next())
             {
-                int userID = rs.getInt("userID");
-                User liker = getUserDetails(userID);
+                attendingID = rs.getInt("attendingID");
+                User attendee = getUserDetails(attendingID);
                 
-                likeList.add(new Like(post, liker));
+                joiningList.add(attendee);
             }
         } catch(SQLException e){
             e.printStackTrace();
         }
-        System.out.println("LIKE SIZE = " + likeList.size());
-        return likeList;
+        
+        return joiningList;
+    }
+    
+    public boolean isJoining(int eventID, int attendingID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isJoining = false;
+
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM attending_an_event"
+                    + " WHERE eventID = " + eventID + " AND attendingID = " + attendingID + ";";
+
+            rs = stmt.executeQuery(sql);
+
+            if (rs.next()) {
+                isJoining = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isJoining;
+    }
+    
+    public void deleteJoin(int eventID, int attendingID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            
+            sql = "DELETE FROM attending_an_event"
+                    + " WHERE eventID = " + eventID + " AND attendingID = " + attendingID;
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }
