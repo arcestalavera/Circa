@@ -39,13 +39,14 @@ public class toEvent extends HttpServlet {
         CircaDatabase db = CircaDatabase.getInstance();
         String action = request.getParameter("action");
         int eventID = 0, userID;
+        Event event;
         User user;
         RequestDispatcher reqDispatcher = null;
 
         switch (action) {
             case "view":
                 eventID = Integer.parseInt(request.getParameter("id"));
-                Event event = db.getEventDetails(eventID);
+                event = db.getEventDetails(eventID);
                 event.setPostList(db.getPosts(eventID));
                 request.getSession().setAttribute("eventDetails", event);
                 reqDispatcher = request.getRequestDispatcher("Event.jsp");
@@ -55,9 +56,9 @@ public class toEvent extends HttpServlet {
                 user = (User) request.getSession().getAttribute("loggedUser");
                 userID = user.getUserID();
 
-                Event newEvent = getEvent(request);
+                event = getEvent(request);
 
-                eventID = db.addEvent(userID, newEvent.getEventName(), new java.sql.Timestamp(newEvent.getStartDate().getTime()), new java.sql.Timestamp(newEvent.getEndDate().getTime()), newEvent.getVenue(), newEvent.getType(), newEvent.getDescription());
+                eventID = db.addEvent(userID, event.getEventName(), new java.sql.Timestamp(event.getStartDate().getTime()), new java.sql.Timestamp(event.getEndDate().getTime()), event.getVenue(), event.getType(), event.getDescription());
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
@@ -77,33 +78,52 @@ public class toEvent extends HttpServlet {
 
             case "confirm":
                 eventID = Integer.parseInt(request.getParameter("id"));
-                Event editEvent = getEvent(request);
+                event = getEvent(request);
 
-                db.editEvent(eventID, editEvent.getEventName(), new java.sql.Timestamp(editEvent.getStartDate().getTime()), new java.sql.Timestamp(editEvent.getEndDate().getTime()), editEvent.getVenue(), editEvent.getType(), editEvent.getDescription());
+                db.editEvent(eventID, event.getEventName(), new java.sql.Timestamp(event.getStartDate().getTime()), new java.sql.Timestamp(event.getEndDate().getTime()), event.getVenue(), event.getType(), event.getDescription());
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
             case "join":
                 eventID = Integer.parseInt(request.getParameter("id"));
-                Event joinEvent = db.getEventDetails(eventID);
+                event = db.getEventDetails(eventID);
                 user = (User) request.getSession().getAttribute("loggedUser");
 
-                switch (joinEvent.getType()) {
+                switch (event.getType()) {
                     case "Public":
                         db.addJoin(eventID, user.getUserID());
                         break;
                     case "Closed":
-                        db.addJoinRequest(joinEvent.getHost().getUserID(), eventID, user.getUserID());
+                        db.addJoinRequest(event.getHost().getUserID(), eventID, user.getUserID());
                         break;
                 }
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
-                
+
             case "leave":
                 eventID = Integer.parseInt(request.getParameter("id"));
                 user = (User) request.getSession().getAttribute("loggedUser");
-                
+
                 db.deleteJoin(eventID, user.getUserID());
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                break;
+
+            case "approve":
+                eventID = Integer.parseInt(request.getParameter("eid"));
+
+                event = db.getEventDetails(eventID);
+                userID = Integer.parseInt(request.getParameter("uid"));
+
+                db.answerRequest(event.getHost().getUserID(), eventID, userID, "Approved");
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                break;
+
+            case "reject":
+                eventID = Integer.parseInt(request.getParameter("eid"));
+                event = db.getEventDetails(eventID);
+                userID = Integer.parseInt(request.getParameter("uid"));
+
+                db.answerRequest(event.getHost().getUserID(), eventID, userID, "Rejected");
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
         }

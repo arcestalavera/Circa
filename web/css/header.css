@@ -4,7 +4,7 @@
     padding: 8px;
     padding-top: 0px;
     height: 35px;
-    position: absolute;
+    position: fixed;
     z-index: 95;
 }
 
@@ -15,7 +15,7 @@
 #header-temp{
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    box-shadow: 0px 7px 10px rgb(225,225,225);
+    box-shadow: 0px 2px 5px rgb(100,10,10);
 }
 
 #header-right{
@@ -74,7 +74,7 @@
 .header-logo{
     width: 90px;
     height: 90px;
-    position: absolute;
+    position: fixed;
     margin-left: auto;
     left: 0;
     right: 0;

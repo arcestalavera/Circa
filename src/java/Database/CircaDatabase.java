@@ -191,7 +191,7 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return maxEvent;
     }
 
@@ -259,6 +259,7 @@ public class CircaDatabase { //singleton
                 host = getUserDetails(hostID);
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
                 event.setAttendingList(getJoining(event.getEventID()));
+                event.setRequestList(getRequests(event.getEventID()));
             }
 
         } catch (SQLException e) {
@@ -669,6 +670,26 @@ public class CircaDatabase { //singleton
                     deletePost(post.getPostID());
                 }
             }
+
+            sql = "DELETE FROM request_to_join"
+                    + " WHERE eventID = " + eventID;
+
+            stmt.executeUpdate(sql);
+
+            sql = "DELETE FROM attending_an_event"
+                    + " WHERE eventID = " + eventID;
+
+            stmt.executeUpdate(sql);
+
+            sql = "DELETE FROM invite_to_event"
+                    + " WHERE eventID = " + eventID;
+
+            stmt.executeUpdate(sql);
+
+            sql = "DELETE FROM event_view_restriction"
+                    + " WHERE eventID = " + eventID;
+
+            stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -850,7 +871,7 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
 
             sql = "INSERT INTO request_to_join"
-                    + " VALUES(" + hostID + ", " + eventID + ", " + requestorID + "'Pending')";
+                    + " VALUES(" + hostID + ", " + eventID + ", " + requestorID + ", 'Pending')";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -863,11 +884,11 @@ public class CircaDatabase { //singleton
 
         try {
             stmt = con.createStatement();
-            
+
             sql = "UPDATE request_to_join"
                     + " SET status = '" + action + "'"
                     + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
-            
+
             stmt.executeUpdate(sql);
             if (action.equals("Approved")) {
                 addJoin(eventID, requestorID);
@@ -938,5 +959,72 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<User> getRequests(int eventID) {
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<User> requestList = new ArrayList<>();
+        int requestorID;
+        try {
+            stmt = con.createStatement();
+
+            sql = "SELECT * FROM request_to_join"
+                    + " WHERE eventID = " + eventID + " AND status = 'Pending'";
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                requestorID = rs.getInt("requestorID");
+                User attendee = getUserDetails(requestorID);
+
+                requestList.add(attendee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return requestList;
+    }
+
+    public boolean isInvited(int eventID, int invitedID) {
+        boolean isInvited = false;
+        Statement stmt;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM invite_to_event"
+                    + " WHERE eventID = " + eventID + " AND invitedID = " + invitedID + " AND status = 'Pending'";
+
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                isInvited = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isInvited;
+    }
+    
+    public boolean isRequested(int eventID, int requestorID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isRequested = false;
+        
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM request_to_join"
+                    + " WHERE eventID = " + eventID + " AND requestorID = " + requestorID + " AND status = 'Pending'";
+
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                isRequested = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isRequested;
     }
 }

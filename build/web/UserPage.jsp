@@ -94,13 +94,13 @@
                     <div class = "event-description">
                         <%=eventList.get(i).getDescription()%><br/>
                         <%
-                            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                            DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy h:mm a");
                         %>
                         <h6><%=eventList.get(i).getType()%> | 
                             <%=dateFormat.format(eventList.get(i).getStartDate())%> - 
                             <%=dateFormat.format(eventList.get(i).getEndDate())%>
                         </h6><br>
-                        
+
                         <button type = "submit" onclick = "window.location.href = 'Event?action=view&id=<%=eventList.get(i).getEventID()%>'">View Event</button>
 
                     </div>

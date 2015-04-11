@@ -302,7 +302,6 @@ a:hover{
 
 .request-container{
     display: table-cell;
-    padding: 3px;
 }
 
 .request-prof-pic{
@@ -313,7 +312,6 @@ a:hover{
 
 .request-button{
     width: 60px;
-    margin-bottom: 5px;
     background: whitesmoke;
     font-family: arial;
 }
@@ -325,4 +323,8 @@ a:hover{
 
 .post-text-div{
     word-wrap: break-word;
+}
+
+form{
+    margin-bottom: 5px;
 }

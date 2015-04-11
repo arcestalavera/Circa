@@ -52,7 +52,7 @@
         <%
             //get Event details of event
             Event event = (Event) request.getSession().getAttribute("eventDetails");
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy h:mm a");
             //get host
             User host = event.getHost();
             User loggedUser = (User) request.getSession().getAttribute("loggedUser");
@@ -73,12 +73,37 @@
                 <%
                     if (loggedUser.getUserID() != host.getUserID()) {
                         if (!db.isJoining(event.getEventID(), loggedUser.getUserID())) {
+                            if (event.getType().equals("Closed")) {
+                                if (db.isInvited(event.getEventID(), loggedUser.getUserID())) {
+                %>
+                <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
+                    <%=event.getHost().getFirstName()%> invited you. What do you say?
+                    <input type = "submit" class = "event-join" value = "Accept"/>
+                    <input type = "submit" class = "event-join" value = "Decline"/>
+                </form>
+                <%
+                                } else if (db.isRequested(event.getEventID(), loggedUser.getUserID())){
+                %>
+                You have already requested to join this event.
+                <%
+                                }else{
+                    %>
+                This is a closed event. You need to ask the host's permission to join!
+                <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
+                    <input type = "submit" class = "event-join" value = "Request to Join"/>
+                </form>
+                <%
+                                }
+                            }
+                            else if(event.getType().equals("Public")){
                 %>
                 <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
                     <input type = "submit" class = "event-join" value = "Join"/>
                 </form>
                 <%
-                } else {
+                            }
+                //if not joining
+                        } else {
                 %>
                 <form action = "Event?action=leave&id=<%=event.getEventID()%>" method = "post">
                     <input type = "submit" class = "event-join" value = "Leave"/>
@@ -99,20 +124,22 @@
                 <hr>
             </div>
             <%
-                if (event.getType().equals("Closed")) {
+                if (event.getType()
+                        .equals("Closed")) {
+                    if (loggedUser.getUserID() == host.getUserID()) {
             %>
+
             <!-- EVENT REQUESTS FOR HOST TO APPROVE-->
             <h3 align = "center" class = "event-comment-header">Requests to join your event</h3>
             <%
                 ArrayList<User> requestList = event.getRequestList();
-                
-                if(requestList.isEmpty()){
+
+                if (requestList.isEmpty()) {
             %>
             <h3 class = "empty-text" align = "center">Your event has no requests right now.</h3>
             <hr width = "40%">
             <%
-                }
-                else {
+            } else {
             %>
             <div id = "request-div">
                 <%
@@ -122,10 +149,10 @@
                     <a href = "User?action=view&id=<%=requestor.getUserID()%>">
                         <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
                     </a><br>
-                    <form action = "Event?action=approve&id=" method = "post">
+                    <form action = "Event?action=approve&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
                         <input type = "submit" class = "request-button" value = "Approve"/>
-                    </form><br>
-                    <form action = "Event?action=reject&id=" method = "post">
+                    </form>
+                    <form action = "Event?action=reject&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
                         <input type = "submit" class = "request-button" value = "Reject"/>
                     </form>
                 </div>
@@ -134,6 +161,7 @@
                 %>
             </div>
             <%
+                        }
                     }
                 }
             %>
