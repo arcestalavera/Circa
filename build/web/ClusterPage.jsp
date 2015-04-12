@@ -94,31 +94,65 @@
                             <img src ="<%=post.getPoster().getProfilePicture()%>" title = "<%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%>" class ="post-poster-img" height = "50px" width="50px"/>
                         </a>
 
-                        <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>" class = "post-poster-name-link">
-                            <p class = "post-poster-name"><%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%></p>
-                        </a>
-
+                        <p class = "post-poster-name">
+                            <a href = "User?action=view&id=<%=post.getPoster().getUserID()%>" class = "post-poster-name-link">
+                                <%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%>
+                            </a>
+                        </p>
+                        
                         <a href = "Event?action=view&id=<%=post.getEvent().getEventID()%>" class = "post-event-name-link">
                             <p class = "post-event-name"><%=post.getEvent().getEventName()%></p>
                         </a>
                         
                         <p class = "post-text"><%=post.getPostText()%></p>
-                    </div>
-                    <ul class = "post-comment-container">
-                        <%  for(Comment comment : post.getCommentList()){ %>
-                            <li class = "post-comment-commenter-div">
-                                <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>">
-                                    <img src = "<%=comment.getCommenter().getProfilePicture()%>" title = "<%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>" class = "post-comment-commenter-img" height = "30px" width="30px">
-                                </a>
-                                <div class = "post-comment-commenter-info">
-                                    <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>" class = "link">
-                                        <p class = "post-comment-commenter-name"><%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%></p>
-                                    </a>
-                                    <p class = "post-comment-commenter-text"><%=comment.getCommentText()%></p>
-                                </div>
-                            </li>
+                        <%  if(db.isLiked(post.getPostID(), user.getUserID())){
+                        %>
+                        <p class = "post-like-option">
+                            <a class = "like-link" href= "Like?action=unlike&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>">Unlike</a>
+                        </p>
+                        <%
+                        }else{
+                        %>
+                        <p class = "post-like-option">
+                            <a class = "like-link" href= "Like?action=like&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>">Like</a>
+                        </p>
+                        <%} if(post.getLikeList().size() == 1){
+                        %>
+                        <p class = "post-like-count">  | <%=post.getLikeList().size()%> like </p>
+                        <%  }else if(post.getLikeList().size() > 1){
+                        %>
+                        <p class = "post-like-count">  | <%=post.getLikeList().size()%> likes </p>
                         <%}%>
-                    </ul>
+                    </div>
+                    <div class = "post-comment-container">
+                        <ul>
+                            <%  for(Comment comment : post.getCommentList()){ %>
+                                <li class = "post-comment-commenter-div">
+                                    <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>">
+                                        <img src = "<%=comment.getCommenter().getProfilePicture()%>" title = "<%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>" class = "post-comment-commenter-img" height = "30px" width="30px">
+                                    </a>
+                                    <div class = "post-comment-commenter-info">
+                                        <p class = "post-comment-commenter-name">
+                                            <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>" class = "link">
+                                                <%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>
+                                            </a>
+                                        </p>
+                                        
+                                        <p class = "post-comment-commenter-text"><%=comment.getCommentText()%></p>
+                                    </div>
+                                </li>
+                            <%}%>
+                        </ul>
+                        <div class = "new-comment-div">
+                            <a href = "User?action=view&id=${loggedUser.getUserID()}">
+                                <img src = "${loggedUser.getProfilePicture()}" title = "${loggedUser.getFirstName()} ${loggedUser.getLastName()}" class = "post-comment-commenter-img" height = "30px" width="30px">
+                            </a>
+                            <form class = "new-comment-form" action = "Comment?action=add&id=<%=post.getPostID()%>" method = "post">
+                                <input type = "hidden" name = "curpage" value = "cluster" />
+                                <input type = "text" class = "new-comment-comment-field" name = "commentText" placeholder = "Write a comment"/>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <%
                             }
@@ -156,9 +190,13 @@
                                 <img src = "<%=event.getEventPicture()%>" class = "cluster-event-pic" title = "<%=event.getEventName()%>" width = "40px" height="40px" />
                             </a>
                             <div class = "cluster-event-info-div">
-                                <a href = "Event?action=view&id=<%=event.getEventID()%>" class = "link">
-                                    <p class = "cluster-event-name"><%=event.getEventName()%></p>
-                                </a>
+                                
+                                <p class = "cluster-event-name">
+                                    <a href = "Event?action=view&id=<%=event.getEventID()%>" class = "link">
+                                        <%=event.getEventName()%>
+                                    </a>
+                                </p>
+                                
                                 <p class = "cluster-event-info"><%=event.getVenue()%> - <%=strDate%></p>
                             </div>
                         </li>

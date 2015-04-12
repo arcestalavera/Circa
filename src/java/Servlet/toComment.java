@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import Classes.Cluster;
 import Classes.Event;
 import Classes.Post;
 import Classes.User;
@@ -35,6 +36,7 @@ public class toComment extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
+        String curPage = request.getParameter("curpage");
         int postID;
         String commentText;
         int userID;
@@ -44,13 +46,17 @@ public class toComment extends HttpServlet {
         switch (action) {
             case "add":
                 User user = (User) request.getSession().getAttribute("loggedUser");
+                Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
                 userID = user.getUserID();
                 postID = Integer.parseInt(request.getParameter("id"));
                 commentText = request.getParameter("commentText");
                 db.addComment(postID, commentText, userID);
                 //getpost
                 Post post = db.getPostDetails(postID);
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + post.getEvent().getEventID());
+                if(curPage.equals("event"))
+                    reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + post.getEvent().getEventID());
+                else if(curPage.equals("cluster"))
+                    reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
                 break;
             
             case "delete":

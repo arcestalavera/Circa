@@ -134,7 +134,8 @@ html, body{
     border-bottom-left-radius: 6px;
 }
 
-.post-comment-commenter-div{
+.post-comment-commenter-div, .new-comment-div{
+    overflow: hidden;
     padding-left: 10px;
     padding-right: 10px;
     padding-bottom: 3px;
@@ -172,6 +173,21 @@ html, body{
     width: 100%;
 }
 
+.new-comment-form{
+    width: 92%;
+    display: inline-block;
+    clear: both;
+    padding-left: 5px;
+}
+
+.new-comment-comment-field{
+    height: 25px;
+    width: 100%;
+    padding-left: 2px;
+    border: 1px solid #DCDCDC;
+    border-radius: 2px;
+}
+
 .post-event-name{
     display: inline;
     position: absolute;
@@ -204,7 +220,6 @@ html, body{
 .post-event-name-link:hover{
     color: #AD0000;
     background-color: white;
-    border: 1px solid #AD0000;
 }
 
 .post-text{
@@ -214,8 +229,32 @@ html, body{
     display: block;
     width: 97%;
     margin-top: 4px;
-    margin-bottom: 0;
+    margin-bottom: 8px;
     font-size: 14px;
+}
+
+.post-like-option, .post-like-count{
+    font-family: sans-serif;
+    font-size: 11px;
+    display: inline;
+}
+
+.post-like-option{
+    
+    color: #DCDCDC;
+}
+
+.like-link{
+    color: #DCDCDC;
+    text-decoration: none;
+}
+
+.like-link:hover{
+    color: gray;
+}
+
+.post-like-count{
+    color: #AD0000;
 }
 
 #post-no-post-container-div{

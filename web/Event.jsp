@@ -244,6 +244,7 @@
                         %>
                         <div class = "input-comment-div" align = "center">
                             <form action = "Comment?action=add&id=<%=postList.get(i).getPostID()%>" method = "post" onsubmit = "return checkComment('<%=i%>')">
+                                <input type = "hidden" name = "curpage" value = "event" />
                                 <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
                                 <br>
                                 <input type = "submit" class = "input-post-submit" value = "Comment!"/>

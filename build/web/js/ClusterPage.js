@@ -18,4 +18,11 @@ $(document).ready(function () {
             $("#cluster-name-div").submit();
         }
     });
+    
+    $(".new-comment-comment-field").keypress(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $(this).parent().submit();
+        }
+    });
 });
