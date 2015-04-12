@@ -172,7 +172,14 @@ html, body{
     display: inline;
 }
 
+.delete-comment-form{
+    visibility: hidden;
+    float: right;
+    display: inline;
+}
+
 .post-comment-commenter-text{
+    clear: both;
     position: relative;
     word-wrap: break-word;
     width: 100%;

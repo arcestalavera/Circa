@@ -102,7 +102,7 @@
                         </p>
                         <%  if(post.getPoster().getUserID() == user.getUserID()){
                         %>
-                        <form action = "Post?action=delete&id=<%=post.getPostID()%>&curpage=cluster" method = "post">
+                        <form class = "delete-post-form"action = "Post?action=delete&id=<%=post.getPostID()%>&curpage=cluster" method = "post">
                             <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-post-button" />
                         </form>
                         <%}%>
@@ -137,13 +137,19 @@
                                     <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>">
                                         <img src = "<%=comment.getCommenter().getProfilePicture()%>" title = "<%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>" class = "post-comment-commenter-img" height = "30px" width="30px">
                                     </a>
+                                    
                                     <div class = "post-comment-commenter-info">
                                         <p class = "post-comment-commenter-name">
                                             <a href = "User?action=view&id=<%=comment.getCommenter().getUserID()%>" class = "link">
                                                 <%=comment.getCommenter().getFirstName()%> <%=comment.getCommenter().getLastName()%>
                                             </a>
                                         </p>
-                                        
+                                        <% if(comment.getCommenter().getUserID() == user.getUserID()){
+                                        %>
+                                        <form class = "delete-comment-form" action="Comment?action=delete&id=<%=comment.getCommentID()%>&curpage=cluster" method = "post">
+                                            <input type="image" src="img/clusterpage/DeleteButtonSmall.png" class="delete-comment-button"/>
+                                        </form>
+                                        <%}%>
                                         <p class = "post-comment-commenter-text"><%=comment.getCommentText()%></p>
                                     </div>
                                 </li>

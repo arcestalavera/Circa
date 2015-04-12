@@ -64,8 +64,10 @@ public class toComment extends HttpServlet {
                 Event event = (Event) request.getSession().getAttribute("eventDetails");
 
                 db.deleteComment(commentID);
-
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+                if(curPage.equals("event"))
+                    reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+                else if(curPage.equals("cluster"))
+                    reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
                 break;
         }
 
