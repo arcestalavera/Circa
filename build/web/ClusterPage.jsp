@@ -108,13 +108,13 @@
                         <%  if(db.isLiked(post.getPostID(), user.getUserID())){
                         %>
                         <p class = "post-like-option">
-                            <a class = "like-link" href= "Like?action=unlike&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>">Unlike</a>
+                            <a class = "like-link" href= "Like?action=unlike&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=cluster">Unlike</a>
                         </p>
                         <%
                         }else{
                         %>
                         <p class = "post-like-option">
-                            <a class = "like-link" href= "Like?action=like&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>">Like</a>
+                            <a class = "like-link" href= "Like?action=like&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=cluster">Like</a>
                         </p>
                         <%} if(post.getLikeList().size() == 1){
                         %>

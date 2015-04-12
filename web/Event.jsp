@@ -234,7 +234,7 @@
                             }
                             if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
                         %>                      
-                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=like&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>">Like</a></p>
+                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=like&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>&curpage=event">Like</a></p>
                         <%
                         } else {
                         %>

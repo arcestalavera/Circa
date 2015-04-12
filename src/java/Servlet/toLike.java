@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import Classes.Cluster;
 import Classes.Event;
 import Database.CircaDatabase;
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class toLike extends HttpServlet {
         int postID = Integer.parseInt(request.getParameter("pid"));
         int userID = Integer.parseInt(request.getParameter("uid"));
         String action = request.getParameter("action");
+        String curpage = request.getParameter("curpage");
         Event event = (Event) request.getSession().getAttribute("eventDetails");
         CircaDatabase db = CircaDatabase.getInstance();
 
@@ -47,9 +49,14 @@ public class toLike extends HttpServlet {
                 db.unlikePost(postID, userID);
                 break;
         }
-        reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
-
-        reqDispatcher.forward(request, response);
+        if(curpage.equals("event")){
+            reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+            reqDispatcher.forward(request, response);
+        }else if(curpage.equals("cluster")){
+            Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+            reqDispatcher = request.getRequestDispatcher("ViewCluster?clusterID=" + cluster.getClusterID());
+            reqDispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
