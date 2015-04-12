@@ -18,6 +18,7 @@ html, body{
 }
 
 #cluster-tag{
+    float: left;
     font-family: sans-serif;
     font-size: 25px;
     color: #AD0000;
@@ -25,8 +26,9 @@ html, body{
 }
 
 #new-cluster-form{
-    position: absolute;
-    right: 0;
+    float: right;
+    //position: absolute;
+    //right: 0;
     margin-bottom: 0;
     display: inline;
 }
@@ -74,10 +76,10 @@ html, body{
 }
 
 .delete-cluster-form{
+    float: right;
+    padding-top: 6px;
+    padding-right: 4px;
     display: inline;
-    position: absolute;
-    right: 6px;
-    margin-top: 6px;
 }
 
 .cluster-name-link{
@@ -119,6 +121,7 @@ html, body{
 }
 
 .cluster-members-list{
+    clear: both;
     margin:10px;
 }
 

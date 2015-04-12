@@ -166,7 +166,7 @@
             %>
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
-                <form action = "Post?action=post" onsubmit = "return checkPost()" method = "post">
+                <form action = "Post?action=post&curpage=event" onsubmit = "return checkPost()" method = "post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
                     <hr width = "60%"/>
                     <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
@@ -197,7 +197,7 @@
                         <%
                             if (poster.getUserID() == loggedUser.getUserID()) {
                         %>
-                        <form action = "Post?action=delete&id=<%=postList.get(i).getPostID()%>" onsubmit = "return deletePost()" method = "post">
+                        <form action = "Post?action=delete&id=<%=postList.get(i).getPostID()%>&curpage=event" onsubmit = "return deletePost()" method = "post">
                             <input type = "submit" class = "remove-post" value = "x"/>
                         </form>
                         <%
@@ -220,7 +220,7 @@
                                 <%=postList.get(i).getPostText()%>
                             </div>
                             <div class = "edit-post-div" align = "center">
-                                <form action = "Post?action=edit&id=<%=postList.get(i).getPostID()%>" method = "post">
+                                <form action = "Post?action=edit&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post">
                                     <textarea name = "postEditText" class = "edit-post-textarea" rows = "5" cols = "40"><%=postList.get(i).getPostText()%></textarea><br>
                                     <input type = "submit" value = "Submit" class = "post-edit-submit"/>
                                 </form>

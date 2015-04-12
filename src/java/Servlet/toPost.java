@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import Classes.Cluster;
 import Classes.Event;
 import Classes.User;
 import Database.CircaDatabase;
@@ -76,6 +77,7 @@ public class toPost extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         String action = request.getParameter("action");
+        String curpage = request.getParameter("curpage");
         RequestDispatcher reqDispatcher = null;
         Event event = null;
         CircaDatabase db = CircaDatabase.getInstance();
@@ -106,8 +108,15 @@ public class toPost extends HttpServlet {
                 db.editPost(postID, postText);
                 break;
         }
-        reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
-        reqDispatcher.forward(request, response);
+        
+        if(curpage.equals("event")){
+            reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+            reqDispatcher.forward(request, response);
+        }else if(curpage.equals("cluster")){
+            Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
+            reqDispatcher = request.getRequestDispatcher("ViewCluster?clusterID=" + cluster.getClusterID());
+            reqDispatcher.forward(request, response);
+        }
     }
 
     /**

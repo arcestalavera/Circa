@@ -92,6 +92,7 @@ html, body{
 }
 
 .post-container{
+    width: 96.5%;
     padding: 10px 10px 4px 10px;
 }
 
@@ -124,6 +125,10 @@ html, body{
     margin-bottom: 2px;
     font-weight: 600;
     font-size: 15px;
+}
+
+.delete-post-button{
+    float: right;
 }
 
 .post-comment-container{

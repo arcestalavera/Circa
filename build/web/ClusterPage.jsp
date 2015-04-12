@@ -87,6 +87,7 @@
                     if(viewableEvents.size() != 0){
                         for(Event event : viewableEvents){
                             for(Post post : event.getPostList()){
+                                if(!post.isDeleted()){
                 %>
                 <div class = "post-div">
                     <div class = "post-container">
@@ -99,7 +100,12 @@
                                 <%=post.getPoster().getFirstName()%> <%=post.getPoster().getLastName()%>
                             </a>
                         </p>
-                        
+                        <%  if(post.getPoster().getUserID() == user.getUserID()){
+                        %>
+                        <form action = "Post?action=delete&id=<%=post.getPostID()%>&curpage=cluster" method = "post">
+                            <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-post-button" />
+                        </form>
+                        <%}%>
                         <a href = "Event?action=view&id=<%=post.getEvent().getEventID()%>" class = "post-event-name-link">
                             <p class = "post-event-name"><%=post.getEvent().getEventName()%></p>
                         </a>
@@ -155,6 +161,7 @@
                     </div>
                 </div>
                 <%
+                                }
                             }
                         }
                     }
