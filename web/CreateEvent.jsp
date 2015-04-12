@@ -97,6 +97,9 @@
         </div>
 
         <form action = "<%=action%>" method = "post">
+            <div align = "center">
+                <input type = "submit" value = "Publish Event!" class = "event-submit"/>
+            </div>
             <div id = "create-event-whole">
                 <h2 class = "event-title">Enter event details here!</h2>
                 <div class = "event-body" align = "center">
@@ -143,19 +146,20 @@
                             }
                         %>
                     </select>
-                    <br><br>
-                    <input type = "submit" value = "Publish Event!" class = "event-submit"/>
                 </div>
             </div>
 
             <div id = "invite-user-whole">
                 <h2 class = "invite-title">Invite your buddies!</h2>
                 <div class = "invite-body">
-                    <div class = "invited-buddies-div">
-                        You have invited:
-                    </div>
                     <div class = "invite-buddies-div">
-                        Invite:
+                        <h3 class = "invite-header">Invite:</h3>
+                        <ul class = "invite-buddies-list">
+                            <li class = "invite-buddies-entry">
+                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "asdf"/>
+                                <img src = "img/avatars/default1.jpg" class = "invite-buddies-pic"/><label for="invite-buddy"> lalala</label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
