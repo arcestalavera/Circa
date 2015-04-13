@@ -1,7 +1,79 @@
 body{
     margin: 0px;
 }
-.postBar{
+
+#user-main-panel{
+    width: 85%;
+    min-width: 950px;
+    margin: auto;
+    position: relative;
+    top: 50px;
+}
+
+#user-info-panel{
+    background-color: white;
+    width: 24%;
+    float: left;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+}
+
+#user-image{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+}
+
+#user-name-div{
+    text-align: center;
+    background-color: #AD0000;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#user-name{
+    font-family: sans-serif;
+    font-size: 25px;
+    color: white;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    text-align: center;
+    display: inline;
+}
+
+#user-buddies-list{
+    font-size: 0;
+    margin-top: 8px;
+}
+
+.buddies-member{
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    background-color: red;
+    display: inline-block;
+    margin: 0 0 8px 8px;
+    position: relative;
+}
+
+.buddies-member-img{
+    position: absolute;
+}
+
+#home-post-panel{
+    margin-left: 0.5%;
+    width: 49.5%;
+    float: left;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+/*.postBar{
     width: 465px;
     height: 130px;
     background-color: white;
@@ -139,4 +211,4 @@ IMG.commentPhoto:hover{
 IMG.postBarPhoto{
     width: 20px;
     height: auto;
-}
+}*/
