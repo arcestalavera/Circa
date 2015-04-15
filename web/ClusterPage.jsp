@@ -26,15 +26,22 @@
         <link rel="stylesheet" type="text/css" 	media="all" href="css/ClusterPage.css" />
     </head>
     <body bgcolor = "f4f4f4">
-        <%  User user = (User) request.getSession().getAttribute("loggedUser");
+        <%  // header -> used to get all info
+            User user = (User) request.getSession().getAttribute("loggedUser");
             CircaDatabase db = CircaDatabase.getInstance();
             user.setEventList(db.getEvents(user.getUserID()));
+            for(Event event : user.getEventList()){
+                event.setPostList(db.getPosts(event.getEventID()));
+            }
             user.setBuddyList(db.getUserBuddies(user.getUserID()));
             user.setClusters(db.getUserClusters(user.getUserID()));
-                
-            for(User buddy : user.getBuddyList()){
+
+            for (User buddy : user.getBuddyList()) {
                 buddy.setClusters(db.getUserClusters(buddy.getUserID()));
                 buddy.setEventList(db.getEvents(buddy.getUserID()));
+                for(Event event : buddy.getEventList()){
+                    event.setPostList(db.getPosts(event.getEventID()));
+                }
             }
         %>
         <!-- HEADER -->

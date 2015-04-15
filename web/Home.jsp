@@ -22,9 +22,13 @@
 
 
     <body bgcolor="#f4f4f4">
-        <%  User user = (User) request.getSession().getAttribute("loggedUser");
+        <%  // header -> used to get all info
+            User user = (User) request.getSession().getAttribute("loggedUser");
             CircaDatabase db = CircaDatabase.getInstance();
             user.setEventList(db.getEvents(user.getUserID()));
+            for(Event event : user.getEventList()){
+                event.setPostList(db.getPosts(event.getEventID()));
+            }
             user.setBuddyList(db.getUserBuddies(user.getUserID()));
             user.setClusters(db.getUserClusters(user.getUserID()));
 
@@ -96,6 +100,7 @@
                     boolean flag = false;
                     boolean hasPost = false;
                     
+                    // add buddies events viewable to user
                     for(User buddy : user.getBuddyList()){
                         for(Event event : buddy.getEventList()){
                             flag = false;
@@ -111,10 +116,16 @@
                         }
                     }
                     
+                    // add users events to viewable events
+                    for(Event event : user.getEventList()){
+                        viewableEvents.add(event);
+                    }
+                    
                     if(viewableEvents.size() != 0 && hasPost){
                         for (Event event : viewableEvents) {
                             for(Post post : event.getPostList()){
                                 if (!post.isDeleted()) {
+                                    System.out.println(post.getPostID());
                 %>
                 <div class = "post-div">
                     <div class = "post-container">
