@@ -32,6 +32,7 @@ public class Event {
         this.startDate = startDate;
         this.endDate = endDate;
         
+        postList = new ArrayList<>();
         attendingList = new ArrayList<>();
         invitedList = new ArrayList<>();
         requestList = new ArrayList<>();
@@ -50,6 +51,7 @@ public class Event {
         this.eventPicture = eventPicture;
         this.isDeleted = isDeleted;
         
+        postList = new ArrayList<>();
         attendingList = new ArrayList<>();
         invitedList = new ArrayList<>();
         requestList = new ArrayList<>();

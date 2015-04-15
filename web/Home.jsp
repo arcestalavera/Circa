@@ -31,6 +31,9 @@
             for (User buddy : user.getBuddyList()) {
                 buddy.setClusters(db.getUserClusters(buddy.getUserID()));
                 buddy.setEventList(db.getEvents(buddy.getUserID()));
+                for(Event event : buddy.getEventList()){
+                    event.setPostList(db.getPosts(event.getEventID()));
+                }
             }
         %>
         <!-- HEADER -->
@@ -91,23 +94,26 @@
             <div id = "home-post-panel">
                 <%  ArrayList<Event> viewableEvents = new ArrayList<>();
                     boolean flag = false;
-                
+                    boolean hasPost = false;
+                    
                     for(User buddy : user.getBuddyList()){
                         for(Event event : buddy.getEventList()){
                             flag = false;
-                            for(int i = 0; i < buddy.getClusters().size() && !flag; i++){
-                                if(db.isViewableToCluster(event.getEventID(), buddy.getClusters().get(i).getClusterID())
-                                   && db.isClusterMember(user.getUserID(), buddy.getClusters().get(i).getClusterID())){
+                            for(Cluster cluster : buddy.getClusters()){
+                                if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())
+                                   && db.isClusterMember(user.getUserID(), cluster.getClusterID())){
                                     viewableEvents.add(event);
+                                    if(event.getPostList().size() != 0)
+                                        hasPost = true;
                                     flag = true;
                                 }
                             }
                         }
                     }
                     
-                    if (viewableEvents.size() != 0) {
+                    if(viewableEvents.size() != 0 && hasPost){
                         for (Event event : viewableEvents) {
-                            for (Post post : event.getPostList()) {
+                            for(Post post : event.getPostList()){
                                 if (!post.isDeleted()) {
                 %>
                 <div class = "post-div">
@@ -188,8 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <%
-                            }
+                <%          }
                         }
                     }
                 } else {
