@@ -121,6 +121,7 @@
                     // add users events to viewable events
                     for(Event event : user.getEventList()){
                         viewableEvents.add(event);
+                        hasPost = true;
                     }
                     
                     if(viewableEvents.size() != 0 && hasPost){
