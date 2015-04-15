@@ -127,6 +127,10 @@ html, body{
     font-size: 15px;
 }
 
+.delete-post-form{
+    visibility: hidden;
+}
+
 .delete-post-button{
     float: right;
 }
