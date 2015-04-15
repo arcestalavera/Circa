@@ -56,6 +56,9 @@ public class toLike extends HttpServlet {
             Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
             reqDispatcher = request.getRequestDispatcher("ViewCluster?clusterID=" + cluster.getClusterID());
             reqDispatcher.forward(request, response);
+        }else if(curpage.equals("home")){
+            reqDispatcher = request.getRequestDispatcher("Home.jsp");
+            reqDispatcher.forward(request, response);
         }
     }
 

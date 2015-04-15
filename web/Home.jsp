@@ -143,7 +143,7 @@
                         </p>
                         <%  if (post.getPoster().getUserID() == user.getUserID()) {
                         %>
-                        <form class = "delete-post-form"action = "Post?action=delete&id=<%=post.getPostID()%>&curpage=cluster" method = "post">
+                        <form class = "delete-post-form"action = "Post?action=delete&id=<%=post.getPostID()%>&curpage=home" method = "post">
                             <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-post-button" />
                         </form>
                         <%}%>
@@ -155,13 +155,13 @@
                         <%  if (db.isLiked(post.getPostID(), user.getUserID())) {
                         %>
                         <p class = "post-like-option">
-                            <a class = "like-link" href= "Like?action=unlike&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=cluster">Unlike</a>
+                            <a class = "like-link" href= "Like?action=unlike&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=home">Unlike</a>
                         </p>
                         <%
                         } else {
                         %>
                         <p class = "post-like-option">
-                            <a class = "like-link" href= "Like?action=like&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=cluster">Like</a>
+                            <a class = "like-link" href= "Like?action=like&pid=<%=post.getPostID()%>&uid=<%=user.getUserID()%>&curpage=home">Like</a>
                         </p>
                         <%}
                             if (post.getLikeList().size() == 1) {
@@ -188,7 +188,7 @@
                                     </p>
                                     <% if (comment.getCommenter().getUserID() == user.getUserID()) {
                                     %>
-                                    <form class = "delete-comment-form" action="Comment?action=delete&id=<%=comment.getCommentID()%>&curpage=cluster" method = "post">
+                                    <form class = "delete-comment-form" action="Comment?action=delete&id=<%=comment.getCommentID()%>&curpage=home" method = "post">
                                         <input type="image" src="img/clusterpage/DeleteButtonSmall.png" class="delete-comment-button"/>
                                     </form>
                                     <%}%>
@@ -202,7 +202,7 @@
                                 <img src = "${loggedUser.getProfilePicture()}" title = "${loggedUser.getFirstName()} ${loggedUser.getLastName()}" class = "post-comment-commenter-img" height = "30px" width="30px">
                             </a>
                             <form class = "new-comment-form" action = "Comment?action=add&id=<%=post.getPostID()%>" method = "post">
-                                <input type = "hidden" name = "curpage" value = "cluster" />
+                                <input type = "hidden" name = "curpage" value = "home" />
                                 <input type = "text" class = "new-comment-comment-field" name = "commentText" placeholder = "Write a comment"/>
                             </form>
                         </div>
