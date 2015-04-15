@@ -17,7 +17,17 @@
 
 
     <body bgcolor="#f4f4f4">
-
+        <%  User user = (User) request.getSession().getAttribute("loggedUser");
+            CircaDatabase db = CircaDatabase.getInstance();
+            user.setEventList(db.getEvents(user.getUserID()));
+            user.setBuddyList(db.getUserBuddies(user.getUserID()));
+            user.setClusters(db.getUserClusters(user.getUserID()));
+                
+            for(User buddy : user.getBuddyList()){
+                buddy.setClusters(db.getUserClusters(buddy.getUserID()));
+                buddy.setEventList(db.getEvents(buddy.getUserID()));
+            }
+        %>
         <!-- HEADER -->
         <div id = "header-whole">
             <div id = "header-temp">
@@ -63,10 +73,7 @@
                 </div>
                 
                 <ul id = "user-buddies-list">
-                    <%  User user = (User) request.getSession().getAttribute("loggedUser");
-                        CircaDatabase db = CircaDatabase.getInstance();
-                        user.setBuddyList(db.getUserBuddies(user.getUserID()));
-                        for (User buddy : user.getBuddyList()) {
+                    <%  for (User buddy : user.getBuddyList()) {
                     %>
                     <li class = "buddies-member">
                         <a href = "User?action=view&id=<%=buddy.getUserID()%>">

@@ -26,6 +26,17 @@
         <link rel="stylesheet" type="text/css" 	media="all" href="css/ClusterPage.css" />
     </head>
     <body bgcolor = "f4f4f4">
+        <%  User user = (User) request.getSession().getAttribute("loggedUser");
+            CircaDatabase db = CircaDatabase.getInstance();
+            user.setEventList(db.getEvents(user.getUserID()));
+            user.setBuddyList(db.getUserBuddies(user.getUserID()));
+            user.setClusters(db.getUserClusters(user.getUserID()));
+                
+            for(User buddy : user.getBuddyList()){
+                buddy.setClusters(db.getUserClusters(buddy.getUserID()));
+                buddy.setEventList(db.getEvents(buddy.getUserID()));
+            }
+        %>
         <!-- HEADER -->
         <div id = "header-whole">
             <div id = "header-temp">
@@ -54,7 +65,6 @@
                 </form>
                 <ul id = "cluster-members-list">
                     <%  Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
-                        CircaDatabase db = CircaDatabase.getInstance();
                         cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
                         for (User clusterMember : cluster.getMemberList()) {
                     %>
@@ -73,10 +83,7 @@
             </div>
             
             <div id = "cluster-post-panel">
-                <%
-                    User user = (User) request.getSession().getAttribute("loggedUser");
-                    
-                    ArrayList<Event> viewableEvents = new ArrayList<>();
+                <%  ArrayList<Event> viewableEvents = new ArrayList<>();
                     
                     for(Event event : user.getEventList()){
                         if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
@@ -220,7 +227,6 @@
                     </ul>
                 </div>
                 <%  }
-                    user.setBuddyList(db.getUserBuddies(user.getUserID()));
                     ArrayList<User> addableBuddyToCluster = new ArrayList<>();
                     for(User buddy : user.getBuddyList()){
                         if(!db.isClusterMember(buddy.getUserID(), cluster.getClusterID())){
