@@ -1003,7 +1003,28 @@ public class CircaDatabase { //singleton
 
         return isInvited;
     }
+    
+    public boolean isMemberOfCluster(int addedID, int clusterID){
+        boolean isMember = false;
+        Statement stmt;
+        ResultSet rs;
 
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM add_user_to_cluster"
+                    + " WHERE clusterID = " + clusterID + " AND addedID = " + addedID + ";";
+
+            rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                isMember = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isMember;
+    }
+    
     public boolean isRequested(int eventID, int requestorID) {
         Statement stmt;
         ResultSet rs;

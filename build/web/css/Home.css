@@ -68,6 +68,279 @@ body{
     float: left;
 }
 
+.post-div{
+    font-size: 0;
+    background-color: white;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.post-container, .post-comment-container{
+    position: relative;
+    width: 100%;
+    font-size: 0;
+}
+
+.post-container{
+    width: 96.5%;
+    padding: 10px 10px 4px 10px;
+}
+
+.post-poster-img{
+    border-radius: 6px;
+    float: left;
+    //display: inline-block;
+}
+
+.post-poster-name, .post-event-name, .post-text{
+    margin-top: 0;
+    font-family: sans-serif;
+}
+
+.post-poster-name-link{
+    text-decoration: none;
+    color: #AD0000;
+}
+
+.post-poster-name:hover{
+    text-decoration: underline;
+}
+
+.post-poster-name{
+    display: inline;
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 5px;
+    color: #AD0000;
+    margin-bottom: 2px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.delete-post-button{
+    float: right;
+}
+
+.post-comment-container{
+    padding-top: 10px;
+    background-color: #F6F7F8;
+    border-top: 1px solid #DCDCDC;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.post-comment-commenter-div, .new-comment-div{
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 3px;
+    padding-bottom: 7px;
+}
+
+.post-comment-commenter-img{
+    clear: both;
+    float: left;
+    border-radius: 6px;
+}
+
+.post-comment-commenter-info{
+    padding-top: 2px;
+    padding-left: 5px;
+    overflow:auto;
+    display:block;
+}
+
+.post-comment-commenter-name, .post-comment-commenter-text{
+    font-family: sans-serif;
+    font-size: 13px;
+    margin: 0;
+}
+
+.post-comment-commenter-name{
+    color: #AD0000;
+    font-weight: 600;
+    display: inline;
+}
+
+.delete-comment-form{
+    visibility: hidden;
+    float: right;
+    display: inline;
+}
+
+.post-comment-commenter-text{
+    clear: both;
+    position: relative;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.new-comment-form{
+    width: 92%;
+    display: inline-block;
+    clear: both;
+    padding-left: 5px;
+}
+
+.new-comment-comment-field{
+    height: 25px;
+    width: 100%;
+    padding-left: 2px;
+    border: 1px solid #DCDCDC;
+    border-radius: 2px;
+}
+
+.post-event-name{
+    display: inline;
+    position: absolute;
+    margin-top: 24px;
+    margin-left: 5px;
+    padding: 4px;
+    text-align: center;
+    background-color: #DCDCDC;
+    color: white;
+    border: 1px solid #DCDCDC;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    font-size: 12px;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.post-event-name:hover{
+    color: #AD0000;
+    background-color: white;
+    border: 1px solid #AD0000;
+}
+
+.post-event-name-link{
+    text-decoration: none;
+    color: white;
+}
+
+.post-event-name-link:hover{
+    color: #AD0000;
+    background-color: white;
+}
+
+.post-text{
+    padding-top: 5px;
+    clear:both; 
+    word-wrap: break-word;
+    display: block;
+    width: 97%;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.post-like-option, .post-like-count{
+    font-family: sans-serif;
+    font-size: 11px;
+    display: inline;
+}
+
+.post-like-option{
+    
+    color: #DCDCDC;
+}
+
+.like-link{
+    color: #DCDCDC;
+    text-decoration: none;
+}
+
+.like-link:hover{
+    color: gray;
+}
+
+.post-like-count{
+    color: #AD0000;
+}
+
+#post-no-post-container-div{
+    margin: 20px;
+}
+
+#post-no-post-img{
+    display: block;
+    margin: 0 auto;
+}
+
+#post-no-post-text{
+    text-align: center;
+    margin-top: 20px;
+    
+    font-family: sans-serif;
+    font-size: 30px;
+    color: gray;
+}
+
+#cluster-other-panel{
+    margin-left: 0.5%;
+    width: 25%;
+    float: left;
+}
+
+#cluster-other-event-panel, #cluster-other-addmember-panel{
+    background-color: white;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+}
+
+#cluster-other-addmember-panel{
+    margin-top: 3px;
+}
+
+#event-tag-div, #addmember-tag-div{
+    margin-top: 5px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+#event-tag, #addmember-tag{
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #AD0000;
+    margin-left: 5px;
+    display: inline;
+}
+
+#cluster-event-list{
+    padding-top: 5px;
+}
+
+.cluster-event-item{
+    padding-bottom: 5px;
+    margin-left: 6px;
+    margin-bottom: 4px;
+    position: relative;
+    font-size: 0;
+}
+
+.cluster-event-pic{
+    //display: inline;
+    float: left;
+}
+
+.cluster-event-info-div{
+    clear: both;
+    display: inline-block;
+    //position: absolute;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+.link{
+    color: #AD0000;
+    text-decoration: none;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
+
 ul{
     margin: 0;
     padding: 0;
