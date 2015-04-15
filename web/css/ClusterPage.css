@@ -57,7 +57,7 @@ html, body{
     overflow: hidden;
     background-color: red;
     display: inline-block;
-    margin: 0 0 8px 8px;
+    margin: 0 0 8px 7px;
     position: relative;
 }
 
@@ -129,10 +129,8 @@ html, body{
 
 .delete-post-form{
     visibility: hidden;
-}
-
-.delete-post-button{
     float: right;
+    display: inline;
 }
 
 .post-comment-container{
