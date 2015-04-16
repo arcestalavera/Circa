@@ -8,8 +8,10 @@ package Database;
 import Classes.Cluster;
 import Classes.Comment;
 import Classes.Event;
+import Classes.InviteToEvent;
 import Classes.Like;
 import Classes.Post;
+import Classes.RequestToJoin;
 import Classes.User;
 import java.sql.Connection;
 import java.sql.Date;
@@ -265,6 +267,8 @@ public class CircaDatabase { //singleton
         return event;
     }
 
+    
+    
     public String getClusterName(int clusterID) {
         Statement stmt;
         ResultSet rs;
@@ -286,7 +290,63 @@ public class CircaDatabase { //singleton
 
         return clusterName;
     }
+    
+    public ArrayList<InviteToEvent> getPendingInviteToEvent(int userID){
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<InviteToEvent> inviteList = new ArrayList<>();
 
+        sql = "SELECT * FROM invite_to_event"
+                + " WHERE invitedID = " + userID + " AND status = 'Pending'";
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                User host = getUserDetails(rs.getInt("hostID"));
+                Event event = getEventDetails(rs.getInt("eventID"));
+                User invited = getUserDetails(rs.getInt("invitedID"));
+                
+                InviteToEvent invite = new InviteToEvent(host, event, invited, "Pending");
+
+                inviteList.add(invite);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return inviteList;
+    }
+    
+    public ArrayList<RequestToJoin> getPendingRequestToJoin(int userID){
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<RequestToJoin> requestList = new ArrayList<>();
+
+        sql = "SELECT * FROM request_to_join"
+                + " WHERE hostID = " + userID + " AND status = 'Pending'";
+
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                User host = getUserDetails(rs.getInt("hostID"));
+                Event event = getEventDetails(rs.getInt("eventID"));
+                User requestor = getUserDetails(rs.getInt("requestorID"));
+                
+                RequestToJoin invite = new RequestToJoin(host, event, requestor, "Pending");
+
+                requestList.add(invite);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return requestList;
+    }
+    
     public ArrayList<Cluster> getUserClusters(int userID) {
         Statement stmt;
         ResultSet rs;
