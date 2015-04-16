@@ -4,6 +4,9 @@
     Author     : Arces
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Classes.User"%>
+<%@page import="Database.CircaDatabase"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="Classes.Event"%>
@@ -155,10 +158,20 @@
                     <div class = "invite-buddies-div">
                         <h3 class = "invite-header">Invite:</h3>
                         <ul class = "invite-buddies-list">
+                            <%
+                                User user = (User) request.getSession().getAttribute("loggedUser");
+                                ArrayList<User> buddyList = user.getBuddyList();
+
+                                for (User buddy : buddyList) {
+                            %>
                             <li class = "invite-buddies-entry">
-                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "asdf"/>
-                                <img src = "img/avatars/default1.jpg" class = "invite-buddies-pic"/><label for="invite-buddy"> lalala</label>
+                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
+                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
+                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
                             </li>
+                            <%
+                                }
+                            %>
                         </ul>
                     </div>
                 </div>

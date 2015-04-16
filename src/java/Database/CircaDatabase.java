@@ -1138,4 +1138,37 @@ public class CircaDatabase { //singleton
 
         return isBuddy;
     }
+    
+    public void addBuddy(int user1ID, int user2ID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "INSERT INTO buddy"
+                    + " VALUES(" + user1ID + ", " + user2ID + ")";
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteBuddy(int user1ID, int user2ID){
+        Statement stmt;
+        
+        try{
+            stmt = con.createStatement();
+            sql = "DELETE FROM buddy"
+                    + " WHERE friend_1 = " + user1ID + " AND friend_2 = " + user2ID;
+            
+            stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM buddy"
+                    + " WHERE friend_2 = " + user1ID + " AND friend_1 = " + user2ID;
+            
+            stmt.executeUpdate(sql);
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }

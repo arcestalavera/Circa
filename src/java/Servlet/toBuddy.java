@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Servlet;
 
-import Classes.Event;
 import Classes.User;
 import Database.CircaDatabase;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Arren Antioquia
+ * @author Arces
  */
-public class toUserPage extends HttpServlet {
+public class toBuddy extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,27 +32,19 @@ public class toUserPage extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher reqDispatcher = null;
-        CircaDatabase db = CircaDatabase.getInstance();
-        String action = request.getParameter("action");
-        int userID;
-        System.out.println("called by " + request.getHeader("Referer"));
-
-        switch (action) {
-            case "view":
-                userID = Integer.parseInt(request.getParameter("id"));
-
-                //get details of user
-                User user = db.getUserDetails(userID);
-                user.setEventList(db.getEvents(userID));
-                user.setClusters(db.getUserClusters(userID));
-                user.setBuddyList(db.getUserBuddies(userID));
-                request.getSession().setAttribute("userDetails", user);
-
-                reqDispatcher = request.getRequestDispatcher("UserPage.jsp");
-                break;
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet toBuddy</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet toBuddy at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        reqDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,7 +60,6 @@ public class toUserPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**
@@ -84,7 +73,19 @@ public class toUserPage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        
+        CircaDatabase db = CircaDatabase.getInstance();
+        User user = (User)request.getSession().getAttribute("loggedUser");
+        User buddy = (User)request.getSession().getAttribute("userDetails");
+        String action = request.getParameter("action");
+        
+        switch(action){
+            case "add": db.addBuddy(user.getUserID(), buddy.getUserID());
+                        break;
+            case "delete": db.deleteBuddy(user.getUserID(), buddy.getUserID());
+                           break;
+        }
     }
 
     /**

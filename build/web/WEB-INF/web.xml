@@ -88,6 +88,10 @@
         <servlet-name>toComment</servlet-name>
         <servlet-class>Servlet.toComment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>toBuddy</servlet-name>
+        <servlet-class>Servlet.toBuddy</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>toComment</servlet-name>
         <url-pattern>/Comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toBuddy</servlet-name>
+        <url-pattern>/Buddy</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

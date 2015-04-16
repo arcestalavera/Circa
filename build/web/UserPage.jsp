@@ -59,15 +59,19 @@
                 if (loggedUser.getUserID() != userDetails.getUserID()) {
                     if (!db.isBuddy(loggedUser.getUserID(), userDetails.getUserID())) {
             %>
-            <form>
-                <input type = "submit" value = "Add Buddy" class = "buddy-button"/>
-            </form>
+            <div id = "buddy-action-div">
+                <form onsubmit = "return buddyAction('add')">
+                    <input type = "submit" value = "Add Buddy" class = "buddy-button"/>
+                </form>
+            </div>
             <%
             } else {
             %>
-            <form>
-                <input type = "submit" value = "Remove Buddy" class = "buddy-button"/>
-            </form>   
+            <div id = "buddy-action-div">
+                <form onsubmit = "return buddyAction('delete')">
+                    <input type = "submit" value = "Remove Buddy" class = "buddy-button"/>
+                </form>   
+            </div>
             <%
                     }
                 }
