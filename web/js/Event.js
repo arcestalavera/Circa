@@ -1,3 +1,34 @@
+//ajax
+//post
+function addPost() {
+    if (checkPost())
+    {
+        $.ajax({
+            type: "POST",
+            url: "Post?action=post&curpage=event",
+            data: $("#add-post").serialize(),
+            success: function(html) {
+                $("#post-list").append(html);
+            }
+        });
+    }
+    return false;
+}
+
+function deletePost(postID){
+    if(confirmDelete())
+    {
+        $.ajax({
+            type: "POST",
+            url: "Post?action=delete&id=" + postID + "&curpage=event",
+            success: function() {
+                $("#post_" + postID).remove().fadeOut("slow");
+            }
+        });
+    }
+    return false;
+}
+
 function checkPost() {
     var input = $(".input-post-textarea").val();
     console.log("input = " + input);
@@ -26,7 +57,7 @@ function checkComment(i) {
     }
 }
 
-function deletePost() {
+function confirmDelete() {
     if (confirm("Do you really want to delete this post?"))
         return true;
     else
@@ -48,10 +79,10 @@ function deleteEvent() {
 }
 
 $(document).ready(function() {
-    $('.comment-link').click(function() {
+    $(document).on("click", ".comment-link", function() {
         $(this).parent().next(".input-comment-div").slideToggle("medium");
     });
-    $('.post-show-comment').click(function() {
+    $(document).on("click", ".post-show-comment", function() {
 
         $(this).next(".post-comments-whole").slideToggle("medium");
         if ($(this).html() === "Show Comments")
@@ -66,7 +97,7 @@ $(document).ready(function() {
         }
     });
 
-    $('.edit-button').click(function() {
+    $(document).on("click", ".edit-button", function() {
         if ($(this).html() === "Edit This Post")
         {
             $(this).siblings(".post-text-div").toggle("fast");

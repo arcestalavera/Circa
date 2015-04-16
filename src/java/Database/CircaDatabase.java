@@ -36,7 +36,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -398,7 +398,7 @@ public class CircaDatabase { //singleton
         return postList;
     }
 
-    public void addPost(int eventID, int userID, String postText) {
+    public int addPost(int eventID, int userID, String postText) {
         Statement stmt;
         ResultSet rs;
         int maxPost = 1;
@@ -420,6 +420,8 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return maxPost;
     }
 
     public ArrayList<Comment> getComments(int postID) {

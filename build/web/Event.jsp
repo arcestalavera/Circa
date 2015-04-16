@@ -144,17 +144,21 @@
                 <%
                     for (User requestor : requestList) {
                 %>
-                <div class = "request-container">
-                    <a href = "User?action=view&id=<%=requestor.getUserID()%>">
-                        <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
-                    </a><br>
-                    <form action = "Event?action=approve&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
-                        <input type = "submit" class = "request-button" value = "Approve"/>
-                    </form>
-                    <form action = "Event?action=reject&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
-                        <input type = "submit" class = "request-button" value = "Reject"/>
-                    </form>
-                </div>
+                <ul>
+                    <li>
+                        <div class = "request-container">
+                            <a href = "User?action=view&id=<%=requestor.getUserID()%>">
+                                <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
+                            </a><br>
+                            <form action = "Event?action=approve&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
+                                <input type = "submit" class = "request-button" value = "Approve"/>
+                            </form>
+                            <form action = "Event?action=reject&eid=<%=event.getEventID()%>&uid=<%=requestor.getUserID()%>" method = "post">
+                                <input type = "submit" class = "request-button" value = "Reject"/>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
                 <%
                     }
                 %>
@@ -166,7 +170,7 @@
             %>
             <!-- POSTS and COMMENTS -->
             <div id = "input-post-div">
-                <form action = "Post?action=post&curpage=event" onsubmit = "return checkPost()" method = "post">
+                <form onsubmit = "return addPost()" id = "add-post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
                     <hr width = "60%"/>
                     <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
@@ -184,6 +188,8 @@
             } else if (!postList.isEmpty()) {
             %>
             <div id = "posts-div">
+                
+                <ul id = "post-list">
                 <%
                     for (int i = 0; i < postList.size(); i++) {
                         if (!postList.get(i).isDeleted()) {
@@ -192,110 +198,118 @@
                             //get commentList
                             ArrayList<Comment> commentList = postList.get(i).getCommentList();
                 %>
-                <div id = "event-post-whole">
-                    <div class = "event-post-div">
-                        <%
-                            if (poster.getUserID() == loggedUser.getUserID()) {
-                        %>
-                        <form action = "Post?action=delete&id=<%=postList.get(i).getPostID()%>&curpage=event" onsubmit = "return deletePost()" method = "post">
-                            <input type = "submit" class = "remove-post" value = "x"/>
-                        </form>
-                        <%
-                            }
-                        %>
-                        <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
-                        <br>
-
-                        <a href = "User?action=view&id=<%=poster.getUserID()%>">
-                            <b><%=poster.getFirstName()%> <%=poster.getLastName()%></b>
-                        </a>
-
-                        <%
-                            if (poster.getUserID() == loggedUser.getUserID()) {
-                        %>
-                        <div id = "edit-container">
-                            <button class = "edit-button">Edit This Post</button>
-
-                            <div class = "post-text-div"> 
-                                <%=postList.get(i).getPostText()%>
-                            </div>
-                            <div class = "edit-post-div" align = "center">
-                                <form action = "Post?action=edit&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post">
-                                    <textarea name = "postEditText" class = "edit-post-textarea" rows = "5" cols = "40"><%=postList.get(i).getPostText()%></textarea><br>
-                                    <input type = "submit" value = "Submit" class = "post-edit-submit"/>
+                    <li id = "post_<%=postList.get(i).getPostID()%>">
+                        <div id = "event-post-whole">
+                            <div class = "event-post-div">
+                                <%
+                                    if (poster.getUserID() == loggedUser.getUserID()) {
+                                %>
+                                <form onsubmit = "return deletePost(<%=postList.get(i).getPostID()%>)">
+                                    <input type = "submit" class = "remove-post" value = "x"/>
                                 </form>
-                            </div>
-                        </div>
-                        <%
-                        } else {
-                        %>
-                        <%=postList.get(i).getPostText()%>
-                        <%
-                            }
-                            if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
-                        %>                      
-                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=like&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>&curpage=event">Like</a></p>
-                        <%
-                        } else {
-                        %>
-                        <p align = "right"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=unlike&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>">Unlike</a></p>
-                        <%
-                            }
-                        %>
-                        <div class = "input-comment-div" align = "center">
-                            <form action = "Comment?action=add&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post" onsubmit = "return checkComment('<%=i%>')">
-                                <input type = "hidden" name = "curpage" value = "event" />
-                                <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
+                                <%
+                                    }
+                                %>
+                                <img src = "<%=poster.getProfilePicture()%>" alt = "<%=poster.getFirstName()%> <%=poster.getLastName()%>" class = "post-pic"/>
                                 <br>
-                                <input type = "submit" class = "input-post-submit" value = "Comment!"/>
-                            </form>
-                        </div>
-                    </div>
-                    <div class = "post-show-comment" align = "center">Show Comments</div>
-                    <%
-                        if (commentList.isEmpty()) {
-                    %>
-                    <div class ="post-comments-whole">
-                        <h3 align = "center" class = "empty-text">This post has no comments yet.</h3>
-                    </div>
-                    <%
-                    } else {
-                    %>
-                    <div class = "post-comments-whole">
-                        <%
-                            for (int j = 0; j < commentList.size(); j++) {
-                                //get commenter
-                                User commenter = commentList.get(j).getCommenter();
-                        %>
-                        <div class = "post-comment">
+
+                                <a href = "User?action=view&id=<%=poster.getUserID()%>">
+                                    <b><%=poster.getFirstName()%> <%=poster.getLastName()%></b>
+                                </a>
+
+                                <%
+                                    if (poster.getUserID() == loggedUser.getUserID()) {
+                                %>
+                                <div id = "edit-container">
+                                    <button class = "edit-button">Edit This Post</button>
+
+                                    <div class = "post-text-div"> 
+                                        <%=postList.get(i).getPostText()%>
+                                    </div>
+                                    <div class = "edit-post-div" align = "center">
+                                        <form action = "Post?action=edit&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post">
+                                            <textarea name = "postEditText" class = "edit-post-textarea" rows = "5" cols = "40"><%=postList.get(i).getPostText()%></textarea><br>
+                                            <input type = "submit" value = "Submit" class = "post-edit-submit"/>
+                                        </form>
+                                    </div>
+                                </div>
+                                <%
+                                } else {
+                                %>
+                                <%=postList.get(i).getPostText()%>
+                                <%
+                                    }
+                                    if (!db.isLiked(postList.get(i).getPostID(), loggedUser.getUserID())) {
+                                %>                      
+                                <p align = "right" id = "comment-par"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=like&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>&curpage=event">Like</a></p>
+                                <%
+                                } else {
+                                %>
+                                <p align = "right" id = "comment-par"><%=postList.get(i).getLikeList().size()%> likes | <a class = "comment-link">Comment</a> <a href= "Like?action=unlike&pid=<%=postList.get(i).getPostID()%>&uid=<%=loggedUser.getUserID()%>">Unlike</a></p>
+                                <%
+                                    }
+                                %>
+                                <div class = "input-comment-div" align = "center">
+                                    <form action = "Comment?action=add&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post" onsubmit = "return checkComment('<%=i%>')">
+                                        <input type = "hidden" name = "curpage" value = "event" />
+                                        <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
+                                        <br>
+                                        <input type = "submit" class = "input-post-submit" value = "Comment!"/>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class = "post-show-comment" align = "center">Show Comments</div>
                             <%
-                                if (commenter.getUserID() == loggedUser.getUserID()) {
+                                if (commentList.isEmpty()) {
                             %>
-                            <form action = "Comment?action=delete&id=<%=commentList.get(j).getCommentID()%>&curpage=event" onsubmit = "return deleteComment()" method = "post">
-                                <input type = "submit" class = "remove-post" value = "x"/>
-                            </form>
+                            <div class ="post-comments-whole">
+                                <h3 align = "center" class = "empty-text">This post has no comments yet.</h3>
+                            </div>
+                            <%
+                            } else {
+                            %>
+                            <div class = "post-comments-whole">
+                                <%
+                                    for (int j = 0; j < commentList.size(); j++) {
+                                        //get commenter
+                                        User commenter = commentList.get(j).getCommenter();
+                                %>
+                                <ul id = "comment-list">
+                                    <li>
+                                        <div class = "post-comment">
+                                            <%
+                                                if (commenter.getUserID() == loggedUser.getUserID()) {
+                                            %>
+                                            <form action = "Comment?action=delete&id=<%=commentList.get(j).getCommentID()%>&curpage=event" onsubmit = "return deleteComment()" method = "post">
+                                                <input type = "submit" class = "remove-post" value = "x"/>
+                                            </form>
+                                            <%
+                                                }
+                                            %>
+                                            <img src = "<%=commenter.getProfilePicture()%>" alt = "<%=commenter.getFirstName()%> <%=commenter.getLastName()%>" class = "comment-pic"/>
+                                            <p class = "event-post-text"><a href = "User?action=view&id=<%=commenter.getUserID()%>"><b>
+                                                        <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <%
+                                    }
+                                %>
+                            </div>
                             <%
                                 }
                             %>
-                            <img src = "<%=commenter.getProfilePicture()%>" alt = "<%=commenter.getFirstName()%> <%=commenter.getLastName()%>" class = "comment-pic"/>
-                            <p class = "event-post-text"><a href = "User?action=view&id=<%=commenter.getUserID()%>"><b>
-                                        <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
                         </div>
-                        <%
-                            }
-                        %>
-                    </div>
-                    <%
-                        }
-                    %>
-                </div>
+                    </li>
                 <%
                         }
                     }
                 %>
+                
+                </ul>
             </div>
             <%
-                    }
+                }
             %>
         </div>
     </body>
