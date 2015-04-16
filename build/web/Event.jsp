@@ -188,16 +188,16 @@
             } else if (!postList.isEmpty()) {
             %>
             <div id = "posts-div">
-                
+
                 <ul id = "post-list">
-                <%
-                    for (int i = 0; i < postList.size(); i++) {
-                        if (!postList.get(i).isDeleted()) {
-                            //get poster
-                            User poster = postList.get(i).getPoster();
-                            //get commentList
-                            ArrayList<Comment> commentList = postList.get(i).getCommentList();
-                %>
+                    <%
+                        for (int i = 0; i < postList.size(); i++) {
+                            if (!postList.get(i).isDeleted()) {
+                                //get poster
+                                User poster = postList.get(i).getPoster();
+                                //get commentList
+                                ArrayList<Comment> commentList = postList.get(i).getCommentList();
+                    %>
                     <li id = "post_<%=postList.get(i).getPostID()%>">
                         <div id = "event-post-whole">
                             <div class = "event-post-div">
@@ -250,7 +250,7 @@
                                     }
                                 %>
                                 <div class = "input-comment-div" align = "center">
-                                    <form action = "Comment?action=add&id=<%=postList.get(i).getPostID()%>&curpage=event" method = "post" onsubmit = "return checkComment('<%=i%>')">
+                                    <form id = "add-comment" onsubmit = "return addComment(<%=postList.get(i).getPostID()%>, <%=commentList.size()%>)">
                                         <input type = "hidden" name = "curpage" value = "event" />
                                         <textarea name = "commentText" class = "comment-textarea"rows = "2" cols = "70" placeholder = "Comment something here!"></textarea>
                                         <br>
@@ -259,23 +259,25 @@
                                 </div>
                             </div>
                             <div class = "post-show-comment" align = "center">Show Comments</div>
-                            <%
-                                if (commentList.isEmpty()) {
-                            %>
-                            <div class ="post-comments-whole">
-                                <h3 align = "center" class = "empty-text">This post has no comments yet.</h3>
-                            </div>
-                            <%
-                            } else {
-                            %>
                             <div class = "post-comments-whole">
-                                <%
-                                    for (int j = 0; j < commentList.size(); j++) {
-                                        //get commenter
-                                        User commenter = commentList.get(j).getCommenter();
-                                %>
+
                                 <ul id = "comment-list">
-                                    <li>
+                                    <%
+                                        if (commentList.isEmpty()) {
+                                    %>
+                                    <li id = "comment-no">
+                                        <h3 align = "center" class = "empty-text">This post has no comments yet.</h3>
+                                    </li>
+                                    <%
+                                    } else {
+                                    %>
+
+                                    <%
+                                        for (int j = 0; j < commentList.size(); j++) {
+                                            //get commenter
+                                            User commenter = commentList.get(j).getCommenter();
+                                    %>
+                                    <li id = "comment_<%=commentList.get(j).getCommentID()%>">
                                         <div class = "post-comment">
                                             <%
                                                 if (commenter.getUserID() == loggedUser.getUserID()) {
@@ -291,21 +293,21 @@
                                                         <br><%=commenter.getFirstName()%> <%=commenter.getLastName()%></b></a> <%=commentList.get(j).getCommentText()%></p>
                                         </div>
                                     </li>
+                                    <%
+                                        }
+                                    %>
                                 </ul>
-                                <%
-                                    }
-                                %>
                             </div>
                             <%
                                 }
                             %>
                         </div>
                     </li>
-                <%
+                    <%
+                            }
                         }
-                    }
-                %>
-                
+                    %>
+
                 </ul>
             </div>
             <%

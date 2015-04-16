@@ -36,7 +36,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -381,7 +381,8 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
 
             sql = "SELECT * FROM post"
-                    + " WHERE eventID = " + eventID;
+                    + " WHERE eventID = " + eventID
+                    + " ORDER BY postID DESC";
 
             rs = stmt.executeQuery(sql);
 
@@ -430,7 +431,7 @@ public class CircaDatabase { //singleton
         ArrayList<Comment> commentList = new ArrayList<>();
         User commenter;
         String commentText;
-        int userID = 0, commentID = 0;
+        int userID, commentID;
 
         sql = "SELECT * FROM comment"
                 + " WHERE postID = " + postID;
@@ -455,7 +456,7 @@ public class CircaDatabase { //singleton
         return commentList;
     }
 
-    public void addComment(int postID, String comment, int userID) {
+    public int addComment(int postID, String comment, int userID) {
         Statement stmt;
         ResultSet rs;
         int maxComment = 0;
@@ -476,6 +477,8 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return maxComment;
     }
 
     public void deleteCluster(int clusterID) {
@@ -577,6 +580,9 @@ public class CircaDatabase { //singleton
                     + " WHERE postID = " + postID;
 
             stmt.executeUpdate(sql);
+            
+            sql = "DELETE FROM likes"
+                    + " WHERE postID = " + postID;
         } catch (SQLException e) {
             e.printStackTrace();
         }

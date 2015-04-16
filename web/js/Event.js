@@ -8,21 +8,43 @@ function addPost() {
             url: "Post?action=post&curpage=event",
             data: $("#add-post").serialize(),
             success: function(html) {
-                $("#post-list").append(html);
+                $("#post-list").prepend(html);
+                $(".input-post-textarea").val("");
             }
         });
     }
     return false;
 }
 
-function deletePost(postID){
-    if(confirmDelete())
+function deletePost(postID) {
+    if (confirmDelete())
     {
         $.ajax({
             type: "POST",
             url: "Post?action=delete&id=" + postID + "&curpage=event",
             success: function() {
                 $("#post_" + postID).remove().fadeOut("slow");
+            }
+        });
+    }
+    return false;
+}
+
+function addComment(postID, size) {
+    console.log("i've been called by " + postID);
+    var commentInput = $("#post_" + postID).find("#add-comment");
+    if (checkComment(postID))
+    {
+        $.ajax({
+            type: "POST",
+            url: "Comment?action=add&id=" + postID,
+            data: commentInput.serialize(),
+            success: function(html) {
+                console.log("post = " + postID);
+                $("#post_" + postID).find("#comment-list").append(html);
+                $(".comment-textarea").val("");
+                if (size === 0)
+                    $("#post_" + postID).find("#comment-no").remove();
             }
         });
     }
@@ -43,8 +65,8 @@ function checkPost() {
     }
 }
 
-function checkComment(i) {
-    var input = $(".comment-textarea").eq(i).val();
+function checkComment(postID) {
+    var input = $("#post_" + postID).find(".input-comment-div").find(".comment-textarea").val();
     console.log("input = " + input);
     if (input === "")
     {
