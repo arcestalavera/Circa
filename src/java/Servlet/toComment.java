@@ -57,6 +57,8 @@ public class toComment extends HttpServlet {
                     reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + post.getEvent().getEventID());
                 else if(curPage.equals("cluster"))
                     reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+                else if(curPage.equals("home"))
+                    reqDispatcher = request.getRequestDispatcher("Home.jsp");
                 break;
             
             case "delete":
@@ -68,6 +70,8 @@ public class toComment extends HttpServlet {
                     reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
                 else if(curPage.equals("cluster"))
                     reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+                else if(curPage.equals("home"))
+                    reqDispatcher = request.getRequestDispatcher("Home.jsp");
                 break;
         }
 

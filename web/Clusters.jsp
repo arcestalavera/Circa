@@ -1,3 +1,4 @@
+<%@page import="Classes.Event"%>
 <%@page import="Classes.Cluster"%>
 <%@page import="Database.CircaDatabase"%>
 <%@page import="Classes.User"%>
@@ -13,6 +14,24 @@
         <link rel="stylesheet" type="text/css" 	media="all" href="css/clusters.css" />
     </head>
     <body bgcolor = "f4f4f4">
+        <%  // header -> used to get all info
+            User user = (User) request.getSession().getAttribute("loggedUser");
+            CircaDatabase db = CircaDatabase.getInstance();
+            user.setEventList(db.getEvents(user.getUserID()));
+            for(Event event : user.getEventList()){
+                event.setPostList(db.getPosts(event.getEventID()));
+            }
+            user.setBuddyList(db.getUserBuddies(user.getUserID()));
+            user.setClusters(db.getUserClusters(user.getUserID()));
+
+            for (User buddy : user.getBuddyList()) {
+                buddy.setClusters(db.getUserClusters(buddy.getUserID()));
+                buddy.setEventList(db.getEvents(buddy.getUserID()));
+                for(Event event : buddy.getEventList()){
+                    event.setPostList(db.getPosts(event.getEventID()));
+                }
+            }
+        %>
         <!-- HEADER -->
         <div id = "header-whole">
             <div id = "header-temp">
@@ -50,11 +69,7 @@
                         <p id = "buddies-tag">Buddies</p>
                     </div>
                     <div class = "cluster-members-list">
-                        <%  User user = (User)request.getSession().getAttribute("loggedUser");
-                            CircaDatabase db = CircaDatabase.getInstance();
-                            user.setBuddyList(db.getUserBuddies(user.getUserID()));
-                            
-                            for(User buddy : user.getBuddyList()){%>
+                        <%  for(User buddy : user.getBuddyList()){%>
                             <div class = "cluster-members">
                                 <a href = "User?action=view&id=<%=buddy.getUserID()%>">
                                     <img src="<%=buddy.getProfilePicture()%>" title = "<%=buddy.getFirstName()%> <%=buddy.getLastName()%>"width = "50px" height="50px"/>

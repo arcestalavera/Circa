@@ -31,6 +31,10 @@ public class User {
         this.emailAddress = emailAddress;
         this.birthDate = birthDate;
         this.profilePicture = profilePicture;
+        
+        this.buddyList = new ArrayList<>();
+        this.clusters  = new ArrayList<>();
+        this.eventList  = new ArrayList<>();
     }
 
     /**

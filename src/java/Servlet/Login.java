@@ -101,7 +101,6 @@ public class Login extends HttpServlet {
 
                 //get and set user info
                 User loggedUser = db.getUserDetails(userID);
-                loggedUser.setEventList(db.getEvents(userID));
                 
                 //put user info in session
                 reqSession.removeAttribute("isCorrect");

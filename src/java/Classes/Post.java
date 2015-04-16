@@ -27,6 +27,9 @@ public class Post {
         this.poster = poster;
         this.event = event;
         this.isDeleted = isDeleted;
+        
+        this.likeList = new ArrayList<>();
+        this.commentList = new ArrayList<>();
     }
 
     public void addLike(Like like) {
