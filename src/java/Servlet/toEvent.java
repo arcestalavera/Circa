@@ -41,10 +41,12 @@ public class toEvent extends HttpServlet {
         int eventID = 0, userID;
         Event event;
         User user;
+        boolean isDispatched = false;
         RequestDispatcher reqDispatcher = null;
 
         switch (action) {
             case "view":
+                isDispatched = true;
                 eventID = Integer.parseInt(request.getParameter("id"));
                 event = db.getEventDetails(eventID);
                 event.setPostList(db.getPosts(eventID));
@@ -53,6 +55,7 @@ public class toEvent extends HttpServlet {
                 break;
 
             case "create":
+                isDispatched = true;
                 user = (User) request.getSession().getAttribute("loggedUser");
                 userID = user.getUserID();
 
@@ -63,6 +66,7 @@ public class toEvent extends HttpServlet {
                 break;
 
             case "delete":
+                isDispatched = true;
                 eventID = Integer.parseInt(request.getParameter("id"));
                 user = (User) request.getSession().getAttribute("loggedUser");
 
@@ -72,11 +76,13 @@ public class toEvent extends HttpServlet {
                 break;
 
             case "edit":
+                isDispatched = true;
                 request.getSession().setAttribute("isEdit", true);
                 reqDispatcher = request.getRequestDispatcher("CreateEvent.jsp");
                 break;
 
             case "confirm":
+                isDispatched = true;
                 eventID = Integer.parseInt(request.getParameter("id"));
                 event = getEvent(request);
 
@@ -85,6 +91,7 @@ public class toEvent extends HttpServlet {
                 break;
 
             case "join":
+                isDispatched = false;
                 eventID = Integer.parseInt(request.getParameter("id"));
                 event = db.getEventDetails(eventID);
                 user = (User) request.getSession().getAttribute("loggedUser");
@@ -97,37 +104,31 @@ public class toEvent extends HttpServlet {
                         db.addJoinRequest(event.getHost().getUserID(), eventID, user.getUserID());
                         break;
                 }
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
             case "leave":
+                isDispatched = false;
                 eventID = Integer.parseInt(request.getParameter("id"));
                 user = (User) request.getSession().getAttribute("loggedUser");
 
                 db.deleteJoin(eventID, user.getUserID());
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
-
-            case "approve":
-                eventID = Integer.parseInt(request.getParameter("eid"));
-
-                event = db.getEventDetails(eventID);
-                userID = Integer.parseInt(request.getParameter("uid"));
-
-                db.answerRequest(event.getHost().getUserID(), eventID, userID, "Approved");
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
-                break;
-
-            case "reject":
+                
+            case "answer":
+                isDispatched = false;
+                String answer = request.getParameter("answer");
                 eventID = Integer.parseInt(request.getParameter("eid"));
                 event = db.getEventDetails(eventID);
                 userID = Integer.parseInt(request.getParameter("uid"));
 
-                db.answerRequest(event.getHost().getUserID(), eventID, userID, "Rejected");
-                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
+                db.answerRequest(event.getHost().getUserID(), eventID, userID, answer);
                 break;
         }
-        reqDispatcher.forward(request, response);
+        
+        if(isDispatched)
+            reqDispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -40,7 +40,6 @@ function addComment(postID, size) {
             url: "Comment?action=add&id=" + postID,
             data: commentInput.serialize(),
             success: function(html) {
-                console.log("post = " + postID);
                 $("#post_" + postID).find("#comment-list").append(html);
                 $(".comment-textarea").val("");
                 if (size === 0)
@@ -51,9 +50,138 @@ function addComment(postID, size) {
     return false;
 }
 
+function deleteComment(commentID) {
+    if (confirmDeleteComment())
+    {
+        $.ajax({
+            type: "POST",
+            url: "Comment?action=delete&id=" + commentID + "&curpage=event",
+            success: function() {
+                $("#comment_" + commentID).remove().fadeOut("slow");
+            }
+        });
+    }
+    return false;
+}
+
+function likePost(action, postID, userID, likeCount) {
+    $.ajax({
+        type: "GET",
+        url: "Like?action=" + action + "&pid=" + postID + "&uid=" + userID + "&curpage=event",
+        success: function() {
+            if (action === "like")
+            {
+                likeCount++;
+                $("#post_" + postID).find("#comment-par").html(likeCount + " likes | <a class = 'comment-link'>Comment</a> <a onclick = 'return likePost(\"unlike\", " + postID + ", " + userID + ", " + likeCount + "); return false;'>Unlike</a>");
+            }
+            else if (action === "unlike")
+            {
+                likeCount--;
+                $("#post_" + postID).find("#comment-par").html(likeCount + " likes | <a class = 'comment-link'>Comment</a> <a onclick = 'return likePost(\"like\", " + postID + ", " + userID + ", " + likeCount + "); return false;'>Like</a>");
+            }
+        }
+    });
+
+
+    return false;
+}
+
+
+function editPost(postID) {
+    $.ajax({
+        type: "POST",
+        url: "Post?action=edit&id=" + postID + "&curpage=event",
+        data: $("#post_" + postID).find("#edit-form").serialize(),
+        success: function(newText) {
+            $("#post_" + postID).find(".post-text-div").html(newText);
+            $("#post_" + postID).find(".post-text-div").toggle("fast");
+            $("#post_" + postID).find(".edit-post-div").toggle("slow");
+            $("#post_" + postID).find(".edit-button").html("Edit This Post");
+        }
+    });
+
+    return false;
+}
+
+function answerRequest(eventID, userID, answer, size, count)
+{
+    $.ajax({
+        type: "POST",
+        url: "Event?action=answer&answer=" + answer + "&eid=" + eventID + "&uid=" + userID,
+        success: function() {
+            $("#request_" + userID).remove();
+            size--;
+            if (size === 0)
+            {
+                console.log("no more requests");
+                $("#request-list").append("<li id = 'no-request'>\n" +
+                        "<h3 class = 'empty-text' align = 'center'>Your event has no requests right now.</h3>\n" +
+                        "</li>");
+            }
+            if(answer === "Approved")
+            {
+                count++;
+                $("#attend-count").html(count + " people are going");
+            }
+        }
+    });
+
+    return false;
+}
+
+function joinEvent(eventID, type, count) {
+    $.ajax({
+        type: "POST",
+        url: "Event?action=join&id=" + eventID,
+        success: function() {
+            if (type === "Closed")
+                $("#request-join-message").html("You have already requested to join this event.");
+            else if (type === "Public")
+            {
+                count++;
+                $("#attend-count").html(count + " people are going");
+                $("#request-join-message").html("<form onsubmit = 'return leaveEvent(" + eventID + ", \"" + type + "\", " + count + ")'>\n" +
+                        "<input type = 'submit' class = 'event-join' value = 'Leave'/>\n" +
+                        "</form>");
+            }
+        }
+    });
+
+    return false;
+}
+
+function leaveEvent(eventID, type, count) {
+    console.log("went here");
+    count--;
+    $.ajax({
+        type: "GET",
+        url: "Event?action=leave&id=" + eventID,
+        success: function() {
+            var typeButton, typeMessage;
+            if (type === "Public")
+            {
+                typeButton = "Join";
+                typeMessage = "";
+            }
+            else if (type === "Closed")
+            {
+                typeButton = "Request to Join";
+                typeMessage = "This is a closed event. You need to ask the host's permission to join!<br>";
+            }
+            $("#request-join-message").html("<form onsubmit = 'return joinEvent(" + eventID + ", \"" + type + "\", " + count + ")'>\n" +
+                    typeMessage +
+                    "<input type = 'submit' class = 'event-join' value = '" + typeButton + "'/>\n" +
+                    "</form>");
+            $("#attend-count").html(count + " people are going");
+        }
+    });
+
+    return false;
+}
+
+//--- functions -------------------------
 function checkPost() {
     var input = $(".input-post-textarea").val();
-    console.log("input = " + input);
     if (input === "")
     {
         alert("You're posting nothing! :(");
@@ -67,7 +195,6 @@ function checkPost() {
 
 function checkComment(postID) {
     var input = $("#post_" + postID).find(".input-comment-div").find(".comment-textarea").val();
-    console.log("input = " + input);
     if (input === "")
     {
         alert("You're commenting nothing! :(");
@@ -86,7 +213,7 @@ function confirmDelete() {
         return false;
 }
 
-function deleteComment() {
+function confirmDeleteComment() {
     if (confirm("Do you really want to delete this comment?"))
         return true;
     else

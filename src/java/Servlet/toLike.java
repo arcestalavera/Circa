@@ -49,16 +49,20 @@ public class toLike extends HttpServlet {
                 db.unlikePost(postID, userID);
                 break;
         }
-        if(curpage.equals("event")){
-            reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
-            reqDispatcher.forward(request, response);
-        }else if(curpage.equals("cluster")){
-            Cluster cluster = (Cluster)request.getSession().getAttribute("clusterToProcess");
-            reqDispatcher = request.getRequestDispatcher("ViewCluster?clusterID=" + cluster.getClusterID());
-            reqDispatcher.forward(request, response);
-        }else if(curpage.equals("home")){
-            reqDispatcher = request.getRequestDispatcher("Home.jsp");
-            reqDispatcher.forward(request, response);
+        switch (curpage) {
+            case "event":
+                reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+                reqDispatcher.forward(request, response);
+                break;
+            case "cluster":
+                Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
+                reqDispatcher = request.getRequestDispatcher("ViewCluster?clusterID=" + cluster.getClusterID());
+                reqDispatcher.forward(request, response);
+                break;
+            case "home":
+                reqDispatcher = request.getRequestDispatcher("Home.jsp");
+                reqDispatcher.forward(request, response);
+                break;
         }
     }
 

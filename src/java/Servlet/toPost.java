@@ -107,13 +107,13 @@ public class toPost extends HttpServlet {
                         + "                                    <button class = \"edit-button\">Edit This Post</button>\n"
                         + "                                    <div class = \"post-text-div\">"+ postText + "</div>\n"
                         + "                                    <div class = \"edit-post-div\" align = \"center\">\n"
-                        + "                                        <form action = \"Post?action=edit&id=" + postID + "&curpage=event\" method = \"post\">\n"
+                        + "                                        <form id = \"edit-form\" onsubmit = \"return editPost(<%=postList.get(i).getPostID()%>)\">\n"
                         + "                                            <textarea name = \"postEditText\" class = \"edit-post-textarea\" rows = \"5\" cols = \"40\">"+ postText + "</textarea><br>\n"
                         + "                                            <input type = \"submit\" value = \"Submit\" class = \"post-edit-submit\"/>\n"
                         + "                                        </form>\n"
                         + "                                    </div>\n"
                         + "                                </div>\n"
-                        + "                                <p align = \"right\" id = \"comment-par\">0 likes | <a class = \"comment-link\">Comment</a> <a href= \"Like?action=like&pid=" + postID + "&uid=" + user.getUserID() + "&curpage=event\">Like</a></p>\n"
+                        + "                                <p align = \"right\" id = \"comment-par\">0 likes | <a class = \"comment-link\">Comment</a> <a onclick = \"return likePost('like', " + postID + ", " + user.getUserID() + ", 0); return false;\">Like</a></p>\n"
                         + "                                <div class = \"input-comment-div\" align = \"center\">\n"
                         + "                                    <form id = \"add-comment\" onsubmit = \"return addComment(" + postID + ", 0)\">\n"
                         + "                                        <input type = \"hidden\" name = \"curpage\" value = \"event\" />\n"
@@ -144,9 +144,8 @@ public class toPost extends HttpServlet {
             case "edit":
                 postID = Integer.parseInt(request.getParameter("id"));
                 postText = request.getParameter("postEditText");
-                event = (Event) request.getSession().getAttribute("eventDetails");
-
                 db.editPost(postID, postText);
+                response.getWriter().write(postText);
                 break;
         }
 

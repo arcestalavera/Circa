@@ -849,7 +849,6 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("LIKE SIZE = " + likeList.size());
         return likeList;
     }
 

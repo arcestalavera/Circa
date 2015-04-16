@@ -50,13 +50,12 @@ public class toComment extends HttpServlet {
                 postID = Integer.parseInt(request.getParameter("id"));
                 commentText = request.getParameter("commentText");
                 commentID = db.addComment(postID, commentText, userID);
-                System.out.println("curPage = " + curPage);
                 switch (curPage) {
                     case "event":
                         response.setContentType("text/html;charset=UTF-8");
                         response.getWriter().write("<li id = \"comment_" + commentID + "\">\n"
                                 + "                                        <div class = \"post-comment\">\n"
-                                + "                                            <form action = \"Comment?action=delete&id=<%=commentList.get(j).getCommentID()%>&curpage=event\" onsubmit = \"return deleteComment()\" method = \"post\">\n"
+                                + "                                            <form onsubmit = \"return deleteComment(" + commentID + ")\">\n"
                                 + "                                                <input type = \"submit\" class = \"remove-post\" value = \"x\"/>\n"
                                 + "                                            </form>\n"
                                 + "                                            <img src = \"" + user.getProfilePicture() + "\" alt = \"" + user.getFirstName() + " " + user.getLastName() + "\" class = \"comment-pic\"/>\n"
@@ -78,20 +77,23 @@ public class toComment extends HttpServlet {
 
             case "delete":
                 commentID = Integer.parseInt(request.getParameter("id"));
-                Event event = (Event) request.getSession().getAttribute("eventDetails");
-
+                
                 db.deleteComment(commentID);
-                if (curPage.equals("event")) {
-                    reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
-                } else if (curPage.equals("cluster")) {
-                    reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
-                } else if (curPage.equals("home")) {
-                    reqDispatcher = request.getRequestDispatcher("Home.jsp");
+                switch (curPage) {
+                    case "event":
+                        //do nothing
+                        //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
+                        break;
+                    case "cluster":
+                        reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+                        break;
+                    case "home":
+                        reqDispatcher = request.getRequestDispatcher("Home.jsp");
+                        break;
                 }
                 break;
         }
-        if (!action.equals(
-                "add")) {
+        if (!curPage.equals("event")) {
             reqDispatcher.forward(request, response);
         }
     }
