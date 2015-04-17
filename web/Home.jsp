@@ -251,8 +251,9 @@
                     ArrayList<RequestToJoin> requestList = db.getPendingRequestToJoin(user.getUserID());
                     
                     if(inviteList.size() != 0 || requestList.size() != 0){
+                        int notifSize = inviteList.size() + requestList.size();
                 %>
-                <div class = "home-other-notif-panel">
+                <div class = "home-other-notif-panel" id = "request-invite-div">
                     <div class = "notif-tag-div">
                         <p class = "notif-tag">Notification</p>
                     </div>
@@ -261,7 +262,7 @@
                         <%  
                             for(InviteToEvent invite:inviteList){
                         %>
-                        <li class = "home-notif-item">
+                        <li class = "home-notif-item" id = "inv_notif_<%=invite.getEvent().getEventID()%><%=invite.getInvited().getUserID()%>">
                             <a href = "User?action=view&id=<%=invite.getHost().getUserID()%>">
                                 <img src = "<%=invite.getHost().getProfilePicture()%>" class = "home-notif-pic" title = "<%=invite.getHost().getFirstName()%> <%=invite.getHost().getLastName()%>" width = "40px" height="40px" />
                             </a>
@@ -287,7 +288,7 @@
                             }
                             for(RequestToJoin requestItem: requestList){ 
                         %>
-                        <li class = "home-notif-item">
+                        <li class = "home-notif-item" id = "req_notif_<%=requestItem.getEvent().getEventID()%><%=requestItem.getRequestor().getUserID()%>">
                             <a href = "User?action=view&id=<%=requestItem.getRequestor().getUserID()%>">
                                 <img src = "<%=requestItem.getRequestor().getProfilePicture()%>" class = "home-notif-pic" title = "<%=requestItem.getRequestor().getFirstName()%> <%=requestItem.getRequestor().getLastName()%>" width = "40px" height="40px" />
                             </a>
@@ -301,10 +302,10 @@
                                         <%=requestItem.getEvent().getEventName()%>
                                     </a>
                                 </p>
-                                <form class = "approve-form">
+                                <form class = "approve-form" onsubmit = "return answerRequest('Approved', <%=requestItem.getEvent().getEventID()%>, <%=requestItem.getRequestor().getUserID()%>, <%=notifSize%>)">
                                     <input type = "submit" value ="Approve" class = "approve-button"/>
                                 </form>
-                                <form class = "reject-form">
+                                <form class = "reject-form" onsubmit = "return answerRequest('Rejected', <%=requestItem.getEvent().getEventID()%>, <%=requestItem.getRequestor().getUserID()%>, <%=notifSize%>)">
                                     <input type = "submit" value = "Reject" class = "reject-button"/>
                                 </form>
                             </div>

@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -267,8 +267,6 @@ public class CircaDatabase { //singleton
         return event;
     }
 
-    
-    
     public String getClusterName(int clusterID) {
         Statement stmt;
         ResultSet rs;
@@ -290,8 +288,8 @@ public class CircaDatabase { //singleton
 
         return clusterName;
     }
-    
-    public ArrayList<InviteToEvent> getPendingInviteToEvent(int userID){
+
+    public ArrayList<InviteToEvent> getPendingInviteToEvent(int userID) {
         Statement stmt;
         ResultSet rs;
         ArrayList<InviteToEvent> inviteList = new ArrayList<>();
@@ -307,7 +305,7 @@ public class CircaDatabase { //singleton
                 User host = getUserDetails(rs.getInt("hostID"));
                 Event event = getEventDetails(rs.getInt("eventID"));
                 User invited = getUserDetails(rs.getInt("invitedID"));
-                
+
                 InviteToEvent invite = new InviteToEvent(host, event, invited, "Pending");
 
                 inviteList.add(invite);
@@ -318,8 +316,8 @@ public class CircaDatabase { //singleton
 
         return inviteList;
     }
-    
-    public ArrayList<RequestToJoin> getPendingRequestToJoin(int userID){
+
+    public ArrayList<RequestToJoin> getPendingRequestToJoin(int userID) {
         Statement stmt;
         ResultSet rs;
         ArrayList<RequestToJoin> requestList = new ArrayList<>();
@@ -335,7 +333,7 @@ public class CircaDatabase { //singleton
                 User host = getUserDetails(rs.getInt("hostID"));
                 Event event = getEventDetails(rs.getInt("eventID"));
                 User requestor = getUserDetails(rs.getInt("requestorID"));
-                
+
                 RequestToJoin invite = new RequestToJoin(host, event, requestor, "Pending");
 
                 requestList.add(invite);
@@ -346,7 +344,7 @@ public class CircaDatabase { //singleton
 
         return requestList;
     }
-    
+
     public ArrayList<Cluster> getUserClusters(int userID) {
         Statement stmt;
         ResultSet rs;
@@ -481,7 +479,7 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return maxPost;
     }
 
@@ -537,7 +535,7 @@ public class CircaDatabase { //singleton
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return maxComment;
     }
 
@@ -640,7 +638,7 @@ public class CircaDatabase { //singleton
                     + " WHERE postID = " + postID;
 
             stmt.executeUpdate(sql);
-            
+
             sql = "DELETE FROM likes"
                     + " WHERE postID = " + postID;
         } catch (SQLException e) {
@@ -947,11 +945,16 @@ public class CircaDatabase { //singleton
 
         try {
             stmt = con.createStatement();
-
-            sql = "UPDATE request_to_join"
-                    + " SET status = '" + action + "'"
-                    + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
-
+            if (action.equals("Approved")) {
+                sql = "UPDATE request_to_join"
+                        + " SET status = '" + action + "'"
+                        + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
+            }
+            else if(action.equals("Rejected"))
+            {
+                sql = "DELETE FROM request_to_join"
+                        + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
+            }
             stmt.executeUpdate(sql);
             if (action.equals("Approved")) {
                 addJoin(eventID, requestorID);
@@ -1070,8 +1073,8 @@ public class CircaDatabase { //singleton
 
         return isInvited;
     }
-    
-    public boolean isMemberOfCluster(int addedID, int clusterID){
+
+    public boolean isMemberOfCluster(int addedID, int clusterID) {
         boolean isMember = false;
         Statement stmt;
         ResultSet rs;
@@ -1091,7 +1094,7 @@ public class CircaDatabase { //singleton
 
         return isMember;
     }
-    
+
     public boolean isRequested(int eventID, int requestorID) {
         Statement stmt;
         ResultSet rs;
@@ -1125,11 +1128,10 @@ public class CircaDatabase { //singleton
                     + " UNION"
                     + " select * from buddy"
                     + " WHERE friend_2 = " + userID + " AND friend_1 = " + buddyID;
-            
+
             rs = stmt.executeQuery(sql);
-            
-            if(rs.next())
-            {
+
+            if (rs.next()) {
                 isBuddy = true;
             }
         } catch (SQLException e) {
@@ -1138,101 +1140,101 @@ public class CircaDatabase { //singleton
 
         return isBuddy;
     }
-    
-    public void addBuddy(int user1ID, int user2ID){
+
+    public void addBuddy(int user1ID, int user2ID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "INSERT INTO buddy"
                     + " VALUES(" + user1ID + ", " + user2ID + ")";
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public void deleteBuddy(int user1ID, int user2ID){
+
+    public void deleteBuddy(int user1ID, int user2ID) {
         Statement stmt;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
             sql = "DELETE FROM buddy"
                     + " WHERE friend_1 = " + user1ID + " AND friend_2 = " + user2ID;
-            
+
             stmt.executeUpdate(sql);
-            
+
             sql = "DELETE FROM buddy"
                     + " WHERE friend_2 = " + user1ID + " AND friend_1 = " + user2ID;
-            
+
             stmt.executeUpdate(sql);
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    public ArrayList<Event> getTrendingEvents(){
+
+    public ArrayList<Event> getTrendingEvents() {
         ArrayList<Event> trends = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            sql =   "select e.eventID, count(*) " +
-                    "from post as p, event as e " +
-                    "where p.eventID = e.eventID " +
-                    "group by e.eventID " +
-                    "order by count(*) desc " +
-                    "limit 10;";
+            sql = "select e.eventID, count(*) "
+                    + "from post as p, event as e "
+                    + "where p.eventID = e.eventID "
+                    + "group by e.eventID "
+                    + "order by count(*) desc "
+                    + "limit 10;";
             rs = stmt.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 Event event = getEventDetails(rs.getInt("eventID"));
                 trends.add(event);
             }
-            
-        } catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return trends;
     }
-    
-    public ArrayList<User> searchUser(String username){
+
+    public ArrayList<User> searchUser(String username) {
         ArrayList<User> searchResult = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            sql =   "select * from user " +
-                    "where firstName like '%" + username + "%' or lastName like '%" + username + "%'";
+            sql = "select * from user "
+                    + "where firstName like '%" + username + "%' or lastName like '%" + username + "%'";
             rs = stmt.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 User user = getUserDetails(rs.getInt("userID"));
                 searchResult.add(user);
             }
-            
-        } catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return searchResult;
     }
-    
-    public ArrayList<Event> searchEvent(String eventName){
+
+    public ArrayList<Event> searchEvent(String eventName) {
         ArrayList<Event> searchResult = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
-        
-        try{
+
+        try {
             stmt = con.createStatement();
-            sql =  "select * from event where name like '%"+eventName+"%'";
+            sql = "select * from event where name like '%" + eventName + "%'";
             rs = stmt.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 Event event = getEventDetails(rs.getInt("eventID"));
                 searchResult.add(event);
             }
-            
-        } catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return searchResult;

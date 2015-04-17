@@ -104,7 +104,6 @@ public class toEvent extends HttpServlet {
                         db.addJoinRequest(event.getHost().getUserID(), eventID, user.getUserID());
                         break;
                 }
-                //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
             case "leave":
@@ -113,7 +112,6 @@ public class toEvent extends HttpServlet {
                 user = (User) request.getSession().getAttribute("loggedUser");
 
                 db.deleteJoin(eventID, user.getUserID());
-                //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
                 
             case "answer":
