@@ -1196,4 +1196,45 @@ public class CircaDatabase { //singleton
         }
         return trends;
     }
+    
+    public ArrayList<User> searchUser(String username){
+        ArrayList<User> searchResult = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+        
+        try{
+            stmt = con.createStatement();
+            sql =   "select * from user " +
+                    "where firstName like '%" + username + "%' or lastName like '%" + username + "%'";
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                User user = getUserDetails(rs.getInt("userID"));
+                searchResult.add(user);
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return searchResult;
+    }
+    
+    public ArrayList<Event> searchEvent(String eventName){
+        ArrayList<Event> searchResult = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+        
+        try{
+            stmt = con.createStatement();
+            sql =  "select * from event where name like '%"+eventName+"%'";
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Event event = getEventDetails(rs.getInt("eventID"));
+                searchResult.add(event);
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return searchResult;
+    }
 }
