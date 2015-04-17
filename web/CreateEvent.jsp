@@ -4,6 +4,7 @@
     Author     : Arces
 --%>
 
+<%@page import="Classes.Cluster"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Classes.User"%>
 <%@page import="Database.CircaDatabase"%>
@@ -52,6 +53,11 @@
         <!-- END HEADER -->
 
         <%
+            //get user details
+            User user = (User) request.getSession().getAttribute("loggedUser");
+            ArrayList<User> buddyList = user.getBuddyList();
+            ArrayList<Cluster> clusterList = user.getClusters();
+            CircaDatabase db = CircaDatabase.getInstance();
             //get status if this is editing or creating
             Boolean isEditing = (Boolean) request.getSession().getAttribute("isEdit");
             String action;
@@ -99,83 +105,173 @@
             %>
         </div>
 
-        <form action = "<%=action%>" method = "post">
-            <div align = "center">
-                <input type = "submit" value = "Publish Event!" class = "event-submit"/>
-            </div>
-            <div id = "create-event-whole">
-                <h2 class = "event-title">Enter event details here!</h2>
-                <div class = "event-body" align = "center">
-                    <h2 class = "event-body-title">Name of Event</h2> <input required value = "<%=name%>" type = "text" name = "eventName" class = "event-body-input" placeholder = "Name"/><br>
-                    <br><h2 class = "event-body-title">Venue</h2> <input required value = "<%=venue%>" type = "text" name = "eventVenue" class = "event-body-input" placeholder = "Venue"/><br>
-                    <br><h3 class = "event-body-title">Description</h3><textarea rows="5" cols = "50" name = "eventDescription" placeholder = "Tell us something about your event"><%=description%></textarea>
-                    <br><h2 class = "event-body-title">Start</h2><hr width = "30%">
-                    <text class = "event-body-title"><b>Date:</b></text> <input required value = "<%=startDate%>" type = "date" name = "eventStartDate"/> 
-                    <text class = "event-body-title"><b>Time:</b></text> <input required value = "<%=startTime%>" type = "time" name = "eventStartTime"/>
-                    <br><br><h2 class = "event-body-title">End</h2><hr width = "30%">
-                    <text class = "event-body-title"><b>Date:</b></text> <input required value = "<%=endDate%>" type = "date" name = "eventEndDate"/> 
-                    <text class = "event-body-title"><b>Time:</b></text> <input required value = "<%=endTime%>" type = "time" name = "eventEndTime"/>
-                    <br><br><h3 class = "event-body-title">Type</h3>
-
-                    <select class = "event-body-input"  name = "eventType" required>
-                        <%
-                            if (type.equals("Public")) {
-                        %>
-                        <option value = "Public" selected>Public</option>
-                        <%
-                        } else {
-                        %>
-                        <option value = "Public">Public</option>
-                        <%
-                            }
-                            if (type.equals("Closed")) {
-                        %>
-                        <option value = "Closed" selected>Closed</option>
-                        <%
-                        } else {
-                        %>
-                        <option value = "Closed">Closed</option>
-                        <%
-                            }
-                        %><%
-                            if (type.equals("Private")) {
-                        %>
-                        <option value = "Private" selected>Private</option>
-                        <%
-                        } else {
-                        %>
-                        <option value = "Private">Private</option>
-                        <%
-                            }
-                        %>
-                    </select>
+        <div id = "create-container">
+            <form action = "<%=action%>" method = "post">
+                <div align = "center">
+                    <input type = "submit" value = "Publish Event!" class = "event-submit"/>
                 </div>
-            </div>
+                <div align = "center">
+                    <ul class = "tabs">
+                        <li><a href="#create-event-whole"><b>1) Event Details</b></a></li>
+                        <li><a href="#view-filter-whole"><b>2) Privacy</b></a></li>
+                        <li><a href="#invite-user-whole"><b>3) Invite Buddies</b></a></li>
+                    </ul>
+                </div>
+                <div id = "create-event-whole">
+                    <h3 class = "event-title">Enter event details here!</h3>
+                    <div class = "event-body" align = "center">
+                        <h2 class = "event-body-title">Name of Event</h2> <input required value = "<%=name%>" type = "text" name = "eventName" class = "event-body-input" placeholder = "Name"/><br>
+                        <br><h2 class = "event-body-title">Venue</h2> <input required value = "<%=venue%>" type = "text" name = "eventVenue" class = "event-body-input" placeholder = "Venue"/><br>
+                        <br><h3 class = "event-body-title">Description</h3><textarea rows="5" cols = "50" name = "eventDescription" placeholder = "Tell us something about your event"><%=description%></textarea>
+                        <br><h2 class = "event-body-title">Start</h2><hr width = "30%">
+                        <text class = "event-body-title"><b>Date:</b></text> <input required value = "<%=startDate%>" type = "date" name = "eventStartDate"/> 
+                        <text class = "event-body-title"><b>Time:</b></text> <input required value = "<%=startTime%>" type = "time" name = "eventStartTime"/>
+                        <br><br><h2 class = "event-body-title">End</h2><hr width = "30%">
+                        <text class = "event-body-title"><b>Date:</b></text> <input required value = "<%=endDate%>" type = "date" name = "eventEndDate"/> 
+                        <text class = "event-body-title"><b>Time:</b></text> <input required value = "<%=endTime%>" type = "time" name = "eventEndTime"/>
+                        <br><br><h3 class = "event-body-title">Type</h3>
 
-            <div id = "invite-user-whole">
-                <h2 class = "invite-title">Invite your buddies!</h2>
-                <div class = "invite-body">
-                    <div class = "invite-buddies-div">
-                        <h3 class = "invite-header">Invite:</h3>
-                        <ul class = "invite-buddies-list">
+                        <select class = "event-body-input"  name = "eventType" required>
                             <%
-                                User user = (User) request.getSession().getAttribute("loggedUser");
-                                ArrayList<User> buddyList = user.getBuddyList();
+                                if (type.equals("Public")) {
+                            %>
+                            <option value = "Public" selected>Public</option>
+                            <%
+                            } else {
+                            %>
+                            <option value = "Public">Public</option>
+                            <%
+                                }
+                                if (type.equals("Closed")) {
+                            %>
+                            <option value = "Closed" selected>Closed</option>
+                            <%
+                            } else {
+                            %>
+                            <option value = "Closed">Closed</option>
+                            <%
+                                }
+                            %><%
+                                if (type.equals("Private")) {
+                            %>
+                            <option value = "Private" selected>Private</option>
+                            <%
+                            } else {
+                            %>
+                            <option value = "Private">Private</option>
+                            <%
+                                }
+                            %>
+                        </select>
+                    </div>
+                </div>
 
-                                for (User buddy : buddyList) {
+                <div id = "view-filter-whole">
+                    <h3 class = "invite-title">Who can view your event?</h3>
+                    <div align = "center">
+                        <select id = "view-select">
+                            <option value = "Public" selected>Public</option>
+                            <option value = "Specified">Specified</option>
+                        </select>
+                    </div>
+                    <h4 id = "view-header" class = "view-title">Anyone can see your event</h4>
+
+                    <div id = "view-specified">
+                        <div id = "view-buddies">
+                            <br>
+                            <h3 class = "event-body-title">Choose Buddies</h3>
+                            <ul id = "invited-list" class = "invite-buddies-list">
+                                <%
+                                    for (User buddy : buddyList) {
+                                %>
+                                <li class = "invite-buddies-entry">
+                                    <input type = "checkbox" onchange = "" id = "view-buddy" name = "view-buddy" value = "<%=buddy.getUserID()%>"/>
+                                    <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
+                                    <label for="view-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
+                                </li>
+                                <%
+                                    }
+                                %>
+                            </ul>
+                        </div>
+                        <div id = "view-cluster">
+                            <br>
+                            <h3 class = "event-body-title">Choose Clusters</h3>
+                            <ul id = "invited-list" class = "invite-buddies-list">
+                                <%
+                                    for (Cluster cluster : clusterList) {
+                                %>
+                                <li class = "invite-buddies-entry">
+                                    <input type = "checkbox" id = "view-cluster" name = "view-cluster" value = "<%=cluster.getClusterID()%>"/>
+                                    <label for="view-cluster"> <%=cluster.getName()%></label>
+                                </li>
+                                <%
+                                    }
+                                %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div id = "invite-user-whole">
+            <h3 class = "invite-title">Invite your buddies!</h3>
+            <div class = "invite-body">
+                <div class = "invite-buddies-div">
+                    <div class = "invited-div">
+                        <br>
+                        <h3 class = "event-body-title">INVITED</h3>
+                        <ul id = "invited-list" class = "invite-buddies-list">
+                            <%
+                                if (isEditing != null && isEditing) {
+                                    for (User buddy : buddyList) {
+                                        if (db.isInvited(event.getEventID(), buddy.getUserID())) {
                             %>
                             <li class = "invite-buddies-entry">
+                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>" checked disabled = "disabled"/>
+                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
+                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
+                            </li>
+                            <%
+                                        }
+                                    }
+                                }
+                            %>
+                        </ul>
+                    </div>
+                    <div class = "invite-div">
+                        <br>
+                        <h3 class = "event-body-title">INVITE</h3>
+                        <ul id = "invite-list" class = "invite-buddies-list">
+                            <%
+                                for (User buddy : buddyList) {
+                                    if (isEditing != null && isEditing) {
+                                        if (!db.isInvited(event.getEventID(), buddy.getUserID()) && !db.isJoining(event.getEventID(), buddy.getUserID())) {
+                            %>
+                            <li class = "invite-buddies-entry" id = "invite-buddy_<%=buddy.getUserID()%>">
                                 <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
                                 <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
                                 <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
                             </li>
                             <%
                                 }
+                            } else {
+                            %>
+                            <li class = "invite-buddies-entry" id = "invite-buddy_<%=buddy.getUserID()%>">
+                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
+                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
+                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
+                            </li>       
+                            <%
+                                    }
+                                }
                             %>
                         </ul>
                     </div>
                 </div>
             </div>
-        </form>
-    </body>
+        </div>
+    </form>
+</div>
+</body>
 </html>

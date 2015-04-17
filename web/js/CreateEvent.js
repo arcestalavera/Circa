@@ -1,21 +1,52 @@
 $(document).ready(function() {
-    var isOpened = false;
-    $(".invite-title").click(function() {
-        if (!isOpened)
+    $('ul.tabs').each(function() {
+        var $active, $content, $links = $(this).find('a');
+        $active = $($links[0]);
+        $active.addClass('active');
+        $content = $($active[0].hash);
+        $links.not($active).each(function() {
+            $(this.hash).hide();
+        });
+        $(this).on('click', 'a', function(e) {
+            $active.removeClass('active');
+            $content.hide();
+            $active = $(this);
+            $content = $(this.hash);
+            $active.addClass('active');
+            $content.show();
+            e.preventDefault();
+        });
+    });
+
+    $("#view-select").change(function() {
+        var type = $("#view-select option:selected").val();
+        switch (type)
         {
-            $("#create-event-whole").fadeOut("medium");
-            $("#invite-user-whole").animate({bottom: '+=15px'});
-            $(this).css('opacity','1');
-            isOpened = true;
+            case "Public":
+                $("#view-header").html("Anyone can view your event");
+                $("#view-specified").hide();
+                $("#invite-list > li").show();
+                break;
+            case "Specified":
+                $("#view-header").html("Only specified buddies / clusters can see your event");
+                $("#view-specified").show();
+                $("#view-specified").css("display", "table");
+                $("#invite-list > li").hide();
+                $("input:checkbox").attr("checked", false);
+                break;
         }
-        else
-        {
-            $("#create-event-whole").fadeIn("medium");
-            $("#invite-user-whole").animate({bottom: '-=15px'});
-            $(this).css('opacity','.6');
-            isOpened = false;
+    });
+
+    $(document).on("change", "#view-buddy", function() {
+        if (this.checked) {
+            var inviteBuddy = $("#invite-buddy_" + this.value);
+            inviteBuddy.find("#invite-buddy").attr("checked", false);
+            inviteBuddy.show();
         }
-        
-        $(".invite-body").slideToggle("medium");
+        else if (!this.checked){
+            var inviteBuddy = $("#invite-buddy_" + this.value);
+            inviteBuddy.find("#invite-buddy").attr("checked", false);
+            inviteBuddy.hide();
+        }
     });
 });

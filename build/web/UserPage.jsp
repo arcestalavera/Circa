@@ -81,7 +81,6 @@
         </div>
 
         <div class="postDiv">
-
             <ul class = "tabs">
                 <li><a href="#showEvents"><b>Events</b></a></li>
                 <li><a href="#showSchedule"><b>Schedule</b></a></li>
