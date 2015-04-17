@@ -49,8 +49,8 @@
             <div id = "header-temp">
             </div>
             <div id = "header">
-                <form id = "header-left">
-                    <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
+                <form id = "header-left" action="Search" method="get">
+                    <input type = "text" placeholder = "Search for a Person / Event" name = "keyword" class = "search-input"/>
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">

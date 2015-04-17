@@ -20,6 +20,7 @@ public class Event {
     private Date startDate, endDate;
     private ArrayList<Post> postList;
     private ArrayList<User> attendingList, invitedList, requestList;
+    private ArrayList<Integer> viewRestriction;
     private boolean isDeleted;
     
     //for servlet use
@@ -36,6 +37,7 @@ public class Event {
         attendingList = new ArrayList<>();
         invitedList = new ArrayList<>();
         requestList = new ArrayList<>();
+        viewRestriction = new ArrayList<>();
     }
     
     //for official event
@@ -278,5 +280,13 @@ public class Event {
     public void setDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
 
+    }
+
+    public ArrayList<Integer> getViewRestriction() {
+        return viewRestriction;
+    }
+
+    public void setViewRestriction(ArrayList<Integer> viewRestriction) {
+        this.viewRestriction = viewRestriction;
     }
 }

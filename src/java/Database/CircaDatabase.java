@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -223,6 +223,25 @@ public class CircaDatabase { //singleton
         return user;
     }
 
+    public ArrayList<Integer> getEventViewRestriction(int eventID){
+        ArrayList<Integer> viewRestriction = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+
+        try {
+            stmt = con.createStatement();
+            sql = "select * from event_view_restriction where eventID = " + eventID;
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                viewRestriction.add(rs.getInt("clusterID"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return viewRestriction;
+    }
+    
     public Event getEventDetails(int eventID) {
         Statement stmt;
         ResultSet rs;
@@ -258,6 +277,7 @@ public class CircaDatabase { //singleton
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
                 event.setAttendingList(getJoining(event.getEventID()));
                 event.setRequestList(getRequests(event.getEventID()));
+                event.setViewRestriction(getEventViewRestriction(event.getEventID()));
             }
 
         } catch (SQLException e) {

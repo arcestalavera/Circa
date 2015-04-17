@@ -7,7 +7,7 @@ body{
     min-width: 950px;
     margin: auto;
     position: relative;
-    top: 50px;
+    top: 60px;
 }
 
 #user-info-panel{
@@ -82,10 +82,80 @@ body{
     width: 49.5%;
     float: left;
     height: 100px;
-    background-color: red;
 }
 
+#search-result-header-div{
+    border: 1px #DCDCDC solid;
+    background-color: white;
+}
 
+#event-search-result-info-container{
+    margin: 8px;
+}
+
+#search-result-header-text{
+    margin: 1px 0 1px 3px;
+    color: #AD0000;
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    display: inline;
+}
+
+#search-mode{
+    display: inline;
+    margin: 0;
+    float: right;
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #DCDCDC;
+}
+
+#user-search-mode:hover, #event-search-mode:hover{
+    cursor: pointer;
+    color: #AD0000;
+}
+
+#search-result-div{
+    clear: both;
+    position: relative;
+    background-color: white;
+}
+
+#user-search-list, #event-search-list{
+    margin-top: 5px;
+    border-top: 1px #DCDCDC solid;
+    border-right: 1px #DCDCDC solid;
+    border-left: 1px #DCDCDC solid;
+}
+
+#event-search-list{
+    display: none;
+}
+
+.user-search-item, .event-search-item{
+    clear: both;
+    overflow: hidden;
+    background-color: white;
+    padding: 10px;
+    border-bottom: 1px #DCDCDC solid;
+}
+
+.user-search-img, .event-search-img{
+    float: left;
+}
+
+.user-search-info-div, .event-search-info-div{
+    margin: 10px 0 0 10px;
+    display: inline-block;
+}
+
+.user-search-name, .event-search-name{
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 15px;
+}
 
 #search-result-other-panel{
     margin-left: 0.5%;

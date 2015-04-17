@@ -15,6 +15,8 @@
         </script>
         <script type = "text/javascript" src = "js/header.js">
         </script>
+        <script type = "text/javascript" src = "js/Result.js">
+        </script>
         <link rel="stylesheet" type="text/css" 	media="all" href="css/header.css" />
         <!-- END HEADER -->
 
@@ -32,7 +34,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style = "margin: 0px;">
+    <body bgcolor="#f4f4f4">
         <%  // header -> used to get all info
             User user = (User) request.getSession().getAttribute("loggedUser");
             CircaDatabase db = CircaDatabase.getInstance();
@@ -56,8 +58,8 @@
             <div id = "header-temp">
             </div>
             <div id = "header">
-                <form id = "header-left">
-                    <input type = "text" placeholder = "Search for a Person / Event" class = "search-input"/>
+                <form id = "header-left" action="Search" method="get">
+                    <input type = "text" placeholder = "Search for a Person / Event" name = "keyword" class = "search-input"/>
                     <a href = "Result.jsp"><input type = "submit" class = "search-button" value = ">"/></a>
                 </form>
                 <div id = "header-right">
@@ -108,6 +110,70 @@
                 </div>
             </div>
             <div id= "search-result-panel">
+                <div id="search-result-header-div">
+                    <div id="event-search-result-info-container">
+                        <p id="search-result-header-text">${keyword}</p>
+                        <p id = "search-mode">
+                            <a id="user-search-mode">People</a> |
+                            <a id="event-search-mode">Events</a>
+                        </p>
+                    </div>
+                </div>
+                <div id="search-result-div">
+                    <div id="user-search-result-div">
+                        <ul id ="user-search-list">
+                            <%  String keyword = request.getParameter("keyword");
+                                ArrayList<User> userList = db.searchUser(keyword);
+                                
+                                for(User userItem: userList){
+                            %>
+                            <li class="user-search-item">
+                                <a href="User?action=view&id=<%=userItem.getUserID()%>">
+                                    <img src="<%=userItem.getProfilePicture()%>" class="user-search-img" title="<%=userItem.getFirstName()%> <%=userItem.getLastName()%>"width="50px" height="50px"/>
+                                </a>
+                                <div class="user-search-info-div">
+                                    <a href="User?action=view&id=<%=userItem.getUserID()%>" class="link">
+                                        <p class="user-search-name"><%=userItem.getFirstName()%> <%=userItem.getLastName()%></p>
+                                    </a>
+                                </div>
+                            </li>
+                            <%}%>
+                        </ul>
+                    </div>
+                    <div id="event-search-result-div">
+                        <ul id ="event-search-list">
+                            <%  ArrayList<Event> eventList = db.searchEvent(keyword);
+                                SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+                                for(Event event:eventList){
+                                    String strDate = ddMMMMyyFormat.format(event.getStartDate());
+                                    boolean isPrinted = false;
+                                    for(int i = 0; i < event.getViewRestriction().size() && !isPrinted; i++){
+                                        int clusterID = event.getViewRestriction().get(i);
+                                        if((clusterID == 0) || 
+                                           (clusterID == 1 && db.isBuddy(user.getUserID(), event.getHost().getUserID())) ||
+                                           (db.isClusterMember(user.getUserID(), clusterID)) ||
+                                           (event.getHost().getUserID() == user.getUserID())){
+                                                isPrinted = true;
+                            %>
+                            <li class="event-search-item">
+                                <a href="Event?action=view&id=<%=event.getEventID()%>">
+                                    <img src="<%=event.getEventPicture()%>" class="event-search-img" title="<%=event.getEventName()%>"width="50px" height="50px"/>
+                                </a>
+                                <div class="event-search-info-div">
+                                    <a href="Event?action=view&id=<%=event.getEventID()%>" class="link">
+                                        <p class="event-search-name"><%=event.getEventName()%></p>
+                                    </a>
+                                    <p class = "result-event-info"><%=event.getVenue()%> - <%=strDate%></p>
+                                </div>
+                            </li>
+                            <%
+                                        }
+                                    }
+                                }
+                            %>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div id = "search-result-other-panel">
                 <%  if(user.getEventList().size() != 0){
@@ -120,7 +186,7 @@
                     <ul class = "result-event-list">
                         <%  for(int i = 0; i < user.getEventList().size(); i++){
                                 Event event = user.getEventList().get(i);
-                                SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
+                                
                                 String strDate = ddMMMMyyFormat.format(event.getStartDate());
                         %>
                         <li class = "result-event-item">
