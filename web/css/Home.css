@@ -315,19 +315,19 @@ body{
     float: left;
 }
 
-.home-other-event-panel{
+.home-other-event-panel, .home-other-notif-panel{
     margin-bottom: 6px;
     background-color: white;
     border: 1px solid #DCDCDC;
     border-radius: 6px;
 }
 
-#event-tag-div{
+.event-tag-div, .notif-tag-div{
     margin-top: 5px;
     border-bottom: 1px solid #DCDCDC;
 }
 
-#event-tag{
+.event-tag, .notif-tag{
     font-family: sans-serif;
     font-size: 18px;
     color: #AD0000;
@@ -335,11 +335,11 @@ body{
     display: inline;
 }
 
-#home-event-list{
+.home-event-list, .home-notif-list{
     padding-top: 5px;
 }
 
-.home-event-item{
+.home-event-item, .home-notif-item{
     padding-bottom: 5px;
     margin-left: 6px;
     margin-bottom: 4px;
@@ -347,7 +347,7 @@ body{
     font-size: 0;
 }
 
-.home-event-pic{
+.home-event-pic, .home-notif-pic{
     //display: inline;
     float: left;
 }
@@ -360,9 +360,15 @@ body{
     margin-left: 5px;
 }
 
-.home-event-name, .home-event-info{
+.home-event-name, .home-event-info, .home-notif-text{
     margin: 0;
     font-family: sans-serif;
+}
+
+.home-notif-item{
+    overflow: auto;
+    border-bottom: 1px #DCDCDC solid;
+    margin-right: 6px;
 }
 
 .home-event-name{
@@ -377,8 +383,60 @@ body{
     margin-top: 2px;
 }
 
+.home-notif-info-div{
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+.home-notif-pic{
+    clear: both;
+}
+
+.home-notif-text{
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 12px;
+    clear: both;
+    position: relative;
+    word-wrap: break-word;
+    width: 100%;
+}
+
+.approve-form, .reject-form{
+    display: inline;
+    margin-right: 4px;
+}
+
+.approve-button, .reject-button{
+    margin-top: 4px;
+    width: 49%;
+    height: 15px;
+    padding: 0;
+    border: 1px solid #DCDCDC;
+    background: white;
+    font-family: sans-serif;
+    font-size: 12px;
+    color: #DCDCDC;
+    border-radius: 6px;
+}
+
+.approve-button:hover{
+    border: 1px solid green;
+    background: green;
+    color: white;
+    cursor: pointer;
+}
+
+.reject-button:hover{
+    border: 1px solid #AD0000;
+    background: #AD0000;
+    color: white;
+    cursor: pointer;
+}
+
 .link{
     color: #AD0000;
+    font-weight: 600;
     text-decoration: none;
 }
 

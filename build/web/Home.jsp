@@ -1,3 +1,5 @@
+<%@page import="Classes.RequestToJoin"%>
+<%@page import="Classes.InviteToEvent"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Classes.Comment"%>
 <%@page import="Classes.Post"%>
@@ -226,15 +228,80 @@
                 %>
             </div>
             <div id = "home-other-panel">
-                <%
+                <%  ArrayList<InviteToEvent> inviteList = db.getPendingInviteToEvent(user.getUserID());
+                    ArrayList<RequestToJoin> requestList = db.getPendingRequestToJoin(user.getUserID());
+                    
+                    if(inviteList.size() != 0 || requestList.size() != 0){
+                %>
+                <div class = "home-other-notif-panel">
+                    <div class = "notif-tag-div">
+                        <p class = "notif-tag">Notification</p>
+                    </div>
+
+                    <ul class = "home-notif-list">
+                        <%  
+                            for(InviteToEvent invite:inviteList){
+                        %>
+                        <li class = "home-notif-item">
+                            <a href = "User?action=view&id=<%=invite.getHost().getUserID()%>">
+                                <img src = "<%=invite.getHost().getProfilePicture()%>" class = "home-notif-pic" title = "<%=invite.getHost().getFirstName()%> <%=invite.getHost().getLastName()%>" width = "40px" height="40px" />
+                            </a>
+                            <div class = "home-notif-info-div">
+                                <p class = "home-notif-text">
+                                    <a href = "User?action=view&id=<%=invite.getHost().getUserID()%>" class = "link">
+                                        <%=invite.getHost().getFirstName()%> <%=invite.getHost().getLastName()%>
+                                    </a>
+                                     invited you to
+                                     <a href = "Event?action=view&id=<%=invite.getEvent().getEventID()%>" class = "link">
+                                        <%=invite.getEvent().getEventName()%>
+                                    </a>
+                                </p>
+                                <form class = "approve-form">
+                                    <input type = "submit" value ="Approve" class = "approve-button"/>
+                                </form>
+                                <form class = "reject-form">
+                                    <input type = "submit" value = "Reject" class = "reject-button"/>
+                                </form>
+                            </div>
+                        </li>
+                        <%
+                            }
+                            for(RequestToJoin requestItem: requestList){ 
+                        %>
+                        <li class = "home-notif-item">
+                            <a href = "User?action=view&id=<%=requestItem.getRequestor().getUserID()%>">
+                                <img src = "<%=requestItem.getRequestor().getProfilePicture()%>" class = "home-notif-pic" title = "<%=requestItem.getRequestor().getFirstName()%> <%=requestItem.getRequestor().getLastName()%>" width = "40px" height="40px" />
+                            </a>
+                            <div class = "home-notif-info-div">
+                                <p class = "home-notif-text">
+                                    <a href = "User?action=view&id=<%=requestItem.getRequestor().getUserID()%>" class = "link">
+                                        <%=requestItem.getRequestor().getFirstName()%> <%=requestItem.getRequestor().getLastName()%>
+                                    </a>
+                                     requested to join
+                                     <a href = "Event?action=view&id=<%=requestItem.getEvent().getEventID()%>" class = "link">
+                                        <%=requestItem.getEvent().getEventName()%>
+                                    </a>
+                                </p>
+                                <form class = "approve-form">
+                                    <input type = "submit" value ="Approve" class = "approve-button"/>
+                                </form>
+                                <form class = "reject-form">
+                                    <input type = "submit" value = "Reject" class = "reject-button"/>
+                                </form>
+                            </div>
+                        </li>
+                        <%}%>
+                    </ul>
+                </div>
+                <%  }
                     if(viewableEvents.size() != buddyEventCount){ 
                 %>
                 <div class = "home-other-event-panel">
-                    <div id = "event-tag-div">
-                        <p id = "event-tag">Your Events</p>
+                    <div class = "event-tag-div">
+                        <p class = "event-tag">Your Events</p>
                     </div>
 
-                    <ul id = "home-event-list">
+                    <ul class = "home-event-list">
                         <%  for(int i = buddyEventCount; i < viewableEvents.size(); i++){
                                 Event event = viewableEvents.get(i);
                                 SimpleDateFormat ddMMMMyyFormat = new SimpleDateFormat("MMM dd, yyyy");
@@ -264,11 +331,11 @@
                     if(buddyEventCount != 0){
                 %>  
                 <div class = "home-other-event-panel">
-                    <div id = "event-tag-div">
-                        <p id = "event-tag">Events Shared by Buddies</p>
+                    <div class = "event-tag-div">
+                        <p class = "event-tag">Events Shared by Buddies</p>
                     </div>
 
-                    <ul id = "home-event-list">
+                    <ul class = "home-event-list">
                         <%  
                             for(int i = 0; i < buddyEventCount; i++){
                                 Event event = viewableEvents.get(i);
@@ -296,7 +363,6 @@
                     </ul>
                 </div>
                 <%  }
-                    
                 %>
             </div>
         </div>
