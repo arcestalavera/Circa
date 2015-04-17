@@ -97,6 +97,25 @@
                         <%}%>
                     </ul>
                 </div>
+                <div id = "trending-div">
+                    <div id = "trending-tag-div">
+                        <p id = "trending-tag">Trending</p>
+                    </div>
+                    
+                    <ul id = "trending-list">
+                        <%  ArrayList<Event> trends = db.getTrendingEvents();
+                            for(Event event : trends){
+                        %>
+                        <li class = "trending-item">
+                            <p class = "trending-text">
+                                <a href="Event?action=view&id=<%=event.getEventID()%>" class = "link-normal">
+                                    <%=event.getEventName()%>
+                                </a>
+                            </p>
+                        </li>
+                        <%}%>
+                    </ul>
+                </div>
             </div>
             <div id = "home-post-panel">
                 <%  ArrayList<Event> viewableEvents = new ArrayList<>();

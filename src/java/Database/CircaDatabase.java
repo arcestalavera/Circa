@@ -1171,4 +1171,29 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
+    
+    public ArrayList<Event> getTrendingEvents(){
+        ArrayList<Event> trends = new ArrayList<>();
+        Statement stmt;
+        ResultSet rs;
+        
+        try{
+            stmt = con.createStatement();
+            sql =   "select e.eventID, count(*) " +
+                    "from post as p, event as e " +
+                    "where p.eventID = e.eventID " +
+                    "group by e.eventID " +
+                    "order by count(*) desc " +
+                    "limit 10;";
+            rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Event event = getEventDetails(rs.getInt("eventID"));
+                trends.add(event);
+            }
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return trends;
+    }
 }
