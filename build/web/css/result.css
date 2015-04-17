@@ -1,114 +1,182 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 03 3, 15, 1:53:32 PM
-    Author     : Arces
-*/
-
-#result-header-div{
-    height: auto;
-    font-family: century gothic;
-    margin-left: 55px;
-    margin-right: 55px;
-    margin-top: 55px;
-    background-color: rgb(230,230,215);
-    border-radius: 30px;
+body{
+    margin: 0px;
 }
 
-.result-body-div{
-    font-family: century gothic;
-    width: 520px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 10px;
-    background-color: rgba(175,10,13, .7);
-    color: white;
+#user-main-panel{
+    width: 85%;
+    min-width: 950px;
+    margin: auto;
     position: relative;
+    top: 50px;
 }
 
-#result-whole{
-    top: 120px;
-    overflow-y: scroll;
-    height: 94%;
+#user-info-panel{
+    width: 24%;
+    float: left;
 }
 
-#result-button-div{
-    margin-left: 55px;
-    margin-right: 55px;
-    margin-bottom: 20px;
+#user-main-info-container{
+    padding: 8px;
+    overflow: hidden;
 }
 
-#result-img-div{
-    margin: 10px;
+#user-image{
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    border-radius: 6px;
+    float: left;
 }
 
-.result-img{
-    width: 500px;
-    height: 200px;
-    transition: all 0.6s ease-in-out 0s;
+#user-main-info-name-div{
+    clear: both;
+    display: inline-block;
+    //position: absolute;
+    margin-top: 8px;
+    margin-left: 8px;
 }
 
-.result-button{
-    border: white;
-    background-color: white;
-    font-family: Arial;
-    font-size: 18px;
-}
-
-
-h2, p{
+#user-name{
     margin: 0;
-}
-
-figure{
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 0;
-}
-
-.result-img-caption{
-    background-color: rgba(100, 100, 100, .8);
-    position: absolute;
-    vertical-align: middle;
-    top: 90px;
+    font-family: sans-serif;
     font-size: 20px;
-    display: none;
+    font-weight: 600;
 }
 
-.choice-button{
+#user-main-info, #trending-div{
     background-color: white;
-    border: white;
-    padding: 7px;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+#trending-list{
+    margin-top: 8px;
+    margin-left: 5px;
+    margin-bottom: 8px;
+    font-size: 0;
+}
+
+.trending-text{
     font-size: 14px;
-    margin-bottom: 10px;
+    font-family: sans-serif;
+    margin: 0 0 4px 0;
+    font-weight: normal;
 }
 
-.choice-button:hover{
-    cursor: hand;
-    text-decoration: underline;
+#trending-tag-div{
+    margin-top: 5px;
+    border-bottom: 1px solid #DCDCDC;
 }
 
-.result-button:hover{
-    border: black;
-    background-color: rgb(244, 244, 244);
-    text-decoration: underline;
-    cursor: hand;
+#trending-tag{
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #AD0000;
+    margin-left: 5px;
+    display: inline;
 }
 
-.result-button:focus{
-    outline: 0;
+#search-result-panel{
+    margin-left: 0.5%;
+    width: 49.5%;
+    float: left;
+    height: 100px;
+    background-color: red;
 }
 
-.result-img:hover{
-    transform: scale(1.3);
-    opacity: .7;
+
+
+#search-result-other-panel{
+    margin-left: 0.5%;
+    width: 25%;
+    float: left;
 }
 
-a{
+.result-other-event-panel{
+    margin-bottom: 6px;
+    background-color: white;
+    border: 1px solid #DCDCDC;
+    border-radius: 6px;
+}
+
+.event-tag-div{
+    margin-top: 5px;
+    border-bottom: 1px solid #DCDCDC;
+}
+
+.event-tag{
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #AD0000;
+    margin-left: 5px;
+    display: inline;
+}
+
+.result-event-list{
+    padding-top: 5px;
+}
+
+.result-event-item{
+    padding-bottom: 5px;
+    margin-left: 6px;
+    margin-bottom: 4px;
+    position: relative;
+    font-size: 0;
+}
+
+.result-event-pic{
+    float: left;
+}
+
+.result-event-info-div{
+    clear: both;
+    display: inline-block;
+    //position: absolute;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+
+.result-event-name, .result-event-info{
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.result-event-name{
+    color: #AD0000;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.result-event-info{
+    color: #DCDCDC;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.link{
+    color: #AD0000;
+    font-weight: 600;
     text-decoration: none;
-    color: black;
+}
+
+.link:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link-normal{
+    color: #AD0000;
+    text-decoration: none;
+}
+
+.link-normal:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
