@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -223,7 +223,7 @@ public class CircaDatabase { //singleton
         return user;
     }
 
-    public ArrayList<Integer> getEventViewRestriction(int eventID){
+    public ArrayList<Integer> getEventViewRestriction(int eventID) {
         ArrayList<Integer> viewRestriction = new ArrayList<>();
         Statement stmt;
         ResultSet rs;
@@ -241,7 +241,7 @@ public class CircaDatabase { //singleton
         }
         return viewRestriction;
     }
-    
+
     public Event getEventDetails(int eventID) {
         Statement stmt;
         ResultSet rs;
@@ -277,6 +277,7 @@ public class CircaDatabase { //singleton
                 event = new Event(eventID, eventName, venue, type, description, startDate, endDate, host, eventPicture, isDeleted);
                 event.setAttendingList(getJoining(event.getEventID()));
                 event.setRequestList(getRequests(event.getEventID()));
+                event.setInvitedList(getInvites(event.getEventID()));
                 event.setViewRestriction(getEventViewRestriction(event.getEventID()));
             }
 
@@ -459,7 +460,7 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
 
             sql = "SELECT * FROM post"
-                    + " WHERE eventID = " + eventID
+                    + " WHERE eventID = " + eventID + " AND isDeleted = false"
                     + " ORDER BY postID DESC";
 
             rs = stmt.executeQuery(sql);
@@ -800,7 +801,9 @@ public class CircaDatabase { //singleton
         try {
             stmt = con.createStatement();
             sql = "SELECT * FROM event_view_restriction"
-                    + " WHERE eventID = " + eventID + " AND clusterID = " + clusterID + ";";
+                    + " WHERE eventID = " + eventID + " AND clusterID = " + clusterID + ""
+                    + " UNION SELECT * FROM event_view_restriction"
+                    + " WHERE eventID = " + eventID + " AND clusterID = -1";
 
             rs = stmt.executeQuery(sql);
 
@@ -969,9 +972,7 @@ public class CircaDatabase { //singleton
                 sql = "UPDATE request_to_join"
                         + " SET status = '" + action + "'"
                         + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
-            }
-            else if(action.equals("Rejected"))
-            {
+            } else if (action.equals("Rejected")) {
                 sql = "DELETE FROM request_to_join"
                         + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND requestorID = " + requestorID;
             }
@@ -1258,5 +1259,75 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
         return searchResult;
+    }
+
+    public void addInvite(int hostID, int eventID, int invitedID) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+
+            sql = "INSERT INTO invite_to_event"
+                    + " VALUES(" + hostID + ", " + eventID + ", " + invitedID + ", 'Pending')";
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addView(int eventID, int clusterID) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+            sql = "INSERT INTO event_view_restriction"
+                    + " VALUES(" + eventID + ", " + clusterID + ")";
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public ArrayList<User> getInvites(int eventID) {
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<User> invitedList = new ArrayList<>();
+        int invitedID;
+        try {
+            stmt = con.createStatement();
+
+            sql = "SELECT * FROM invite_to_event"
+                    + " WHERE eventID = " + eventID + " AND status = 'Pending'";
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                invitedID = rs.getInt("invitedID");
+                User attendee = getUserDetails(invitedID);
+
+                invitedList.add(attendee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return invitedList;
+    }
+    
+    public void deleteInvite(int eventID, int invitedID){
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+
+            sql = "DELETE FROM invite_to_event"
+                    + " where eventID = " + eventID + " AND invitedID = " + invitedID;
+
+            stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

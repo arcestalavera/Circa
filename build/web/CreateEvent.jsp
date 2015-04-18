@@ -55,11 +55,10 @@
         <%
             //get user details
             User user = (User) request.getSession().getAttribute("loggedUser");
-            ArrayList<User> buddyList = user.getBuddyList();
             ArrayList<Cluster> clusterList = user.getClusters();
-            CircaDatabase db = CircaDatabase.getInstance();
             //get status if this is editing or creating
             Boolean isEditing = (Boolean) request.getSession().getAttribute("isEdit");
+            request.getSession().removeAttribute("isEdit");
             String action;
             String name, venue, description, startDate, startTime, endDate, endTime, type;
             Event event = null;
@@ -112,9 +111,8 @@
                 </div>
                 <div align = "center">
                     <ul class = "tabs">
-                        <li><a href="#create-event-whole"><b>1) Event Details</b></a></li>
-                        <li><a href="#view-filter-whole"><b>2) Privacy</b></a></li>
-                        <li><a href="#invite-user-whole"><b>3) Invite Buddies</b></a></li>
+                        <li><a href="#create-event-whole"><b>Event Details</b></a></li>
+                        <li><a href="#view-filter-whole"><b>Privacy</b></a></li>
                     </ul>
                 </div>
                 <div id = "create-event-whole">
@@ -169,31 +167,15 @@
                 <div id = "view-filter-whole">
                     <h3 class = "invite-title">Who can view your event?</h3>
                     <div align = "center">
-                        <select id = "view-select">
+                        <select id = "view-select" name = "view-select">
                             <option value = "Public" selected>Public</option>
+                            <option value = "Buddies">Buddies</option>
                             <option value = "Specified">Specified</option>
                         </select>
                     </div>
                     <h4 id = "view-header" class = "view-title">Anyone can see your event</h4>
 
                     <div id = "view-specified">
-                        <div id = "view-buddies">
-                            <br>
-                            <h3 class = "event-body-title">Choose Buddies</h3>
-                            <ul id = "invited-list" class = "invite-buddies-list">
-                                <%
-                                    for (User buddy : buddyList) {
-                                %>
-                                <li class = "invite-buddies-entry">
-                                    <input type = "checkbox" onchange = "" id = "view-buddy" name = "view-buddy" value = "<%=buddy.getUserID()%>"/>
-                                    <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
-                                    <label for="view-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
-                                </li>
-                                <%
-                                    }
-                                %>
-                            </ul>
-                        </div>
                         <div id = "view-cluster">
                             <br>
                             <h3 class = "event-body-title">Choose Clusters</h3>
@@ -212,66 +194,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
-
-        <div id = "invite-user-whole">
-            <h3 class = "invite-title">Invite your buddies!</h3>
-            <div class = "invite-body">
-                <div class = "invite-buddies-div">
-                    <div class = "invited-div">
-                        <br>
-                        <h3 class = "event-body-title">INVITED</h3>
-                        <ul id = "invited-list" class = "invite-buddies-list">
-                            <%
-                                if (isEditing != null && isEditing) {
-                                    for (User buddy : buddyList) {
-                                        if (db.isInvited(event.getEventID(), buddy.getUserID())) {
-                            %>
-                            <li class = "invite-buddies-entry">
-                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>" checked disabled = "disabled"/>
-                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
-                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
-                            </li>
-                            <%
-                                        }
-                                    }
-                                }
-                            %>
-                        </ul>
-                    </div>
-                    <div class = "invite-div">
-                        <br>
-                        <h3 class = "event-body-title">INVITE</h3>
-                        <ul id = "invite-list" class = "invite-buddies-list">
-                            <%
-                                for (User buddy : buddyList) {
-                                    if (isEditing != null && isEditing) {
-                                        if (!db.isInvited(event.getEventID(), buddy.getUserID()) && !db.isJoining(event.getEventID(), buddy.getUserID())) {
-                            %>
-                            <li class = "invite-buddies-entry" id = "invite-buddy_<%=buddy.getUserID()%>">
-                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
-                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
-                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
-                            </li>
-                            <%
-                                }
-                            } else {
-                            %>
-                            <li class = "invite-buddies-entry" id = "invite-buddy_<%=buddy.getUserID()%>">
-                                <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
-                                <img src = "<%=buddy.getProfilePicture()%>" class = "invite-buddies-pic"/>
-                                <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
-                            </li>       
-                            <%
-                                    }
-                                }
-                            %>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-</body>
+    </body>
 </html>

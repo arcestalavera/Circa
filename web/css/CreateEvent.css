@@ -15,7 +15,7 @@
     margin-bottom: 10px;
 }
 
-#create-event-whole, #invite-user-whole, #view-filter-whole{
+#create-event-whole, #view-filter-whole{
     border-radius: 10px;
     margin: 10px;
     min-width: 450px;
@@ -62,16 +62,6 @@
     text-align: center;
 }
 
-#invite-user-whole{
-    font-family: arial;
-    width: 80%;
-}
-
-.invite-body{
-    height: 50%;
-    width: 100%;
-}
-
 .event-submit{
     font-family: arial;
     background-color: whitesmoke;
@@ -83,20 +73,6 @@
     cursor: pointer;
     background-color: #940000;
     color: white;
-}
-
-.invite-buddies-div{
-    width: 100%;
-    height: 50%;
-    height: 400px;
-}
-
-.invite-header{
-    color: #940000;
-    margin-left: 10px;
-    margin-bottom: 0px;
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 h1{
@@ -116,7 +92,6 @@ ul{
 
 .invite-buddies-list{
     height: 90%;
-    border: 1px solid black;
     margin: 10px;
     height: 320px;
 
@@ -127,20 +102,8 @@ ul{
 .invite-buddies-entry{
     padding: 5px;
     font-size: 16px;
+    margin-bottom: 2px;
     background-color: rgb(240, 240, 240);
-}
-
-.invite-buddies-pic{
-    width: 25px;
-    height: 25px;
-    border-radius: 4px;
-}
-
-.invite-buddies-submit{
-    padding: 5px;
-    width: 30%;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #create-container{
@@ -158,7 +121,8 @@ ul{
 
 .tabs li{
     list-style: none;
-    display: table-cell;
+    display: inline;
+    width: 50%;
     padding-left: 5px;
     text-align: center;
     vertical-align: middle;
@@ -173,6 +137,7 @@ ul{
     padding: 5px;
     color: #940000;
     font-size: 22px;
+    margin: 0px;
 }
 
 .tabs li a:hover{
@@ -180,20 +145,8 @@ ul{
     color: white;
 }
 
-.invited-div, .invite-div{
-    width: 50%;
-}
-
-.invited-div{
-    float: left;
-}
-
-.invite-div{
-    float: right;
-}
-
 #view-filter-whole{
-    width: 80%;
+    width: 40%;
 }
 
 #view-select{
@@ -210,13 +163,9 @@ ul{
 
 #view-specified{
     font-family: arial;
-    width: 96%;
+    width: 80%;
     margin: 5px;
     margin-left: auto;
     margin-right: auto;
     display: none;
-}
-
-#view-buddies, #view-cluster{
-    display: table-cell;
 }

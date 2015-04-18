@@ -96,6 +96,10 @@
         <servlet-name>Search</servlet-name>
         <servlet-class>Servlet.Search</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>toInvite</servlet-name>
+        <servlet-class>Servlet.toInvite</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/Signup</url-pattern>
@@ -191,6 +195,10 @@
     <servlet-mapping>
         <servlet-name>Search</servlet-name>
         <url-pattern>/Search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>toInvite</servlet-name>
+        <url-pattern>/Invite</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

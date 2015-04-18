@@ -1,6 +1,6 @@
 //ajax
 //post
-function addPost() {
+function addPost(size) {
     if (checkPost())
     {
         $.ajax({
@@ -10,13 +10,15 @@ function addPost() {
             success: function(html) {
                 $("#post-list").prepend(html);
                 $(".input-post-textarea").val("");
+                if (size === 0)
+                    $("#post-list").find("#no-post").hide();
             }
         });
     }
     return false;
 }
 
-function deletePost(postID) {
+function deletePost(postID, size) {
     if (confirmDelete())
     {
         $.ajax({
@@ -24,6 +26,9 @@ function deletePost(postID) {
             url: "Post?action=delete&id=" + postID + "&curpage=event",
             success: function() {
                 $("#post_" + postID).remove().fadeOut("slow");
+                size++;
+                if (size !== 0)
+                    $("#post-list").find("#no-post").show();
             }
         });
     }
@@ -118,7 +123,7 @@ function answerRequest(eventID, userID, answer, size, count)
                         "<h3 class = 'empty-text' align = 'center'>Your event has no requests right now.</h3>\n" +
                         "</li>");
             }
-            if(answer === "Approved")
+            if (answer === "Approved")
             {
                 count++;
                 $("#attend-count").html(count + " people are going");
@@ -173,6 +178,38 @@ function leaveEvent(eventID, type, count) {
                     "<input type = 'submit' class = 'event-join' value = '" + typeButton + "'/>\n" +
                     "</form>");
             $("#attend-count").html(count + " people are going");
+        }
+    });
+
+    return false;
+}
+
+function inviteBuddies() {
+    console.log("inviting. . .");
+    $.ajax({
+        type: "POST",
+        url: "Invite?action=invite",
+        data: $("#invite-form").serialize(),
+        success: function(html) {
+            $("input:checkbox[name=invite-buddy]:checked").each(function()
+            {
+                $("#buddy_" + $(this).val()).remove();
+            });
+
+            $("#invited-list").append(html);
+        }
+    });
+
+    return false;
+}
+
+function uninviteBuddy(buddyID) {
+    $.ajax({
+        type: "POST",
+        url: "Invite?action=uninvite&id=" + buddyID,
+        success: function(html) {
+            $("#invited_" + buddyID).remove();
+            $("#invite-list").append(html);
         }
     });
 

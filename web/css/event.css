@@ -19,7 +19,6 @@ and open the template in the editor.
     margin-top: 55px;
     left: 0;
     right: 0;
-    position: relative;
 }
 
 .event-header-img{
@@ -45,9 +44,11 @@ and open the template in the editor.
 #event-body-div{
     font-family: arial;
     width: 90%;
+    border: 1px solid #940000;
+    border-radius: 20px;
+    margin: 10px;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 .event-description, .event-title{
@@ -88,7 +89,6 @@ and open the template in the editor.
     font-family: arial;
     margin-bottom: 0;
     padding: 3px;
-    border: 4px groove;
 }
 
 .event-comment-header{
@@ -163,19 +163,18 @@ a:hover{
 #input-post-div{
     background-color: rgb(220, 220, 220);
     font-family: arial;
-    border-radius: 20px;
+    border-radius: 10px;
     width: 30%;
     height: 170px;
+    padding: 5px;
     text-align: center;
+    margin: 20px;
     margin-left: auto;
     margin-right: auto;
     color: #940000;
-    margin-bottom: 10px;
-    border: 3px groove;
 }
 
 .input-post-submit{
-    float: right;
     margin-right: 20px;
 }
 
@@ -184,8 +183,6 @@ a:hover{
 }
 
 #posts-div{
-    height: 800px;
-    border: 1px groove;
     border-color: rgba(240, 240, 240, .2);
     overflow-y: auto;
     width: 50%;
@@ -211,7 +208,6 @@ a:hover{
     margin-left: auto;
     margin-right: auto;
     padding: 3px;
-    border: 2px groove;
     margin-bottom: 10px;
 }
 
@@ -280,7 +276,6 @@ a:hover{
     margin-top: 5px;
     margin-right: 10px;
     float: right;
-    border: 1px groove;
 }
 
 .edit-button:hover, .post-edit-submit:hover, .request-button:hover{
@@ -340,4 +335,92 @@ ul{
 
 #no-request{
     text-align: center;
+}
+
+#event-actions-div{
+    width: 50%;
+    margin-left: auto;
+    margin-bottom: 10px;
+    margin-right: auto;
+}
+
+#event-container{
+    width: 50%;
+    margin: 20px;
+    display: table-cell;
+}
+
+#invite-div{
+    width: 100%;
+    border: 1px solid #940000;
+    border-radius: 10px;
+}
+
+#middle-div{
+    display: table;
+    padding: 10px;
+    width: 95%;
+}
+
+#invited-div, #invite-more-div{
+    width: 50%;
+    display: table-cell;
+    height: 250px;
+}
+
+#invited-list, #invite-list{
+    margin: 10px;
+    border: 1px solid gray;
+    height: 150px;
+    overflow-y: auto;
+}
+
+.invite-pic{
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.invite-item{
+    font-family: arial;
+    font-size: 13px;
+    padding: 5px;
+    margin-bottom: 2px;
+    background-color: whitesmoke;
+}
+
+.invite-title{
+    font-family: arial;
+    color: #940000;
+    margin: 10px;
+    margin-bottom: 2px;
+}
+
+#invite-container{
+    display: table;
+    width: 100%;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.invite-submit{
+    background-color: #940000;
+    border-radius: 5px;
+    float: right;
+    border: none;
+    color: white;
+    margin-right: 10px;
+}
+
+.invite-submit:hover{
+    cursor: pointer;
+    color: #940000;
+    background-color: white;
+    border: 1px solid #940000;
+}
+
+#request-join-message{
+    font-family: arial;
 }

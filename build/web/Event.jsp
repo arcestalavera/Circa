@@ -58,147 +58,224 @@
             User loggedUser = (User) request.getSession().getAttribute("loggedUser");
             CircaDatabase db = CircaDatabase.getInstance();
         %>
-        <div id = "event-whole">
-            <div id = "event-header-div" align = "center">
-                <img src = "<%=host.getProfilePicture()%>" alt = "napoleon" class = "profile-pic"/>
-                <img src = "img/event/event1.jpg" alt = "napoleon borntoparty" class = "event-header-img"/>
-            </div>
-            <h1 class = "event-title" align = "center" style = "color: #940000;"><%=event.getEventName()%></h1>
-
-            <div id = "event-body-div" align = "center">
-                <p class = "event-description"><%=event.getDescription()%></p>
-                <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
-                <p>Venue: <%=event.getVenue()%></p>
-                <p id = "attend-count"><%=event.getAttendingList().size()%> people are going</p>
-                <p>Hosted by <a href = "User?action=view&id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
-                <%
-                    if (loggedUser.getUserID() != host.getUserID()) {
-                        if (!db.isJoining(event.getEventID(), loggedUser.getUserID())) {
-                            if (event.getType().equals("Closed")) {
-                                if (db.isInvited(event.getEventID(), loggedUser.getUserID())) {
-                %>
-                <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
-                    <%=event.getHost().getFirstName()%> invited you. What do you say?
-                    <input type = "submit" class = "event-join" value = "Accept"/>
-                    <input type = "submit" class = "event-join" value = "Decline"/>
-                </form>
-                <%
-                } else if (db.isRequested(event.getEventID(), loggedUser.getUserID())) {
-                %>
-                <div id = "request-join-message">
-                    You have already requested to join this event.
-                </div>
-                <%
-                } else {
-                %>
-                <div id = "request-join-message">
-                    <form onsubmit = "return joinEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
-                        This is a closed event. You need to ask the host's permission to join!<br>
-                        <input type = "submit" class = "event-join" value = "Request to Join"/>
-                    </form>
-                </div>
-                <%
-                    }
-                } else if (event.getType().equals("Public")) {
-                %>
-                <div id = "request-join-message">
-                    <form onsubmit = "return joinEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
-                        <input type = "submit" class = "event-join" value = "Join"/>
-                    </form>
-                </div>
-                <%
-                    }
-                    //if not joining
-                } else {
-                %>
-                <div id = "request-join-message">
-                    <form onsubmit = "return leaveEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
-                        <input type = "submit" class = "event-join" value = "Leave"/>
-                    </form>
-                </div>
-                <%
-                    }
-                } else {
-                %>
-                <form action = "Event?action=edit" method = "post">
-                    <input type = "submit" class = "event-join" value = "Edit Event Details"/>
-                </form>
-                <form action = "Event?action=delete&id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
-                    <input type = "submit" class = "event-join" value = "Cancel Event"/>
-                </form>
-                <%
-                    }
-                %>
-                <hr>
-            </div>
+        <div id = "event-header-div" align = "center">
+            <img src = "<%=host.getProfilePicture()%>" alt = "<%=host.getFirstName()%> <%=host.getLastName()%>" class = "profile-pic"/>
+            <img src = "img/event/event1.jpg" alt = "<%=host.getFirstName()%> <%=host.getLastName()%>" class = "event-header-img"/>
+        </div>
+        <h1 class = "event-title" align = "center" style = "color: #940000;"><%=event.getEventName()%></h1>
+        <p class = "event-description" align = "center"><%=event.getDescription()%></p>
+        <div id = "middle-div">
             <%
-                if (event.getType().equals("Closed")) {
-                    if (loggedUser.getUserID() == host.getUserID()) {
+                if (loggedUser.getUserID() == host.getUserID()) {
             %>
-
-            <!-- EVENT REQUESTS FOR HOST TO APPROVE-->
-            <h3 align = "center" class = "event-comment-header">Requests to join your event</h3>
-            <div id = "request-div">
-                <ul id = "request-list">
+            <div id = "event-container">
+                <%
+                    }
+                %>
+                <div id = "event-body-div" align = "center">
+                    <p style = "color: #940000;"><b><%=dateFormat.format(event.getStartDate())%> - <%=dateFormat.format(event.getEndDate())%> | <%=event.getType()%> Event</b></p>
+                    <p>Venue: <%=event.getVenue()%></p>
+                    <p id = "attend-count"><%=event.getAttendingList().size()%> people are going</p>
+                    <p>Hosted by <a href = "User?action=view&id=<%=host.getUserID()%>"><%=host.getFirstName()%> <%=host.getLastName()%></a></p>
+                </div>
+                <div id = "event-actions-div" align = "center">
                     <%
-                        ArrayList<User> requestList = event.getRequestList();
-
-                        if (requestList.isEmpty()) {
+                        if (loggedUser.getUserID() != host.getUserID()) {
+                            if (!db.isJoining(event.getEventID(), loggedUser.getUserID())) {
+                                if (db.isInvited(event.getEventID(), loggedUser.getUserID())) {
                     %>
-                    <li id = "no-request">
-                        <h3 class = "empty-text" align = "center">Your event has no requests right now.</h3>
-                    </li>
+                    <div id ="request-join-message">
+                        <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
+                            <%=event.getHost().getFirstName()%> invited you. What do you say?<br>
+                            <input type = "submit" class = "event-join" value = "Accept"/>
+                            <input type = "submit" class = "event-join" value = "Decline"/>
+                        </form>
+                    </div>
+                    <%
+                    } else if (event.getType().equals("Closed")) {
+                    %>
+
+                    <%    if (db.isRequested(event.getEventID(), loggedUser.getUserID())) {
+                    %>
+                    <div id = "request-join-message">
+                        You have already requested to join this event.
+                    </div>
                     <%
                     } else {
                     %>
-
+                    <div id = "request-join-message">
+                        <form onsubmit = "return joinEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
+                            This is a closed event. You need to ask the host's permission to join!<br>
+                            <input type = "submit" class = "event-join" value = "Request to Join"/>
+                        </form>
+                    </div>
                     <%
-                        for (User requestor : requestList) {
+                        }
+                    } else if (event.getType().equals("Public")) {
                     %>
-                    <li id = "request_<%=requestor.getUserID()%>" class = "request-item">
-                        <div class = "request-container">
-                            <a href = "User?action=view&id=<%=requestor.getUserID()%>">
-                                <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
-                            </a><br>
-                            <form onsubmit = "return answerRequest(<%=event.getEventID()%>, <%=requestor.getUserID()%>, 'Approved', <%=requestList.size()%>, <%=event.getAttendingList().size()%>)">
-                                <input type = "submit" class = "request-button" value = "Approve"/>
-                            </form>
-                            <form onsubmit = "return answerRequest(<%=event.getEventID()%>, <%=requestor.getUserID()%>, 'Rejected', <%=requestList.size()%>, <%=event.getAttendingList().size()%>)">
-                                <input type = "submit" class = "request-button" value = "Reject"/>
-                            </form>
-                        </div>
-                    </li>
+                    <div id = "request-join-message">
+                        <form onsubmit = "return joinEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
+                            <input type = "submit" class = "event-join" value = "Join"/>
+                        </form>
+                    </div>
                     <%
+                        }
+                        //if not joining
+                    } else {
+                    %>
+                    <div id = "request-join-message">
+                        <form onsubmit = "return leaveEvent(<%=event.getEventID()%>, '<%=event.getType()%>', <%=event.getAttendingList().size()%>)">
+                            <input type = "submit" class = "event-join" value = "Leave"/>
+                        </form>
+                    </div>
+                    <%
+                        }
+                    } else {
+                    %>
+                    <form action = "Event?action=edit" method = "post">
+                        <input type = "submit" class = "event-join" value = "Edit Event Details"/>
+                    </form>
+                    <form action = "Event?action=delete&id=<%=event.getEventID()%>" onsubmit = "return deleteEvent()" method = "post">
+                        <input type = "submit" class = "event-join" value = "Cancel Event"/>
+                    </form>
+                    <%
+                        }
+                    %>
+                </div>
+                <%
+                    if (loggedUser.getUserID()
+                            == host.getUserID()) {
+                %>
+            </div>
+            <div id = "invite-div">
+                <h3 class = "invite-title" align = "center">Invite your Buddies!</h3>
+                <div id = "invite-container">
+                    <div id = "invited-div">
+                        <h4 class = "invite-title">Invited: </h4><hr width = "90%">
+                        <ul id = "invited-list">
+                            <%
+                                ArrayList<User> invitedList = event.getInvitedList();
+                                for (User invited : invitedList) {
+                            %>
+
+                            <li id = "invited_<%=invited.getUserID()%>" class = "invite-item">
+                                <form onsubmit = "return uninviteBuddy(<%=invited.getUserID()%>)">
+                                    <img src = "<%=invited.getProfilePicture()%>" class = "invite-pic"/>
+                                    <label for="invite-buddy"> <%=invited.getFirstName()%> <%=invited.getLastName()%></label>
+
+                                    <input type = "submit" class = "remove-post" value = "x"/>
+                                </form>
+                            </li>
+                            <%
+                                }
+                            %>
+                        </ul>
+                    </div>
+                    <div id = "invite-more-div">
+                        <form onsubmit = "return inviteBuddies()" id = "invite-form">
+                            <h4 class = "invite-title">Invite: </h4><hr width = "90%">
+
+                            <ul id = "invite-list">
+                                <%
+                                    ArrayList<User> buddyList = loggedUser.getBuddyList();
+                                    ArrayList<Integer> clustersView = event.getViewRestriction();
+                                    for (User buddy : buddyList) {
+                                        boolean isFound = false;
+                                        for (int i = 0; i < clustersView.size() && !isFound; i++) {
+                                            int cluster = clustersView.get(i);
+                                            if ((cluster == 0 || cluster == -1 || db.isClusterMember(buddy.getUserID(), cluster)) && !db.isInvited(event.getEventID(), buddy.getUserID())) {
+                                %>
+                                <li id = "buddy_<%=buddy.getUserID()%>" class = "invite-item">
+                                    <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
+                                    <img src = "<%=buddy.getProfilePicture()%>" class = "invite-pic"/>
+                                    <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
+                                </li>
+                                <%
+                                                isFound = true;
+                                            }
+                                        }
                                     }
+                                %>
+                            </ul>
+                            <input type = "submit" value = "Invite these Buddies!" class = "invite-submit"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <%
+                }
+
+                if (event.getType()
+                        .equals("Closed")) {
+                    if (loggedUser.getUserID() == host.getUserID()) {
+            %>
+        </div>
+        <!-- EVENT REQUESTS FOR HOST TO APPROVE-->
+        <h3 align = "center" class = "event-comment-header">Requests to join your event</h3>
+        <div id = "request-div">
+            <ul id = "request-list">
+                <%
+                    ArrayList<User> requestList = event.getRequestList();
+
+                    if (requestList.isEmpty()) {
+                %>
+                <li id = "no-request">
+                    <h3 class = "empty-text" align = "center">Your event has no requests right now.</h3>
+                </li>
+                <%
+                } else {
+                %>
+
+                <%
+                    for (User requestor : requestList) {
+                %>
+                <li id = "request_<%=requestor.getUserID()%>" class = "request-item">
+                    <div class = "request-container">
+                        <a href = "User?action=view&id=<%=requestor.getUserID()%>">
+                            <img src = "<%=requestor.getProfilePicture()%>" class = "request-prof-pic" title = "<%=requestor.getFirstName()%> <%=requestor.getLastName()%>"/>
+                        </a><br>
+                        <form onsubmit = "return answerRequest(<%=event.getEventID()%>, <%=requestor.getUserID()%>, 'Approved', <%=requestList.size()%>, <%=event.getAttendingList().size()%>)">
+                            <input type = "submit" class = "request-button" value = "Approve"/>
+                        </form>
+                        <form onsubmit = "return answerRequest(<%=event.getEventID()%>, <%=requestor.getUserID()%>, 'Rejected', <%=requestList.size()%>, <%=event.getAttendingList().size()%>)">
+                            <input type = "submit" class = "request-button" value = "Reject"/>
+                        </form>
+                    </div>
+                </li>
+                <%
                                 }
                             }
                         }
-                    %>
-                </ul>
-            </div>
-            <!-- POSTS and COMMENTS -->
+                    }
+                %>
+            </ul>
+        </div>
+        <!-- POSTS and COMMENTS -->
+        <%
+            ArrayList<Post> postList = event.getPostList();
+        %>
+        <hr>
+        <div id = "post-container"> 
             <div id = "input-post-div">
-                <form onsubmit = "return addPost()" id = "add-post">
+                <form onsubmit = "return addPost(<%=postList.size()%>)" id = "add-post">
                     <h4 class = "input-post-text">Post something about <%=event.getEventName()%>!</h4>
                     <hr width = "60%"/>
                     <textarea rows="5" cols = "40" class = "input-post-textarea" placeholder = "Say something about <%=event.getEventName()%>" name = "postText"></textarea>
-                    <br><input type = "submit" class = "input-post-submit"/>
+                    <br><input type = "submit" class = "invite-submit" value = "Post"/>
                 </form>
             </div>
             <h3 align = "center" class = "event-comment-header">Posts about "<%=event.getEventName()%>"</h3>
-            <%
-                ArrayList<Post> postList = event.getPostList();
-
-                if (postList.isEmpty()) {
-            %>
-            <h2 align = "center" class = "empty-text">There are no posts to display.</h2>
-            <%
-            } else if (!postList.isEmpty()) {
-            %>
             <div id = "posts-div">
-
                 <ul id = "post-list">
                     <%
+
+                        if (postList.isEmpty()) {
+                    %>
+                    <li id = "no-post">
+                        <h2 align = "center" class = "empty-text">There are no posts to display.</h2>
+                    </li>
+                    <%
+                    } else if (!postList.isEmpty()) {
                         for (int i = 0; i < postList.size(); i++) {
                             if (!postList.get(i).isDeleted()) {
                                 //get poster
@@ -212,7 +289,7 @@
                                 <%
                                     if (poster.getUserID() == loggedUser.getUserID()) {
                                 %>
-                                <form onsubmit = "return deletePost(<%=postList.get(i).getPostID()%>)">
+                                <form onsubmit = "return deletePost(<%=postList.get(i).getPostID()%>, <%=postList.size()%>)">
                                     <input type = "submit" class = "remove-post" value = "x"/>
                                 </form>
                                 <%
@@ -319,10 +396,10 @@
                     %>
 
                 </ul>
+                <%
+                    }
+                %>
             </div>
-            <%
-                }
-            %>
         </div>
     </body>
 </html>

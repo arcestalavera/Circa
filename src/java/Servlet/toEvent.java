@@ -57,11 +57,31 @@ public class toEvent extends HttpServlet {
             case "create":
                 isDispatched = true;
                 user = (User) request.getSession().getAttribute("loggedUser");
+                String viewType = request.getParameter("view-select");
                 userID = user.getUserID();
 
                 event = getEvent(request);
 
+                //add event
                 eventID = db.addEvent(userID, event.getEventName(), new java.sql.Timestamp(event.getStartDate().getTime()), new java.sql.Timestamp(event.getEndDate().getTime()), event.getVenue(), event.getType(), event.getDescription());
+
+                //add views
+                switch(viewType)
+                {
+                    case "Public":
+                        db.addView(eventID, -1);
+                        break;
+                    case "Buddies":
+                        db.addView(eventID, 0);
+                        break;
+                    case "Specified":
+                        String[] clustersID = request.getParameterValues("view-cluster");
+                        for(String clusterID : clustersID)
+                        {
+                            db.addView(eventID, Integer.parseInt(clusterID));
+                        }
+                        break;
+                }
                 reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + eventID);
                 break;
 
@@ -113,7 +133,7 @@ public class toEvent extends HttpServlet {
 
                 db.deleteJoin(eventID, user.getUserID());
                 break;
-                
+
             case "answer":
                 isDispatched = false;
                 String answer = request.getParameter("answer");
@@ -123,10 +143,12 @@ public class toEvent extends HttpServlet {
 
                 db.answerRequest(event.getHost().getUserID(), eventID, userID, answer);
                 break;
+             
         }
-        
-        if(isDispatched)
+
+        if (isDispatched) {
             reqDispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
