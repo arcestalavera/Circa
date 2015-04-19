@@ -65,9 +65,11 @@ public class toComment extends HttpServlet {
                                 + "                                    </li>");
 
                         break;
+                        
+                    case "home":
                     case "cluster":
                         System.out.println("cluster hehehe");
-                        response.getWriter().write("<li class = \"post-comment-commenter-div\">\n"
+                        response.getWriter().write("<li id = \"comment_" + commentID + "\" class = \"post-comment-commenter-div\">\n"
                                 + "                                <a href = \"User?action=view&id=" + user.getUserID() + "\">\n"
                                 + "                                    <img src = \"" + user.getProfilePicture() + "\" title = \"" + user.getFirstName() + " " + user.getLastName() + "\" class = \"post-comment-commenter-img\" height = \"30px\" width=\"30px\">\n"
                                 + "                                </a>\n"
@@ -78,16 +80,12 @@ public class toComment extends HttpServlet {
                                 + "                                            " + user.getFirstName() + " " + user.getLastName() + "\n"
                                 + "                                        </a>\n"
                                 + "                                    </p>\n"
-                                + "                                    <form class = \"delete-comment-form\" action=\"Comment?action=delete&id=<%=comment.getCommentID()%>&curpage=cluster\" method = \"post\">\n"
+                                + "                                    <form class = \"delete-comment-form\" onsubmit = \"return deleteComment(" + commentID + ")\">\n"
                                 + "                                        <input type=\"image\" src=\"img/clusterpage/DeleteButtonSmall.png\" class=\"delete-comment-button\"/>\n"
                                 + "                                    </form>\n"
                                 + "                                    <p class = \"post-comment-commenter-text\">" + commentText + "</p>\n"
                                 + "                                </div>\n"
                                 + "                            </li>");
-                        //reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
-                        break;
-                    case "home":
-                        reqDispatcher = request.getRequestDispatcher("Home.jsp");
                         break;
                 }
 
@@ -97,14 +95,14 @@ public class toComment extends HttpServlet {
                 commentID = Integer.parseInt(request.getParameter("id"));
 
                 db.deleteComment(commentID);
-                switch (curPage) {
+                /*switch (curPage) {
                     case "cluster":
                         reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
                         break;
                     case "home":
                         reqDispatcher = request.getRequestDispatcher("Home.jsp");
                         break;
-                }
+                }*/
                 break;
         }
        /* if (!curPage.equals("event")) {

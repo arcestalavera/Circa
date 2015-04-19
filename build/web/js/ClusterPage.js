@@ -5,6 +5,7 @@ function addComment(postID) {
         data: $(".new-comment-form").serialize(),
         success: function(html) {
             $("#post_" + postID).find("#comment-list").append(html);
+            $(".new-comment-comment-field").val("");
         }
     });
     return false;
@@ -35,7 +36,7 @@ function likePost(postID, userID, count) {
             {
                 $("#post_" + postID).find(".post-like-count").html("<p class = \"post-like-count\">  | " + count + " like </p>");
             }
-            $(".post-like-option").html("<a class = \"like-link\" onclick = \"return unlikePost(" + postID + ", " + userID + ", " + count + ")\">Unlike </a>");
+            $("#post_" + postID).find(".post-like-option").html("<a class = \"like-link\" onclick = \"return unlikePost(" + postID + ", " + userID + ", " + count + ")\">Unlike </a>");
         }
     });
     return false;
@@ -56,11 +57,12 @@ function unlikePost(postID, userID, count) {
             {
                 $("#post_" + postID).find(".post-like-count").html("<p class = \"post-like-count\">  | " + count + " like </p>");
             }
-            $(".post-like-option").html("<a class = \"like-link\" onclick = \"return likePost(" + postID + ", " + userID + ", " + count + ")\">Like </a>");
+            $("#post_" + postID).find(".post-like-option").html("<a class = \"like-link\" onclick = \"return likePost(" + postID + ", " + userID + ", " + count + ")\">Like </a>");
         }
     });
     return false;
 }
+
 $(document).ready(function() {
     $(document).on('hover', '.delete-cluster-member-button', function() {
         $(this).attr('src', 'img/clusterpage/DeleteButtonSmallHover.png');

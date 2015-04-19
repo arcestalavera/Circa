@@ -49,12 +49,6 @@ public class toLike extends HttpServlet {
                 db.unlikePost(postID, userID);
                 break;
         }
-        switch (curpage) {
-            case "home":
-                reqDispatcher = request.getRequestDispatcher("Home.jsp");
-                reqDispatcher.forward(request, response);
-                break;
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

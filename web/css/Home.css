@@ -279,6 +279,7 @@ body{
 
 .like-link:hover{
     color: gray;
+    cursor: pointer;
 }
 
 .post-like-count{
