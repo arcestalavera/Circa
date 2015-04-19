@@ -52,34 +52,54 @@
         %>
 
         <div class = "profTop"><IMG class="profPic" src= "<%=userDetails.getProfilePicture()%>"/> <IMG class="profCover" src="img/home/coverfestival.jpg"/></div>
-
-        <div class="infoDiv">
-            <h2 class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></h2>
-            <%
-                if (loggedUser.getUserID() != userDetails.getUserID()) {
-                    if (!db.isBuddy(loggedUser.getUserID(), userDetails.getUserID())) {
-            %>
-            <div id = "buddy-action-div">
-                <form onsubmit = "return buddyAction('add')">
-                    <input type = "submit" value = "Add Buddy" class = "buddy-button"/>
-                </form>
-            </div>
-            <%
-            } else {
-            %>
-            <div id = "buddy-action-div">
-                <form onsubmit = "return buddyAction('delete')">
-                    <input type = "submit" value = "Remove Buddy" class = "buddy-button"/>
-                </form>   
-            </div>
-            <%
+        <div class = "float-left-div">
+            <div class="infoDiv">
+                <h2 class="infoText"><%=userDetails.getFirstName()%> <%=userDetails.getLastName()%></h2>
+                <%
+                    if (loggedUser.getUserID() != userDetails.getUserID()) {
+                        if (!db.isBuddy(loggedUser.getUserID(), userDetails.getUserID())) {
+                %>
+                <div id = "buddy-action-div">
+                    <form onsubmit = "return buddyAction('add')">
+                        <input type = "submit" value = "Add Buddy" class = "buddy-button"/>
+                    </form>
+                </div>
+                <%
+                } else {
+                %>
+                <div id = "buddy-action-div">
+                    <form onsubmit = "return buddyAction('delete')">
+                        <input type = "submit" value = "Remove Buddy" class = "buddy-button"/>
+                    </form>   
+                </div>
+                <%
+                        }
                     }
-                }
+                %>
+                <p class="infoTitle">Clusters | Events</p> 
+                <p class="infoTitleContent"> <%=userDetails.getClusters().size()%> || <%=userDetails.getEventList().size()%></p>
+            </div>
+                <%  userDetails.setBuddyList(db.getUserBuddies(userDetails.getUserID()));
+                    if(userDetails.getBuddyList().size() != 0){
             %>
-            <p class="infoTitle">Clusters | Events</p> 
-            <p class="infoTitleContent"> <%=userDetails.getClusters().size()%> || <%=userDetails.getEventList().size()%></p>
+            <div class = "buddies-div">
+                <div id = "buddies-tag-div">
+                    <p id = "buddies-tag">Buddies</p>
+                </div>
+                <div id = "buddies-list-div">
+                    <ul id = "buddies-list">
+                        <%for(User buddy : userDetails.getBuddyList()){%>
+                        <li class = "buddies-member">
+                            <a href="User?action=view&id=<%=buddy.getUserID()%>">
+                                <img src = "<%=buddy.getProfilePicture()%>" title = "<%=buddy.getFirstName()%> <%=buddy.getLastName()%>" width = "60px" height="60px"/>
+                            </a>
+                        </li>
+                        <%}%>
+                    </ul>
+                </div>
+            </div>
+            <%}%>
         </div>
-
         <div class="postDiv">
             <ul class = "tabs">
                 <li><a href="#showEvents"><b>Events</b></a></li>
