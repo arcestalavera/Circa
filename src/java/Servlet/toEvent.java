@@ -64,7 +64,8 @@ public class toEvent extends HttpServlet {
 
                 //add event
                 eventID = db.addEvent(userID, event.getEventName(), new java.sql.Timestamp(event.getStartDate().getTime()), new java.sql.Timestamp(event.getEndDate().getTime()), event.getVenue(), event.getType(), event.getDescription());
-
+                
+                db.addJoin(eventID, userID);
                 //add views
                 switch(viewType)
                 {

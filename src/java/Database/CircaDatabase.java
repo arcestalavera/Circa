@@ -1330,4 +1330,28 @@ public class CircaDatabase { //singleton
             e.printStackTrace();
         }
     }
+    
+    public ArrayList<Event> getEventsToAttend(int userID){
+        Statement stmt;
+        ResultSet rs;
+        ArrayList<Event> eventsToAttend = new ArrayList<>();
+        
+        try {
+            stmt = con.createStatement();
+
+            sql = "SELECT * FROM attending_an_event a, event e " +
+                  "WHERE a.eventID = e.eventID AND a.attendingID = " + userID +
+                  " ORDER BY startDate desc";
+
+            rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                eventsToAttend.add(getEventDetails(rs.getInt("eventID")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return eventsToAttend;
+    }
 }

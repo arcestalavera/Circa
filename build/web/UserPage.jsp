@@ -176,7 +176,45 @@
                     <%
                         }
                     %>
-                <input type = "date" class = "schedule-date"/>
+                <div id = "event-body">
+                    
+                    <%  ArrayList<Event> eventsToAttend = db.getEventsToAttend(userDetails.getUserID());
+
+                        if (!eventsToAttend.isEmpty()) {
+                            for (int i = 0; i < eventsToAttend.size(); i++) {
+                                if (!eventsToAttend.get(i).isDeleted()) {
+                    %>
+                    <h4 class = "event-header"><b><%=eventsToAttend.get(i).getEventName()%></b></h4>
+                    <div class = "event-description">
+                        <%=eventsToAttend.get(i).getDescription()%><br/>
+                        <%
+                            DateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy h:mm a");
+                        %>
+                        <h6><%=eventsToAttend.get(i).getType()%> | 
+                            <%=dateFormat.format(eventsToAttend.get(i).getStartDate())%> - 
+                            <%=dateFormat.format(eventsToAttend.get(i).getEndDate())%>
+                        </h6><br>
+
+                        <button type = "submit" onclick = "window.location.href = 'Event?action=view&id=<%=eventsToAttend.get(i).getEventID()%>'">View Event</button>
+
+                    </div>
+                    <%
+                            }
+                        }
+                    } else {
+                        if (loggedUser.getUserID() == userDetails.getUserID()) {
+                    %>
+                    <h3 class = "event-no-event">You have no events to attend to.</h3>
+                    <%
+                    } else {
+
+                    %>
+                    <h3 class = "event-no-event"><%=userDetails.getFirstName()%> has no event to attend to.</h3>
+                    <%
+                            }
+                        }
+                    %>
+                </div>
             </div>
         </div>
     </body>
