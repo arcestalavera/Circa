@@ -817,6 +817,35 @@ public class CircaDatabase { //singleton
         return isViewable;
     }
 
+    public boolean isViewableToUser(int eventID, int userID){
+        Statement stmt;
+        ResultSet rs;
+        boolean isViewable = false;
+
+        try {
+            stmt = con.createStatement();
+            sql = "SELECT * FROM event_view_restriction"
+                    + " WHERE eventID = " + eventID;
+            
+            Event event = getEventDetails(eventID);
+            
+            rs = stmt.executeQuery(sql);
+
+            while(rs.next() && !isViewable){
+                int clusterID = rs.getInt("clusterID");
+                if((clusterID == -1) || 
+                   (clusterID == 0 && isBuddy(userID, event.getHost().getUserID())) ||
+                   (isClusterMember(userID, clusterID))){
+                    isViewable = true;
+                }
+                    
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isViewable;
+    }
+    
     public boolean isClusterMember(int userID, int clusterID) {
         Statement stmt;
         ResultSet rs;

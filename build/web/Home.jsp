@@ -121,11 +121,17 @@
                 <%  ArrayList<Event> viewableEvents = new ArrayList<>();
                     boolean flag = false;
                     boolean hasPost = false;
-                    
+
                     // add buddies events viewable to user
                     for(User buddy : user.getBuddyList()){
                         for(Event event : buddy.getEventList()){
-                            flag = false;
+                            if(db.isViewableToUser(event.getEventID(), user.getUserID())){
+                                viewableEvents.add(event);
+                                if(event.getPostList().size() != 0){
+                                    hasPost = true;
+                                }
+                            }
+                            /*flag = false;
                             for(Cluster cluster : buddy.getClusters()){
                                 if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())
                                    && db.isClusterMember(user.getUserID(), cluster.getClusterID())){
@@ -134,7 +140,7 @@
                                         hasPost = true;
                                     flag = true;
                                 }
-                            }
+                            }*/
                         }
                     }
                     

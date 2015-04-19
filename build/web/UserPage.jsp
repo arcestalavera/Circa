@@ -126,11 +126,13 @@
                     </div>
                     <%
                         }
-                        ArrayList<Event> eventList = userDetails.getEventList();
+                        ArrayList<Event> eventList = db.getEvents(userDetails.getUserID());
 
                         if (!eventList.isEmpty()) {
                             for (int i = 0; i < eventList.size(); i++) {
-                                if (!eventList.get(i).isDeleted()) {
+                                if (!eventList.get(i).isDeleted() &&
+                                    (loggedUser.getUserID() == userDetails.getUserID() || 
+                                    db.isViewableToUser(eventList.get(i).getEventID(), userDetails.getUserID()))) {
                     %>
                     <h4 class = "event-header"><b><%=eventList.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
@@ -182,7 +184,9 @@
 
                         if (!eventsToAttend.isEmpty()) {
                             for (int i = 0; i < eventsToAttend.size(); i++) {
-                                if (!eventsToAttend.get(i).isDeleted()) {
+                                if (!eventsToAttend.get(i).isDeleted() &&
+                                    (loggedUser.getUserID() == userDetails.getUserID() || 
+                                    db.isViewableToUser(eventsToAttend.get(i).getEventID(), userDetails.getUserID()))) {
                     %>
                     <h4 class = "event-header"><b><%=eventsToAttend.get(i).getEventName()%></b></h4>
                     <div class = "event-description">
