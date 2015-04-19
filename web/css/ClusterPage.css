@@ -265,6 +265,7 @@ html, body{
 
 .like-link:hover{
     color: gray;
+    cursor: pointer;
 }
 
 .post-like-count{
@@ -409,3 +410,4 @@ ul{
     padding: 0;
     list-style-type: none;
 }
+

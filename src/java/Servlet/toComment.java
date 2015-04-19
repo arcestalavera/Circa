@@ -35,6 +35,7 @@ public class toComment extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         String curPage = request.getParameter("curpage");
         int postID;
@@ -52,7 +53,6 @@ public class toComment extends HttpServlet {
                 commentID = db.addComment(postID, commentText, userID);
                 switch (curPage) {
                     case "event":
-                        response.setContentType("text/html;charset=UTF-8");
                         response.getWriter().write("<li id = \"comment_" + commentID + "\">\n"
                                 + "                                        <div class = \"post-comment\">\n"
                                 + "                                            <form onsubmit = \"return deleteComment(" + commentID + ")\">\n"
@@ -66,7 +66,25 @@ public class toComment extends HttpServlet {
 
                         break;
                     case "cluster":
-                        reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+                        System.out.println("cluster hehehe");
+                        response.getWriter().write("<li class = \"post-comment-commenter-div\">\n"
+                                + "                                <a href = \"User?action=view&id=" + user.getUserID() + "\">\n"
+                                + "                                    <img src = \"" + user.getProfilePicture() + "\" title = \"" + user.getFirstName() + " " + user.getLastName() + "\" class = \"post-comment-commenter-img\" height = \"30px\" width=\"30px\">\n"
+                                + "                                </a>\n"
+                                + "\n"
+                                + "                                <div class = \"post-comment-commenter-info\">\n"
+                                + "                                    <p class = \"post-comment-commenter-name\">\n"
+                                + "                                        <a href = \"User?action=view&id=" + user.getUserID() + "\" class = \"link\">\n"
+                                + "                                            " + user.getFirstName() + " " + user.getLastName() + "\n"
+                                + "                                        </a>\n"
+                                + "                                    </p>\n"
+                                + "                                    <form class = \"delete-comment-form\" action=\"Comment?action=delete&id=<%=comment.getCommentID()%>&curpage=cluster\" method = \"post\">\n"
+                                + "                                        <input type=\"image\" src=\"img/clusterpage/DeleteButtonSmall.png\" class=\"delete-comment-button\"/>\n"
+                                + "                                    </form>\n"
+                                + "                                    <p class = \"post-comment-commenter-text\">" + commentText + "</p>\n"
+                                + "                                </div>\n"
+                                + "                            </li>");
+                        //reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
                         break;
                     case "home":
                         reqDispatcher = request.getRequestDispatcher("Home.jsp");
@@ -77,13 +95,9 @@ public class toComment extends HttpServlet {
 
             case "delete":
                 commentID = Integer.parseInt(request.getParameter("id"));
-                
+
                 db.deleteComment(commentID);
                 switch (curPage) {
-                    case "event":
-                        //do nothing
-                        //reqDispatcher = request.getRequestDispatcher("Event?action=view&id=" + event.getEventID());
-                        break;
                     case "cluster":
                         reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
                         break;
@@ -93,9 +107,9 @@ public class toComment extends HttpServlet {
                 }
                 break;
         }
-        if (!curPage.equals("event")) {
+       /* if (!curPage.equals("event")) {
             reqDispatcher.forward(request, response);
-        }
+        }*/
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
