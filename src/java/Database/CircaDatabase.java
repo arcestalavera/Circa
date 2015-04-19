@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -801,9 +801,7 @@ public class CircaDatabase { //singleton
         try {
             stmt = con.createStatement();
             sql = "SELECT * FROM event_view_restriction"
-                    + " WHERE eventID = " + eventID + " AND clusterID = " + clusterID + ""
-                    + " UNION SELECT * FROM event_view_restriction"
-                    + " WHERE eventID = " + eventID + " AND clusterID = -1";
+                    + " WHERE eventID = " + eventID + " AND clusterID = " + clusterID;
 
             rs = stmt.executeQuery(sql);
 
@@ -828,7 +826,6 @@ public class CircaDatabase { //singleton
                     + " WHERE eventID = " + eventID;
             
             Event event = getEventDetails(eventID);
-            
             rs = stmt.executeQuery(sql);
 
             while(rs.next() && !isViewable){
