@@ -133,6 +133,7 @@ public class toEvent extends HttpServlet {
                 user = (User) request.getSession().getAttribute("loggedUser");
 
                 db.deleteJoin(eventID, user.getUserID());
+                db.deleteInvite(eventID, user.getUserID());
                 break;
 
             case "answer":

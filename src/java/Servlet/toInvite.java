@@ -37,7 +37,8 @@ public class toInvite extends HttpServlet {
         User user;
         Event event;
         response.setContentType("text/html;charset=UTF-8");
-
+        int eventID;
+        
         switch (action) {
             case "invite":
                 String[] invitedID = request.getParameterValues("invite-buddy");
@@ -70,6 +71,15 @@ public class toInvite extends HttpServlet {
                         + "                                    <img src = \"" + user.getProfilePicture() + "\" class = \"invite-pic\"/>\n"
                         + "                                    <label for=\"invite-buddy\"> " + user.getFirstName() + " " + user.getLastName() + "</label>\n"
                         + "                                </li>");
+                break;
+                
+            case "answer":
+                String answer = request.getParameter("answer");
+                eventID = Integer.parseInt(request.getParameter("eid"));
+                event = db.getEventDetails(eventID);
+                userID = Integer.parseInt(request.getParameter("uid"));
+
+                db.answerInvite(event.getHost().getUserID(), eventID, userID, answer);
                 break;
         }
     }

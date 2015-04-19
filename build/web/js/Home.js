@@ -15,6 +15,23 @@ function answerRequest(answer, eventID, requestorID, size) {
     return false;
 }
 
+function answerInvite(answer, eventID, invitedID, size) {
+    $.ajax({
+        type: "POST",
+        url: "Invite?action=answer&answer=" + answer + "&eid=" + eventID + "&uid=" + invitedID,
+        success: function() {
+            $("#inv_notif_" + eventID + "" + invitedID).remove();
+            size--;
+            if (size === 0)
+            {
+                $("#request-invite-div").hide();
+            }
+        }
+    });
+
+    return false;
+}
+
 $(document).ready(function() {
 
     $('.delete-post-button').hover(function() {

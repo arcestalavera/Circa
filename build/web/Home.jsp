@@ -276,10 +276,10 @@
                                         <%=invite.getEvent().getEventName()%>
                                     </a>
                                 </p>
-                                <form class = "approve-form">
+                                <form onsubmit = "return answerInvite('Approved', <%=invite.getEvent().getEventID()%>, <%=user.getUserID()%>, <%=notifSize%>)" class = "approve-form">
                                     <input type = "submit" value ="Approve" class = "approve-button"/>
                                 </form>
-                                <form class = "reject-form">
+                                <form onsubmit = "return answerInvite('Rejected', <%=invite.getEvent().getEventID()%>, <%=user.getUserID()%>, <%=notifSize%>)" class = "reject-form">
                                     <input type = "submit" value = "Reject" class = "reject-button"/>
                                 </form>
                             </div>

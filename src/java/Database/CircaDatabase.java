@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -1082,7 +1082,7 @@ public class CircaDatabase { //singleton
         try {
             stmt = con.createStatement();
             sql = "SELECT * FROM invite_to_event"
-                    + " WHERE eventID = " + eventID + " AND invitedID = " + invitedID + " AND status = 'Pending'";
+                    + " WHERE eventID = " + eventID + " AND invitedID = " + invitedID;
 
             rs = stmt.executeQuery(sql);
             if (rs.next()) {
@@ -1353,5 +1353,28 @@ public class CircaDatabase { //singleton
         }
 
         return eventsToAttend;
+    }
+    
+    public void answerInvite(int hostID, int eventID, int invitedID, String action) {
+        Statement stmt;
+
+        try {
+            stmt = con.createStatement();
+            if (action.equals("Approved")) {
+                sql = "UPDATE invite_to_event"
+                        + " SET status = '" + action + "'"
+                        + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND invitedID = " + invitedID;
+            } else if (action.equals("Rejected")) {
+                System.out.println("reject = " + hostID + " " + eventID + " " + invitedID + " " + " " + action);
+                sql = "DELETE FROM invite_to_event"
+                        + " WHERE hostID = " + hostID + " AND eventID = " + eventID + " AND invitedID = " + invitedID;
+            }
+            stmt.executeUpdate(sql);
+            if (action.equals("Approved")) {
+                addJoin(eventID, invitedID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

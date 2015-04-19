@@ -216,6 +216,29 @@ function uninviteBuddy(buddyID) {
     return false;
 }
 
+function answerInvite(eventID, userID, answer, count, type)
+{
+    $.ajax({
+        type: "POST",
+        url: "Invite?action=answer&answer=" + answer + "&eid=" + eventID + "&uid=" + userID,
+        success: function() {
+            if (answer === "Approved")
+            {
+                $("#request-join-message").html("<form onsubmit = 'return leaveEvent(" + eventID + ", \"" + type + "\", " + count + ")'>\n" +
+                        "<input type = 'submit' class = 'event-join' value = 'Leave'/>\n" +
+                        "</form>");
+                count++;
+                $("#attend-count").html(count + " people are going");
+            }
+            else
+            {
+                $("#request-join-message").html("You have rejected the invititation.");
+            }
+        }
+    });
+
+    return false;
+}
 //--- functions -------------------------
 function checkPost() {
     var input = $(".input-post-textarea").val();

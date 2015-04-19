@@ -85,9 +85,11 @@
                                 if (db.isInvited(event.getEventID(), loggedUser.getUserID())) {
                     %>
                     <div id ="request-join-message">
-                        <form action = "Event?action=join&id=<%=event.getEventID()%>" method = "post">
-                            <%=event.getHost().getFirstName()%> invited you. What do you say?<br>
+                        <%=event.getHost().getFirstName()%> invited you. What do you say?<br>
+                        <form onsubmit = "return answerInvite(<%=event.getEventID()%>, <%=loggedUser.getUserID()%>, 'Approved', <%=event.getAttendingList().size()%>, '<%=event.getType()%>')">
                             <input type = "submit" class = "event-join" value = "Accept"/>
+                        </form>
+                        <form onsubmit = "return answerInvite(<%=event.getEventID()%>, <%=loggedUser.getUserID()%>, 'Rejected', <%=event.getAttendingList().size()%>, '<%=event.getType()%>')">
                             <input type = "submit" class = "event-join" value = "Decline"/>
                         </form>
                     </div>
@@ -183,7 +185,8 @@
                                         boolean isFound = false;
                                         for (int i = 0; i < clustersView.size() && !isFound; i++) {
                                             int cluster = clustersView.get(i);
-                                            if ((cluster == 0 || cluster == -1 || db.isClusterMember(buddy.getUserID(), cluster)) && !db.isInvited(event.getEventID(), buddy.getUserID())) {
+                                            if (cluster == 0 || cluster == -1 || db.isClusterMember(buddy.getUserID(), cluster)) {
+                                                if (!db.isInvited(event.getEventID(), buddy.getUserID())) {
                                 %>
                                 <li id = "buddy_<%=buddy.getUserID()%>" class = "invite-item">
                                     <input type = "checkbox" id = "invite-buddy" name = "invite-buddy" value = "<%=buddy.getUserID()%>"/>
@@ -191,7 +194,8 @@
                                     <label for="invite-buddy"> <%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
                                 </li>
                                 <%
-                                                isFound = true;
+                                                    isFound = true;
+                                                }
                                             }
                                         }
                                     }
