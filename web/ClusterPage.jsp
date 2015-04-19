@@ -91,14 +91,16 @@
             
             <div id = "cluster-post-panel">
                 <%  ArrayList<Event> viewableEvents = new ArrayList<>();
-                    
+                    boolean hasPost = false;
                     for(Event event : user.getEventList()){
                         if(db.isViewableToCluster(event.getEventID(), cluster.getClusterID())){
                             event.setPostList(db.getPosts(event.getEventID()));
+                            if(event.getPostList().size() != 0)
+                                hasPost = true;
                             viewableEvents.add(event);
                         }
                     }
-                    if(viewableEvents.size() != 0){
+                    if(viewableEvents.size() != 0 && hasPost){
                         for(Event event : viewableEvents){
                             for(Post post : event.getPostList()){
                                 if(!post.isDeleted()){
