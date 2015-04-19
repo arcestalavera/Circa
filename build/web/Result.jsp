@@ -149,8 +149,8 @@
                                     boolean isPrinted = false;
                                     for(int i = 0; i < event.getViewRestriction().size() && !isPrinted; i++){
                                         int clusterID = event.getViewRestriction().get(i);
-                                        if((clusterID == 0) || 
-                                           (clusterID == 1 && db.isBuddy(user.getUserID(), event.getHost().getUserID())) ||
+                                        if((clusterID == -1) || 
+                                           (clusterID == 0 && db.isBuddy(user.getUserID(), event.getHost().getUserID())) ||
                                            (db.isClusterMember(user.getUserID(), clusterID)) ||
                                            (event.getHost().getUserID() == user.getUserID())){
                                                 isPrinted = true;
