@@ -72,7 +72,7 @@ public class ViewCluster extends HttpServlet {
         
         request.getSession().setAttribute("clusterToProcess", cluster);
         
-        User user = (User)request.getSession().getAttribute("loggedUser");
+        User user = (User) request.getSession().getAttribute("loggedUser");
         user.setEventList(db.getEvents(user.getUserID()));
         
         RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
@@ -96,29 +96,41 @@ public class ViewCluster extends HttpServlet {
         Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
         CircaDatabase db = CircaDatabase.getInstance();
         
-        if(type != null){
-            if(type.equals("add-cluster-member")){
+        response.setContentType("text/html;charset=UTF-8");
+        if (type != null) {
+            if (type.equals("add-cluster-member")) {
                 String[] newmember = request.getParameterValues("new-member");
                 if (newmember != null) {
                     for (String s : newmember) {
                         db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
+                        User newMember = db.getUserDetails(Integer.parseInt(s));
+                        response.getWriter().write("<li id = \"member_" + newMember.getUserID() + "\" class = \"cluster-member\">\n"
+                                + "                        <form class = \"delete-cluster-member-form\" action = \"ViewCluster\" method = \"POST\">\n"
+                                + "                            <input type = \"hidden\" name = \"cluster-member-id\" value = \"" + newMember.getUserID() + "\" />\n"
+                                + "                            <input type = \"hidden\" name = \"form-type\" value = \"delete-cluster-member\" />\n"
+                                + "                            <input class = \"delete-cluster-member-button\" type = \"image\" src = \"img/clusterpage/DeleteButtonSmall.png\">\n"
+                                + "                        </form>\n"
+                                + "                        <a href = \"User?action=view&id=" + newMember.getUserID() + "\">\n"
+                                + "                            <img src=\"" + newMember.getProfilePicture() + "\" class = \"cluster-member-img\" title = \"" + newMember.getFirstName() + " " + newMember.getLastName() + "\" width = \"60px\" height=\"60px\" />\n"
+                                + "                        </a>\n"
+                                + "                    </li>");
                     }
                 }
-            }
-            else if(type.equals("delete-cluster-member")){
+            } else if (type.equals("delete-cluster-member")) {
                 int clusterMemberID = Integer.parseInt(request.getParameter("cluster-member-id"));
-
+                
                 db.deleteUsertoCluster(clusterMemberID, cluster.getClusterID());
-            }
-            else if(type.equals("edit-cluster-name")){
+            } else if (type.equals("edit-cluster-name")) {
                 String name = request.getParameter("cluster-name");
                 int clusterID = Integer.parseInt(request.getParameter("cluster-id"));
                 cluster.setName(name);
                 db.editClusterName(clusterID, name);
+                
+                response.getWriter().write(name);
             }
         }
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
-            reqDispatcher.forward(request, response);
+        //RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
+        //  reqDispatcher.forward(request, response);
     }
 
     /**

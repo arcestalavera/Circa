@@ -11,6 +11,20 @@ function addComment(postID) {
     return false;
 }
 
+function changeClusterName() {
+    $.ajax({
+        type: "POST",
+        url: "ViewCluster",
+        data: $("#cluster-name-div").serialize(),
+        success: function(name) {
+            $("#cluster-name").val(name);
+            $("title").html(name + "  Cluster | Circa");
+        }
+    });
+
+    return false;
+}
+
 function deleteComment(commentID) {
     $.ajax({
         type: "POST",
@@ -58,6 +72,33 @@ function unlikePost(postID, userID, count) {
                 $("#post_" + postID).find(".post-like-count").html("<p class = \"post-like-count\">  | " + count + " like </p>");
             }
             $("#post_" + postID).find(".post-like-option").html("<a class = \"like-link\" onclick = \"return likePost(" + postID + ", " + userID + ", " + count + ")\">Like </a>");
+        }
+    });
+    return false;
+}
+
+function addMember() {
+    $.ajax({
+        type: "POST",
+        url: "ViewCluster",
+        data: $("#addmember-form").serialize(),
+        success: function(html) {
+            var length = $("ul#cluster-addmember-list li").length;
+            $("#cluster-members-list").append(html);
+            if (length > 0)
+            {
+                $(".new-member-item").each(function() {
+                    if ($(this).find("#new-member").is(":checked"))
+                    {
+                        length--;
+                        $(this).remove();
+                    }
+                });
+            }
+            if(length === 0)
+            {
+                $("#cluster-other-addmember-panel").remove();
+            }
         }
     });
     return false;

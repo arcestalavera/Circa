@@ -65,7 +65,7 @@
         <!-- END HEADER -->
         <div id = "cluster-main-panel">
             <div id = "cluster-info-panel">
-                <form id = "cluster-name-div" action = "ViewCluster" method="POST">
+                <form onsubmit = "return changeClusterName()" id = "cluster-name-div">
                     <input type ="text" id = "cluster-name" name = "cluster-name" value ="${clusterToProcess.getName()}" />
                     <input type="hidden" name = "cluster-id" value = "${clusterToProcess.getClusterID()}"/>
                     <input type="hidden" name = "form-type" value = "edit-cluster-name"/>
@@ -75,7 +75,7 @@
                         cluster.setMemberList(db.getClusterMembers(cluster.getClusterID()));
                         for (User clusterMember : cluster.getMemberList()) {
                     %>
-                    <li class = "cluster-member">
+                    <li id = "member_<%=clusterMember.getUserID()%>" class = "cluster-member">
                         <form class = "delete-cluster-member-form" action = "ViewCluster" method = "POST">
                             <input type = "hidden" name = "cluster-member-id" value = "<%=clusterMember.getUserID()%>" />
                             <input type = "hidden" name = "form-type" value = "delete-cluster-member" />
@@ -251,7 +251,7 @@
                         <p id = "addmember-tag">Add Members</p>
                     </div>
                     <div id = "add-member-div">
-                        <form id = "addmember-form" action = "ViewCluster" method="POST">
+                        <form onsubmit = "return addMember()" id = "addmember-form">
                             <ul id = "cluster-addmember-list">
                                 <%  for (User buddy : addableBuddyToCluster) {
                                 %>

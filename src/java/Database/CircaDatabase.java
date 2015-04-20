@@ -593,8 +593,11 @@ public class CircaDatabase { //singleton
         }
     }
 
-    public void addNewCluster(int creatorID, String clusterName) {
-
+    public int addNewCluster(int creatorID, String clusterName) {
+        Statement stmt;
+        ResultSet rs;
+        int maxCluster = 0;
+        
         sql = "INSERT INTO cluster(creatorID, Name) "
                 + "VALUES(?, ?)";
 
@@ -605,9 +608,20 @@ public class CircaDatabase { //singleton
             preparedStmt.setString(2, clusterName);
 
             preparedStmt.executeUpdate();
+            
+            sql = "SELECT MAX(clusterID) from cluster";
+            
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            
+            if(rs.next())
+            {
+                maxCluster = rs.getInt("MAX(clusterID)");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return maxCluster;
     }
 
     public ArrayList<User> getUserBuddies(int userID) {

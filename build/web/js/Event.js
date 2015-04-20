@@ -156,27 +156,31 @@ function joinEvent(eventID, type, count) {
 }
 
 function leaveEvent(eventID, type, count) {
-    console.log("went here");
     count--;
     $.ajax({
         type: "GET",
         url: "Event?action=leave&id=" + eventID,
         success: function() {
             var typeButton, typeMessage;
-            if (type === "Public")
+            if (type === "Private")
             {
-                typeButton = "Join";
-                typeMessage = "";
+                $("#request-join-message").html("This is a private event. Only invited users by the host can join. :(");
+            } else {
+                if (type === "Public")
+                {
+                    typeButton = "Join";
+                    typeMessage = "";
+                }
+                else if (type === "Closed")
+                {
+                    typeButton = "Request to Join";
+                    typeMessage = "This is a closed event. You need to ask the host's permission to join!<br>";
+                }
+                $("#request-join-message").html("<form onsubmit = 'return joinEvent(" + eventID + ", \"" + type + "\", " + count + ")'>\n" +
+                        typeMessage +
+                        "<input type = 'submit' class = 'event-join' value = '" + typeButton + "'/>\n" +
+                        "</form>");
             }
-            else if (type === "Closed")
-            {
-                typeButton = "Request to Join";
-                typeMessage = "This is a closed event. You need to ask the host's permission to join!<br>";
-            }
-            $("#request-join-message").html("<form onsubmit = 'return joinEvent(" + eventID + ", \"" + type + "\", " + count + ")'>\n" +
-                    typeMessage +
-                    "<input type = 'submit' class = 'event-join' value = '" + typeButton + "'/>\n" +
-                    "</form>");
             $("#attend-count").html(count + " people are going");
         }
     });

@@ -57,7 +57,7 @@
             <div id = "cluster-heading">
                 <div id = "cluster-tag">Clusters</div>
 
-                <form id = "new-cluster-form" action = "Cluster" method = "POST">
+                <form onsubmit = "return addCluster()" id = "new-cluster-form">
                     <input type = "text" name = "new-cluster-name" placeholder = "Cluster Name" />
                     <input type = "hidden" name = "form-type" value = "add-cluster" />
                     <input type = "submit" id = "add-cluster-button" value ="Add Cluster" />
@@ -83,13 +83,13 @@
                     
                 for(Cluster cluster : user.getClusters()){
                 %>
-                <li class = "cluster-item">
+                <li id = "cluster_<%=cluster.getClusterID()%>" class = "cluster-item">
                     <div class = "cluster-item-elements">
                         <form action = "ViewCluster" method="GET" class = "view-members-form">
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
                             <input type = "submit" class = "cluster-name" value = "<%=cluster.getName()%>">
                         </form>
-                        <form action = "Cluster" method="POST" class = "delete-cluster-form">
+                        <form onsubmit = "return deleteCluster(<%=cluster.getClusterID()%>)" class = "delete-cluster-form">
                             <input type = "hidden" name = "clusterID" value = "<%=cluster.getClusterID()%>"/>
                             <input type = "hidden" name = "form-type" value = "delete-cluster" />
                             <input type = "image" src = "img/clusters/DeleteButton.png" class = "delete-cluster-button"/>

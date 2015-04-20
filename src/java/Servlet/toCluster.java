@@ -75,23 +75,37 @@ public class toCluster extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        
+        response.setContentType("text/html;charset=UTF-8");
         String type = request.getParameter("form-type");
         CircaDatabase db = CircaDatabase.getInstance();
-        User user = (User)request.getSession().getAttribute("loggedUser");
+        User user = (User) request.getSession().getAttribute("loggedUser");
         
-        if(type.equals("add-cluster")){
+        if (type.equals("add-cluster")) {
             String clusterName = request.getParameter("new-cluster-name");
-            db.addNewCluster(user.getUserID(), clusterName);
-             
-        } else if(type.equals("delete-cluster")){
+            int clusterID = db.addNewCluster(user.getUserID(), clusterName);
+            
+            response.getWriter().write("<li id = \"cluster_" + clusterID + "\" class = \"cluster-item\">\n"
+                    + "                    <div class = \"cluster-item-elements\">\n"
+                    + "                        <form action = \"ViewCluster\" method=\"GET\" class = \"view-members-form\">\n"
+                    + "                            <input type = \"hidden\" name = \"clusterID\" value = \"" + clusterID + "\"/>\n"
+                    + "                            <input type = \"submit\" class = \"cluster-name\" value = \"" + clusterName + "\">\n"
+                    + "                        </form>\n"
+                    + "                        <form onsubmit = \"return deleteCluster(" + clusterID + ")\" class = \"delete-cluster-form\">\n"
+                    + "                            <input type = \"hidden\" name = \"clusterID\" value = \"" + clusterID + "\"/>\n"
+                    + "                            <input type = \"hidden\" name = \"form-type\" value = \"delete-cluster\" />\n"
+                    + "                            <input type = \"image\" src = \"img/clusters/DeleteButton.png\" class = \"delete-cluster-button\"/>\n"
+                    + "                        </form>\n"
+                    + "                    </div>\n"
+                    + "                    <div class = \"cluster-members-list\">\n"
+                    + "                    </div>\n"
+                    + "                </li>");
+        } else if (type.equals("delete-cluster")) {
             int clusterID = Integer.parseInt(request.getParameter("clusterID"));
             db.deleteCluster(clusterID);
         }
         
-        RequestDispatcher reqDispatcher = request.getRequestDispatcher("Clusters.jsp");
-        reqDispatcher.forward(request, response);
+       // RequestDispatcher reqDispatcher = request.getRequestDispatcher("Clusters.jsp");
+        //reqDispatcher.forward(request, response);
     }
 
     /**

@@ -121,6 +121,12 @@
                         </form>
                     </div>
                     <%
+                    } else if (event.getType().equals("Private")) {
+                    %>
+                    <div id = "request-join-message">
+                        This is a private event. Only invited users by the host can join. :(
+                    </div>
+                    <%
                         }
                         //if not joining
                     } else {
@@ -145,8 +151,7 @@
                     %>
                 </div>
                 <%
-                    if (loggedUser.getUserID()
-                            == host.getUserID()) {
+                    if (loggedUser.getUserID() == host.getUserID()) {
                 %>
             </div>
             <div id = "invite-div">
@@ -206,14 +211,13 @@
                     </div>
                 </div>
             </div>
-            <%
-                }
-
-                if (event.getType()
-                        .equals("Closed")) {
-                    if (loggedUser.getUserID() == host.getUserID()) {
-            %>
         </div>
+        <%
+            }
+
+            if (event.getType().equals("Closed")) {
+                if (loggedUser.getUserID() == host.getUserID()) {
+        %>
         <!-- EVENT REQUESTS FOR HOST TO APPROVE-->
         <h3 align = "center" class = "event-comment-header">Requests to join your event</h3>
         <div id = "request-div">
