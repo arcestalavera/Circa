@@ -95,10 +95,24 @@ function addMember() {
                     }
                 });
             }
-            if(length === 0)
+            if (length === 0)
             {
-                $("#cluster-other-addmember-panel").remove();
+                $("#cluster-other-addmember-panel").hide();
             }
+        }
+    });
+    return false;
+}
+
+function deleteMember(memberID) {
+    $.ajax({
+        type: "POST",
+        url: "ViewCluster",
+        data: $(".delete-cluster-member-form").serialize(),
+        success: function(html) {
+            $("#cluster-addmember-list").append(html);
+            $("#cluster-other-addmember-panel").show();
+            $("#member_" + memberID).remove();
         }
     });
     return false;
@@ -152,4 +166,11 @@ $(document).ready(function() {
             $(this).parent().submit();
         }
     });
+
+    var length = $("ul#cluster-addmember-list li").length;
+
+    if (length == 0)
+    {
+        $("#cluster-other-addmember-panel").hide();
+    }
 });

@@ -76,7 +76,7 @@
                         for (User clusterMember : cluster.getMemberList()) {
                     %>
                     <li id = "member_<%=clusterMember.getUserID()%>" class = "cluster-member">
-                        <form class = "delete-cluster-member-form" action = "ViewCluster" method = "POST">
+                        <form onsubmit = "return deleteMember(<%=clusterMember.getUserID()%>)" class = "delete-cluster-member-form">
                             <input type = "hidden" name = "cluster-member-id" value = "<%=clusterMember.getUserID()%>" />
                             <input type = "hidden" name = "form-type" value = "delete-cluster-member" />
                             <input class = "delete-cluster-member-button" type = "image" src = "img/clusterpage/DeleteButtonSmall.png">
@@ -244,7 +244,6 @@
                         }
                     }
 
-                    if (addableBuddyToCluster.size() != 0) {
                 %>
                 <div id = "cluster-other-addmember-panel">
                     <div id = "addmember-tag-div">
@@ -253,13 +252,15 @@
                     <div id = "add-member-div">
                         <form onsubmit = "return addMember()" id = "addmember-form">
                             <ul id = "cluster-addmember-list">
-                                <%  for (User buddy : addableBuddyToCluster) {
+                                <%                                    if (addableBuddyToCluster.size() != 0) {
+                                        for (User buddy : addableBuddyToCluster) {
                                 %>
                                 <li class = "new-member-item">
                                     <input type = "checkbox" id = "new-member" name = "new-member" value = "<%=buddy.getUserID()%>"/>
                                     <label for="new-member"><%=buddy.getFirstName()%> <%=buddy.getLastName()%></label>
                                 </li>
                                 <%
+                                        }
                                     }
                                 %>
                             </ul>
@@ -268,7 +269,6 @@
                         </form>
                     </div>
                 </div>
-                <%}%>
             </div>
         </div>
     </body>

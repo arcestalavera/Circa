@@ -39,7 +39,7 @@ public class ViewCluster extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddClusterMembers</title>");            
+            out.println("<title>Servlet AddClusterMembers</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddClusterMembers at " + request.getContextPath() + "</h1>");
@@ -62,19 +62,19 @@ public class ViewCluster extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         int clusterID = Integer.parseInt(request.getParameter("clusterID"));
-        
+
         CircaDatabase db = CircaDatabase.getInstance();
         String clusterName = db.getClusterName(clusterID);
-        
+
         Cluster cluster = new Cluster(clusterID, clusterName);
-        
+
         cluster.setMemberList(db.getClusterMembers(clusterID));
-        
+
         request.getSession().setAttribute("clusterToProcess", cluster);
-        
+
         User user = (User) request.getSession().getAttribute("loggedUser");
         user.setEventList(db.getEvents(user.getUserID()));
-        
+
         RequestDispatcher reqDispatcher = request.getRequestDispatcher("ClusterPage.jsp");
         reqDispatcher.forward(request, response);
     }
@@ -90,12 +90,12 @@ public class ViewCluster extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String type = request.getParameter("form-type");
         User user = (User) request.getSession().getAttribute("loggedUser");
         Cluster cluster = (Cluster) request.getSession().getAttribute("clusterToProcess");
         CircaDatabase db = CircaDatabase.getInstance();
-        
+
         response.setContentType("text/html;charset=UTF-8");
         if (type != null) {
             if (type.equals("add-cluster-member")) {
@@ -105,7 +105,7 @@ public class ViewCluster extends HttpServlet {
                         db.addUserToCluster(user.getUserID(), Integer.parseInt(s), cluster.getClusterID());
                         User newMember = db.getUserDetails(Integer.parseInt(s));
                         response.getWriter().write("<li id = \"member_" + newMember.getUserID() + "\" class = \"cluster-member\">\n"
-                                + "                        <form class = \"delete-cluster-member-form\" action = \"ViewCluster\" method = \"POST\">\n"
+                                + "                        <form onsubmit = \"return deleteMember(" + newMember.getUserID() + ")\" class = \"delete-cluster-member-form\">\n"
                                 + "                            <input type = \"hidden\" name = \"cluster-member-id\" value = \"" + newMember.getUserID() + "\" />\n"
                                 + "                            <input type = \"hidden\" name = \"form-type\" value = \"delete-cluster-member\" />\n"
                                 + "                            <input class = \"delete-cluster-member-button\" type = \"image\" src = \"img/clusterpage/DeleteButtonSmall.png\">\n"
@@ -118,14 +118,20 @@ public class ViewCluster extends HttpServlet {
                 }
             } else if (type.equals("delete-cluster-member")) {
                 int clusterMemberID = Integer.parseInt(request.getParameter("cluster-member-id"));
-                
+
                 db.deleteUsertoCluster(clusterMemberID, cluster.getClusterID());
+                User member = db.getUserDetails(clusterMemberID);
+
+                response.getWriter().write("<li class = \"new-member-item\">\n"
+                        + "                                    <input type = \"checkbox\" id = \"new-member\" name = \"new-member\" value = \"" + member.getUserID() + "\"/>\n"
+                        + "                                    <label for=\"new-member\">" + member.getFirstName() + " " + member.getLastName() + "</label>\n"
+                        + "                                </li>");
             } else if (type.equals("edit-cluster-name")) {
                 String name = request.getParameter("cluster-name");
                 int clusterID = Integer.parseInt(request.getParameter("cluster-id"));
                 cluster.setName(name);
                 db.editClusterName(clusterID, name);
-                
+
                 response.getWriter().write(name);
             }
         }
