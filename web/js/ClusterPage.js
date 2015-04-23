@@ -2,7 +2,7 @@ function addComment(postID) {
     $.ajax({
         type: "POST",
         url: "Comment?action=add&id=" + postID + "&curpage=cluster",
-        data: $(".new-comment-form").serialize(),
+        data: $("#post_" + postID).find(".new-comment-form").serialize(),
         success: function(html) {
             $("#post_" + postID).find("#comment-list").append(html);
             $(".new-comment-comment-field").val("");
