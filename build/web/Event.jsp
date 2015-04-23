@@ -184,13 +184,16 @@
 
                             <ul id = "invite-list">
                                 <%
-                                    ArrayList<User> buddyList = loggedUser.getBuddyList();
+                                    ArrayList<User> buddyList = db.getUserBuddies(loggedUser.getUserID());
                                     ArrayList<Integer> clustersView = event.getViewRestriction();
+                                            System.out.println("friend!");
                                     for (User buddy : buddyList) {
                                         boolean isFound = false;
                                         for (int i = 0; i < clustersView.size() && !isFound; i++) {
                                             int cluster = clustersView.get(i);
+                                            System.out.println("friend! cluster = " + cluster);
                                             if (cluster == 0 || cluster == -1 || db.isClusterMember(buddy.getUserID(), cluster)) {
+                                                System.out.println("friend! cluster = " + cluster);
                                                 if (!db.isInvited(event.getEventID(), buddy.getUserID())) {
                                 %>
                                 <li id = "buddy_<%=buddy.getUserID()%>" class = "invite-item">
