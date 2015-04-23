@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "admin";
+            String uPass = "password";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -1244,14 +1244,16 @@ public class CircaDatabase { //singleton
             stmt = con.createStatement();
             sql = "select e.eventID, count(*) "
                     + "from post as p, event as e "
-                    + "where p.eventID = e.eventID "
+                    + "where p.eventID = e.eventID AND e.isDeleted = false "
                     + "group by e.eventID "
                     + "order by count(*) desc "
                     + "limit 10;";
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Event event = getEventDetails(rs.getInt("eventID"));
-                trends.add(event);
+                if(isViewableToCluster(rs.getInt("eventID"), -1)){
+                    Event event = getEventDetails(rs.getInt("eventID"));
+                    trends.add(event);
+                }
             }
 
         } catch (SQLException e) {
