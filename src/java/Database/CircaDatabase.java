@@ -38,7 +38,7 @@ public class CircaDatabase { //singleton
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             String host = "jdbc:mysql://127.0.0.1:3306/Circa?user=root";
             String uUser = "root";
-            String uPass = "password";
+            String uPass = "admin";
 
             con = DriverManager.getConnection(host, uUser, uPass);
 
@@ -183,7 +183,7 @@ public class CircaDatabase { //singleton
             }
 
             sql = "INSERT INTO EVENT(eventID, name, startDate, endDate, venue, type, hostID, description)"
-                    + " VALUES(" + maxEvent + ", '" + name + "', '" + startDate + "', '" + endDate + "', '" + venue + "', '" + type + "', " + hostID + ", '" + description + "')";
+                    + " VALUES(" + maxEvent + ", \"" + name + "\", \"" + startDate + "\", \"" + endDate + "\", \"" + venue + "\", \"" + type + "\", " + hostID + ", \"" + description + "\")";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -494,7 +494,7 @@ public class CircaDatabase { //singleton
             }
 
             sql = "INSERT INTO post(postID, eventID, userID, postText)"
-                    + " VALUES(" + maxPost + ", " + eventID + ", " + userID + ", '" + postText + "')";
+                    + " VALUES(" + maxPost + ", " + eventID + ", " + userID + ", \"" + postText + "\")";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -550,7 +550,7 @@ public class CircaDatabase { //singleton
             }
 
             sql = "INSERT INTO comment(postID, commentText, userID, commentID)"
-                    + " VALUES(" + postID + ", '" + comment + "', " + userID + ", " + maxComment + ")";
+                    + " VALUES(" + postID + ", \"" + comment + "\", " + userID + ", " + maxComment + ")";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -921,8 +921,8 @@ public class CircaDatabase { //singleton
         try {
             stmt = con.createStatement();
             sql = "UPDATE event"
-                    + " SET name = '" + name + "', startDate = '" + startDate + "', endDate = '" + endDate + "',"
-                    + " venue = '" + venue + "', type = '" + type + "', description = '" + description + "'"
+                    + " SET name = \"" + name + "\", startDate = \"" + startDate + "\", endDate = \"" + endDate + "\","
+                    + " venue = \"" + venue + "\", type = \"" + type + "\", description = \"" + description + "\""
                     + " WHERE eventID = " + eventID;
             stmt.executeUpdate(sql);
 
@@ -937,7 +937,7 @@ public class CircaDatabase { //singleton
         try {
             stmt = con.createStatement();
             sql = "UPDATE post"
-                    + " SET postText = '" + postText + "'"
+                    + " SET postText = \"" + postText + "\""
                     + " WHERE postID = " + postID;
 
             stmt.executeUpdate(sql);
